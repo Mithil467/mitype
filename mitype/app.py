@@ -62,7 +62,7 @@ class App:
         return (time.time() - start_time)
 
     def CountLines(self, s, winWidth):
-        return math.ceil(len(s) / winWidth)
+        return int(math.ceil(len(s) / winWidth))
 
     def is_escape(self, key):
         if len(key) == 1:
@@ -77,7 +77,7 @@ class App:
         return False
 
     def getDimensions(self, win):
-        return win.getmaxyx()[1]
+        return int(win.getmaxyx()[1])
 
     def Init(self):
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)

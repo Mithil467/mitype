@@ -10,6 +10,9 @@
 
 ## What is it?
 
+
+![](img/screen.gif)
+
 **mitype** is a Python package to test (and improve) your typing speed in your terminal. Test text is taken from data/db database which is a collection of 6000 strings taken from typeracerdata.com (I do not own any of the strings and the text content is not given with my license).
 
 ## Where to get it
@@ -59,4 +62,3 @@ python setup.py install
 
 ## License
 [GPL](LICENSE.txt)
-
