@@ -1,4 +1,4 @@
-""" Mitype main app script """
+"""This is the Mitype main app script"""
 
 import curses
 import curses.ascii
@@ -12,7 +12,7 @@ import time
 
 class App:
 
-    """ Class App """
+    """Class for enclosing all methods required to run Mitype"""
 
     current_word, current_string, key, text = '', '', '', ''
     tokens = []
@@ -27,7 +27,13 @@ class App:
 
     @staticmethod
     def directory_path():
-        """ Get full path of directory where this file is stored """
+        """Get full path of directory where source files are stored.
+        This is required for later fetching entry from data.db which is
+        stored in same directory as app.
+
+        Returns:
+            string: The path of directory of source file.
+        """
         path = os.path.abspath(__file__)
         last_index = 0
         slash_character1 = '\\'
@@ -38,7 +44,14 @@ class App:
         return path[0:last_index+1]
 
     def search(self, entry_id):
-        """ Fetch row based on supplied ID """
+        """Fetch row from data.db database.
+
+        Args:
+            entry_id (int): The unique ID of database entry.
+
+        Returns:
+            list: The text corresponding to the entry_id.
+        """
         path_str = self.directory_path()+"data.db"
         conn = sqlite3.connect(path_str)
         cur = conn.cursor()
@@ -48,14 +61,28 @@ class App:
         return rows
 
     def generate(self):
-        """ Generate a random integer and return text string from database """
+        """Generate a random integer [1, number of database entries].
+        This function later calls the 'search' function by passing the
+        generated integer as 'entry_id'.
+        """
         number_of_text_entries = 6000
         string = self.search(random.randrange(1, number_of_text_entries + 1))
         return string[0][0]
 
     @staticmethod
     def change_index(string1, string2):
-        """ Return index at which there is a change in strings """
+        """Return index at which there is a change in strings. This is used
+        to determine the index upto which text must be dimmed and after which
+        must be coloured red (indicating mismatch).
+
+        Args:
+            string1 (string): The string which is a combination of
+                              last typed keys in a session.
+            string2 (string): The string corresponsing to sample text.
+
+        Returns:
+            integer: Index at which mismatch occurs for the first time.
+        """
         if len(string1) == 0:
             return 0
         length = min(len(string1), len(string2))
@@ -65,30 +92,76 @@ class App:
         return length
 
     def get_wpm(self, txt, start_time):
-        """ Return speed in WPM """
+        """Calculate typing speed in WPM.
+
+        Args:
+            txt (list): List of words from sample text.
+            start_time (float): The time when user starts typing the sample text.
+
+        Returns:
+            string: Speed in WPM upto 2 decimal places.
+        """
         time_taken = 60 * len(txt) / self.get_time_elasped(start_time)
         return "{0:.2f}".format(time_taken)
 
     @staticmethod
     def get_time_elasped(start_time):
-        """ Get time elapsed from initial keypress """
+        """Get time elapsed since initial keypress. This is required to calculate
+        speed.
+
+        Args:
+            start_time (float): The time when user starts typing the sample text.
+
+        Returns:
+            float: Time elasped since start of typing session till calling
+                   this function.
+        """
         return time.time() - start_time
 
     @staticmethod
     def count_lines(string, win_width):
-        """ Count number of lines required for displaying sample text """
+        """Count number of lines required for displaying text.
+
+        Args:
+            string (string): String containing sample text.
+            win_width (int): Width of terminal.
+
+        Returns:
+            integer: The number of lines required to display sample text
+        """
         return int(math.ceil(len(string) / win_width))
 
     @staticmethod
     def is_escape(key):
-        """ Detect ESC key """
+        """Detect ESC key. This is used to exit the application.
+
+        Args:
+            key (string): Individual characters are returned as 1-character
+                          strings, and special keys such as function keys
+                          return longer strings containing a key name such as
+                          KEY_UP or ^G.
+
+        Returns:
+            bool: Returns true if pressed key is ESC key.
+                  Returns false otherwise.
+        """
         if len(key) == 1:
             return ord(key) == curses.ascii.ESC
         return False
 
     @staticmethod
     def is_backspace(key):
-        """ Detect BACKSPACE key """
+        """Detect BACKSPACE key. This is used to exit the application.
+
+        Args:
+            key (string): Individual characters are returned as 1-character
+                          strings, and special keys such as function keys
+                          return longer strings containing a key name such as
+                          KEY_UP or ^G.
+
+        Returns:
+            bool: Returns true if pressed key is BACKSPACE key.
+                  Returns false otherwise."""
         if key in ('KEY_BACKSPACE', '\b'):
             return True
         if len(key) == 1:
@@ -97,12 +170,19 @@ class App:
 
     @staticmethod
     def get_dimensions(win):
-        """ Return width of terminal window """
+        """Get the width of terminal.
+
+        Args:
+            win (object): Curses window object.
+
+        Returns:
+            (integer): Return width of terminal window.
+        """
         return int(win.getmaxyx()[1])
 
     @staticmethod
     def initialize():
-        """ Initialize color pairs for curses """
+        """Initialize color pairs for curses"""
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
         curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLUE)
@@ -111,13 +191,25 @@ class App:
         curses.init_pair(6, curses.COLOR_WHITE, curses.COLOR_MAGENTA)
 
     def setup_print(self, win):
-        """ Print setup text """
+        """Print setup text at beginning of each typing session.
+
+        Args:
+            win (object): Curses window object.
+        """
         win.addstr(0, 0, ' '*(self.win_width), curses.color_pair(3))
         win.addstr(0, 0, ' Made by Mithil', curses.color_pair(3))
         win.addstr(2, 0, self.text, curses.A_BOLD)
 
     def key_printer(self, win, key):
-        """ Print supplied key to terminal """
+        """Print required key to terminal.
+
+        Args:
+            win (object): Curses window object.
+            key (string): Individual characters are returned as 1-character
+                          strings, and special keys such as function keys
+                          return longer strings containing a key name such as
+                          KEY_UP or ^G.
+        """
         if self.is_escape(key):
             sys.exit(0)
 
@@ -171,13 +263,16 @@ class App:
             self.current_string = ''
             self.current_word = ''
             self.i = 0
-            # for k in range(len(self.key_strokes)):
-            #     self.key_strokes[k][0] -= self.start_time
 
             self.start_time = 0
 
     def main(self, win):
-        """ Main """
+        """Main function. This is where the infinite loop is executed to
+        continuousle serve events.
+
+        Args:
+            win (object): Curses window object.
+        """
         curses.initscr()
         self.initialize()
         win.nodelay(True)
@@ -233,5 +328,5 @@ class App:
             win.refresh()
 
     def start(self):
-        """ Start app """
+        """Start app. Starts main in curses wrapper."""
         curses.wrapper(self.main)
