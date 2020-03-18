@@ -1,5 +1,7 @@
+""" Called when command python -m mitype is executed """
+
 from mitype.app import App
 
 if __name__ == "__main__":
-    obj = App()
-    obj.start()
+    OBJ = App()
+    OBJ.start()

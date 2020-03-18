@@ -1,5 +1,7 @@
+""" Run this file to execute locally """
+
 from app import App
 
 if __name__ == "__main__":
-    obj = App()
-    obj.start()
+    OBJ = App()
+    OBJ.start()
