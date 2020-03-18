@@ -89,10 +89,10 @@ class App:
     @staticmethod
     def is_backspace(key):
         """ Detect BACKSPACE key """
-        if key == 'KEY_BACKSPACE':
+        if key in ('KEY_BACKSPACE', '\b'):
             return True
         if len(key) == 1:
-            ord(key) == curses.ascii.BS or key == '\b'
+            return ord(key) == curses.ascii.BS
         return False
 
     @staticmethod
