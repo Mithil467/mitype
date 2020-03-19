@@ -1,0 +1,443 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>mitype.app &#8212; Mitype 0.1.3 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for mitype.app</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This is the Mitype main app script&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">curses</span>
+<span class="kn">import</span> <span class="nn">curses.ascii</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="App"><a class="viewcode-back" href="../../index.html#mitype.app.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">:</span>
+
+    <span class="sd">&quot;&quot;&quot;Class for enclosing all methods required to run Mitype&quot;&quot;&quot;</span>
+
+    <span class="n">current_word</span><span class="p">,</span> <span class="n">current_string</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">first_key_pressed</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">i</span> <span class="o">=</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">win_width</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">line_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">curr_wpm</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">key_strokes</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="App.directory_path"><a class="viewcode-back" href="../../index.html#mitype.app.App.directory_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">directory_path</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Get full path of directory where source files are stored.</span>
+<span class="sd">        This is required for later fetching entry from data.db which is</span>
+<span class="sd">        stored in same directory as app.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            string: The path of directory of source file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+        <span class="n">last_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">slash_character1</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span>
+        <span class="n">slash_character2</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">character</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">character</span> <span class="ow">in</span> <span class="p">(</span><span class="n">slash_character1</span><span class="p">,</span> <span class="n">slash_character2</span><span class="p">):</span>
+                <span class="n">last_index</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="k">return</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">last_index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="App.search"><a class="viewcode-back" href="../../index.html#mitype.app.App.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fetch row from data.db database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            entry_id (int): The unique ID of database entry.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The text corresponding to the entry_id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory_path</span><span class="p">()</span><span class="o">+</span><span class="s2">&quot;data.db&quot;</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">path_str</span><span class="p">)</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT txt FROM data where id=?&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">entry_id</span><span class="p">,))</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">rows</span></div>
+
+<div class="viewcode-block" id="App.generate"><a class="viewcode-back" href="../../index.html#mitype.app.App.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate a random integer [1, number of database entries].</span>
+<span class="sd">        This function later calls the &#39;search&#39; function by passing the</span>
+<span class="sd">        generated integer as &#39;entry_id&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">number_of_text_entries</span> <span class="o">=</span> <span class="mi">6000</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number_of_text_entries</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="App.change_index"><a class="viewcode-back" href="../../index.html#mitype.app.App.change_index">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">change_index</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return index at which there is a change in strings. This is used</span>
+<span class="sd">        to determine the index upto which text must be dimmed and after which</span>
+<span class="sd">        must be coloured red (indicating mismatch).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            string1 (string): The string which is a combination of</span>
+<span class="sd">                              last typed keys in a session.</span>
+<span class="sd">            string2 (string): The string corresponsing to sample text.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            integer: Index at which mismatch occurs for the first time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">string1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">string2</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">string1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">string2</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="n">length</span></div>
+
+<div class="viewcode-block" id="App.get_wpm"><a class="viewcode-back" href="../../index.html#mitype.app.App.get_wpm">[docs]</a>    <span class="k">def</span> <span class="nf">get_wpm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txt</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate typing speed in WPM.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            txt (list): List of words from sample text.</span>
+<span class="sd">            start_time (float): The time when user starts typing the sample text.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            string: Speed in WPM upto 2 decimal places.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time_taken</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_time_elasped</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_taken</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.get_time_elasped"><a class="viewcode-back" href="../../index.html#mitype.app.App.get_time_elasped">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_time_elasped</span><span class="p">(</span><span class="n">start_time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get time elapsed since initial keypress. This is required to calculate</span>
+<span class="sd">        speed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start_time (float): The time when user starts typing the sample text.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: Time elasped since start of typing session till calling</span>
+<span class="sd">                   this function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span></div>
+
+<div class="viewcode-block" id="App.count_lines"><a class="viewcode-back" href="../../index.html#mitype.app.App.count_lines">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">count_lines</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">win_width</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Count number of lines required for displaying text.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            string (string): String containing sample text.</span>
+<span class="sd">            win_width (int): Width of terminal.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            integer: The number of lines required to display sample text</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">/</span> <span class="n">win_width</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="App.is_escape"><a class="viewcode-back" href="../../index.html#mitype.app.App.is_escape">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Detect ESC key. This is used to exit the application.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (string): Individual characters are returned as 1-character</span>
+<span class="sd">                          strings, and special keys such as function keys</span>
+<span class="sd">                          return longer strings containing a key name such as</span>
+<span class="sd">                          KEY_UP or ^G.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Returns true if pressed key is ESC key.</span>
+<span class="sd">                  Returns false otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">ascii</span><span class="o">.</span><span class="n">ESC</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="App.is_backspace"><a class="viewcode-back" href="../../index.html#mitype.app.App.is_backspace">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Detect BACKSPACE key. This is used to exit the application.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key (string): Individual characters are returned as 1-character</span>
+<span class="sd">                          strings, and special keys such as function keys</span>
+<span class="sd">                          return longer strings containing a key name such as</span>
+<span class="sd">                          KEY_UP or ^G.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Returns true if pressed key is BACKSPACE key.</span>
+<span class="sd">                  Returns false otherwise.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;KEY_BACKSPACE&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\b</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">ascii</span><span class="o">.</span><span class="n">BS</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="App.get_dimensions"><a class="viewcode-back" href="../../index.html#mitype.app.App.get_dimensions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the width of terminal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            win (object): Curses window object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (integer): Return width of terminal window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">win</span><span class="o">.</span><span class="n">getmaxyx</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="App.initialize"><a class="viewcode-back" href="../../index.html#mitype.app.App.initialize">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Initialize color pairs for curses&quot;&quot;&quot;</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_GREEN</span><span class="p">)</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_RED</span><span class="p">)</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLUE</span><span class="p">)</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_YELLOW</span><span class="p">)</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_CYAN</span><span class="p">)</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_MAGENTA</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.setup_print"><a class="viewcode-back" href="../../index.html#mitype.app.App.setup_print">[docs]</a>    <span class="k">def</span> <span class="nf">setup_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print setup text at beginning of each typing session.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            win (object): Curses window object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">*</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">win_width</span><span class="p">),</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39; Made by Mithil&#39;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">A_BOLD</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.key_printer"><a class="viewcode-back" href="../../index.html#mitype.app.App.key_printer">[docs]</a>    <span class="k">def</span> <span class="nf">key_printer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print required key to terminal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            win (object): Curses window object.</span>
+<span class="sd">            key (string): Individual characters are returned as 1-character</span>
+<span class="sd">                          strings, and special keys such as function keys</span>
+<span class="sd">                          return longer strings containing a key name such as</span>
+<span class="sd">                          KEY_UP or ^G.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span>
+
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">+=</span> <span class="n">key</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">+=</span> <span class="n">key</span>
+
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">win_width</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span>
+
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">A_BOLD</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">)],</span> <span class="n">curses</span><span class="o">.</span><span class="n">A_DIM</span><span class="p">)</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">change_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="n">index</span><span class="o">//</span><span class="bp">self</span><span class="o">.</span><span class="n">win_width</span><span class="p">,</span> <span class="n">index</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">win_width</span><span class="p">,</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">)],</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">):</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Your typing speed is &quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">curr_wpm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wpm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curr_wpm</span><span class="p">,</span>
+                       <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s1">&#39; WPM &#39;</span><span class="p">)</span>
+
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                       <span class="s2">&quot;Press enter to see a replay!&quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="App.main"><a class="viewcode-back" href="../../index.html#mitype.app.App.main">[docs]</a>    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Main function. This is where the infinite loop is executed to</span>
+<span class="sd">        continuousle serve events.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            win (object): Curses window object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">initscr</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">nodelay</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">win_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_lines</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">win_width</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getkey</span><span class="p">()</span>
+                <span class="k">except</span> <span class="n">curses</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">key</span><span class="p">])</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getkey</span><span class="p">()</span>
+                <span class="k">except</span> <span class="n">curses</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">:</span>
+                    <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">win_width</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="p">:</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                        <span class="n">key_within_replay</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">key_within_replay</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getkey</span><span class="p">()</span>
+                        <span class="k">except</span> <span class="n">curses</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                            <span class="k">pass</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_escape</span><span class="p">(</span><span class="n">key_within_replay</span><span class="p">):</span>
+                            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="n">win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="App.start"><a class="viewcode-back" href="../../index.html#mitype.app.App.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Start app. Starts main in curses wrapper.&quot;&quot;&quot;</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Mitype</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html">Mitype : Typing Speed Test right in your terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html#what-is-it">What is it?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html#where-to-get-it">Where to get it?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html#how-to-run-it">How to run it?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html#dependencies">Dependencies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html#installation-from-sources">Installation from sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../includeme.html#license">License</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Mithil Poojary.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
