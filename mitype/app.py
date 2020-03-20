@@ -2,12 +2,12 @@
 
 import curses
 import curses.ascii
-import math
 import os
-import random
-import sqlite3
 import sys
 import time
+
+from mitype import calculations
+from mitype import database
 
 
 class App:
@@ -15,7 +15,8 @@ class App:
     """Class for enclosing all methods required to run Mitype"""
 
     def __init__(self):
-        self.current_word, self.current_string, self.key, self.text = "", "", "", ""
+        self.current_word, self.current_string = "", ""
+        self.key, self.text = "", ""
         self.tokens = []
         self.first_key_pressed = False
         self.start_time = self.i = self.mode = self.end_time = 0
@@ -25,114 +26,6 @@ class App:
         self.line_count = 0
         self.curr_wpm = 0
         self.key_strokes = []
-
-    @staticmethod
-    def directory_path():
-        """Get full path of directory where source files are stored.
-        This is required for later fetching entry from data.db which is
-        stored in same directory as app.
-
-        Returns:
-            string: The path of directory of source file.
-        """
-        path = os.path.abspath(__file__)
-        last_index = 0
-        slash_character1 = "\\"
-        slash_character2 = "/"
-        for idx, character in enumerate(path):
-            if character in (slash_character1, slash_character2):
-                last_index = idx
-        return path[0 : last_index + 1]
-
-    def search(self, entry_id):
-        """Fetch row from data.db database.
-
-        Args:
-            entry_id (int): The unique ID of database entry.
-
-        Returns:
-            list: The text corresponding to the entry_id.
-        """
-        path_str = self.directory_path() + "data.db"
-        conn = sqlite3.connect(path_str)
-        cur = conn.cursor()
-        cur.execute("SELECT txt FROM data where id=?", (entry_id,))
-        rows = cur.fetchall()
-        conn.close()
-        return rows
-
-    def generate(self):
-        """Generate a random integer [1, number of database entries].
-        This function later calls the 'search' function by passing the
-        generated integer as 'entry_id'.
-        """
-        number_of_text_entries = 6000
-        string = self.search(random.randrange(1, number_of_text_entries + 1))
-        return string[0][0]
-
-    @staticmethod
-    def change_index(string1, string2):
-        """Return index at which there is a change in strings. This is used
-        to determine the index upto which text must be dimmed and after which
-        must be coloured red (indicating mismatch).
-
-        Args:
-            string1 (string): The string which is a combination of
-                              last typed keys in a session.
-            string2 (string): The string corresponding to sample text.
-
-        Returns:
-            integer: Index at which mismatch occurs for the first time.
-        """
-        if len(string1) == 0:
-            return 0
-        length = min(len(string1), len(string2))
-        for i in range(length):
-            if string1[i] != string2[i]:
-                return i
-        return length
-
-    def get_wpm(self, txt, start_time):
-        """Calculate typing speed in WPM.
-
-        Args:
-            txt (list): List of words from sample text.
-            start_time (float): The time when user starts typing
-            the sample text.
-
-        Returns:
-            string: Speed in WPM upto 2 decimal places.
-        """
-        time_taken = 60 * len(txt) / self.get_time_elasped(start_time)
-        return "{0:.2f}".format(time_taken)
-
-    @staticmethod
-    def get_time_elasped(start_time):
-        """Get time elapsed since initial keypress. This is required to calculate
-        speed.
-
-        Args:
-            start_time (float): The time when user starts typing
-            the sample text.
-
-        Returns:
-            float: Time elasped since start of typing session till calling
-                   this function.
-        """
-        return time.time() - start_time
-
-    @staticmethod
-    def count_lines(string, win_width):
-        """Count number of lines required for displaying text.
-
-        Args:
-            string (string): String containing sample text.
-            win_width (int): Width of terminal.
-
-        Returns:
-            integer: The number of lines required to display sample text
-        """
-        return int(math.ceil(len(string) / win_width))
 
     @staticmethod
     def is_escape(key):
@@ -241,7 +134,7 @@ class App:
         win.addstr(2, 0, self.text, curses.A_BOLD)
         win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
 
-        index = self.change_index(self.current_string, self.text)
+        index = calculations.change_index(self.current_string, self.text)
         win.addstr(
             2 + index // self.win_width,
             index % self.win_width,
@@ -252,7 +145,7 @@ class App:
         if index == len(self.text):
             win.addstr(self.line_count, 0, "Your typing speed is ")
             if self.mode == 0:
-                self.curr_wpm = self.get_wpm(self.tokens, self.start_time)
+                self.curr_wpm = calculations.get_wpm(self.tokens, self.start_time)
             win.addstr(self.curr_wpm, curses.color_pair(1))
             win.addstr(" WPM ")
 
@@ -286,12 +179,12 @@ class App:
         curses.initscr()
         self.initialize()
         win.nodelay(True)
-        self.text = self.generate()
+        self.text = database.generate()
         self.tokens = self.text.split()
 
         self.win_width = self.get_dimensions(win)
 
-        self.line_count = self.count_lines(self.text, self.win_width) + 2 + 1
+        self.line_count = calculations.count_lines(self.text, self.win_width) + 2 + 1
 
         self.setup_print(win)
 
@@ -339,4 +232,5 @@ class App:
 
     def start(self):
         """Start app. Starts main in curses wrapper."""
+        os.environ.setdefault("ESCDELAY", "0")
         curses.wrapper(self.main)
