@@ -1,3 +1,3 @@
 """ Init file for packaging """
 
-__author__ = 'Mithil'
+__author__ = "Mithil"

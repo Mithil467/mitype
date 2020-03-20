@@ -1,7 +1,7 @@
 Mitype : Typing Speed Test right in your terminal
 =================================================
 
-|forthebadge made-with-python| 
+|Black| |forthebadge made-with-python|
 
 |Generic badge| |PyPI Latest Release| |License| |Package Status| |PyPI pyversions| |Make-a-PR|
 
@@ -25,6 +25,9 @@ Mitype : Typing Speed Test right in your terminal
 
 .. |Make-a-PR| image:: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
    :target: https://github.com/Mithil467/mitype/pulls
+
+.. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/ambv/black
 
 |Demo|
 
