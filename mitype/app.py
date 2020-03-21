@@ -1,13 +1,13 @@
 """This is the Mitype main app script"""
 
 import curses
-import curses.ascii
 import os
 import sys
 import time
 
 from mitype import calculations
 from mitype import database
+from mitype import keycheck
 
 
 class App:
@@ -28,43 +28,6 @@ class App:
         self.key_strokes = []
 
     @staticmethod
-    def is_escape(key):
-        """Detect ESC key. This is used to exit the application.
-
-        Args:
-            key (string): Individual characters are returned as 1-character
-                          strings, and special keys such as function keys
-                          return longer strings containing a key name such as
-                          KEY_UP or ^G.
-
-        Returns:
-            bool: Returns true if pressed key is ESC key.
-                  Returns false otherwise.
-        """
-        if len(key) == 1:
-            return ord(key) == curses.ascii.ESC
-        return False
-
-    @staticmethod
-    def is_backspace(key):
-        """Detect BACKSPACE key. This is used to exit the application.
-
-        Args:
-            key (string): Individual characters are returned as 1-character
-                          strings, and special keys such as function keys
-                          return longer strings containing a key name such as
-                          KEY_UP or ^G.
-
-        Returns:
-            bool: Returns true if pressed key is BACKSPACE key.
-                  Returns false otherwise."""
-        if key in ("KEY_BACKSPACE", "\b"):
-            return True
-        if len(key) == 1:
-            return ord(key) == curses.ascii.BS
-        return False
-
-    @staticmethod
     def get_dimensions(win):
         """Get the width of terminal.
 
@@ -76,15 +39,24 @@ class App:
         """
         return int(win.getmaxyx()[1])
 
-    @staticmethod
-    def initialize():
-        """Initialize color pairs for curses"""
+    def initialize(self, win):
+        """Initialize curses"""
+        curses.initscr()
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
         curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLUE)
         curses.init_pair(4, curses.COLOR_WHITE, curses.COLOR_YELLOW)
         curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_CYAN)
         curses.init_pair(6, curses.COLOR_WHITE, curses.COLOR_MAGENTA)
+        win.nodelay(True)
+        self.text = database.generate()
+        self.tokens = self.text.split()
+
+        self.win_width = self.get_dimensions(win)
+
+        self.line_count = calculations.count_lines(self.text, self.win_width) + 2 + 1
+
+        self.setup_print(win)
 
     def setup_print(self, win):
         """Print setup text at beginning of each typing session.
@@ -106,10 +78,10 @@ class App:
                           return longer strings containing a key name such as
                           KEY_UP or ^G.
         """
-        if self.is_escape(key):
+        if keycheck.is_escape(key):
             sys.exit(0)
 
-        elif self.is_backspace(key):
+        elif keycheck.is_backspace(key):
             if len(self.current_word) > 0:
                 self.current_word = self.current_word[0 : len(self.current_word) - 1]
                 self.current_string = self.current_string[
@@ -176,17 +148,7 @@ class App:
         Args:
             win (object): Curses window object.
         """
-        curses.initscr()
-        self.initialize()
-        win.nodelay(True)
-        self.text = database.generate()
-        self.tokens = self.text.split()
-
-        self.win_width = self.get_dimensions(win)
-
-        self.line_count = calculations.count_lines(self.text, self.win_width) + 2 + 1
-
-        self.setup_print(win)
+        self.initialize(win)
 
         while True:
 
@@ -210,7 +172,7 @@ class App:
                     key = win.getkey()
                 except curses.error:
                     pass
-                if key == "\n":
+                if keycheck.is_enter(key):
                     win.addstr(self.line_count + 2, 0, " " * self.win_width)
                     self.setup_print(win)
                     for j in self.key_strokes:
@@ -221,11 +183,11 @@ class App:
                             key_within_replay = win.getkey()
                         except curses.error:
                             pass
-                        if self.is_escape(key_within_replay):
+                        if keycheck.is_escape(key_within_replay):
                             sys.exit(0)
                         win.refresh()
 
-                elif self.is_escape(key):
+                elif keycheck.is_escape(key):
                     sys.exit(0)
 
             win.refresh()
