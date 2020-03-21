@@ -1,9 +1,8 @@
-Mitype : Typing Speed Test right in your terminal
-=================================================
+**********
+⌨ Mitype ⌨
+**********
 
-|Black| |forthebadge made-with-python|
-
-|Generic badge| |PyPI Latest Release| |License| |Package Status| |PyPI pyversions| |Make-a-PR|
+|Climate| |PyPI Latest Release| |License| |Black|
 
 .. |Generic badge| image:: https://img.shields.io/badge/Author-Mithil-BLUE.svg
     :target: https://www.github.com/mithil467/   
@@ -28,6 +27,11 @@ Mitype : Typing Speed Test right in your terminal
 
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/ambv/black
+
+.. |Climate| image:: https://api.codeclimate.com/v1/badges/4d0397d4c7dd3b81a205/maintainability
+   :target: https://codeclimate.com/github/Mithil467/mitype/maintainability
+   :alt: Maintainability
+
 
 |Demo|
 
