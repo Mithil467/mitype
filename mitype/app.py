@@ -82,24 +82,75 @@ class App:
             sys.exit(0)
 
         elif keycheck.is_backspace(key):
-            if len(self.current_word) > 0:
-                self.current_word = self.current_word[0 : len(self.current_word) - 1]
-                self.current_string = self.current_string[
-                    0 : len(self.current_string) - 1
-                ]
+            self.EraseKey()
 
         elif key == " ":
-            if self.current_word == self.tokens[self.i]:
-                self.i += 1
-                self.current_word = ""
-            else:
-                self.current_word += " "
-            self.current_string += " "
+            self.check_word()
 
         elif len(key) == 1:
-            self.current_word += key
-            self.current_string += key
+            self.appendkey(key)
 
+        self.UpdateState(win)
+
+    def main(self, win):
+        """Main function. This is where the infinite loop is executed to
+        continuously serve events.
+
+        Args:
+            win (object): Curses window object.
+        """
+        self.initialize(win)
+
+        while True:
+            # Typing mode
+            if self.mode == 0:
+                key = self.keyinput(win)
+
+                if not self.first_key_pressed:
+                    self.start_time = time.time()
+                    self.first_key_pressed = True
+
+                self.key_strokes.append([time.time(), key])
+
+                self.key_printer(win, key)
+            # Replay mode
+            elif self.mode == 1:
+                key = self.keyinput(win)
+                if keycheck.is_enter(key):
+                    self.Replay(win)
+
+                elif keycheck.is_escape(key):
+                    sys.exit(0)
+
+            win.refresh()
+
+    def keyinput(self, win):
+        key = ""
+        while key == "":
+            try:
+                key = win.getkey()
+            except curses.error:
+                continue
+        return key
+
+    def EraseKey(self):
+        if len(self.current_word) > 0:
+            self.current_word = self.current_word[0 : len(self.current_word) - 1]
+            self.current_string = self.current_string[0 : len(self.current_string) - 1]
+
+    def check_word(self):
+        if self.current_word == self.tokens[self.i]:
+            self.i += 1
+            self.current_word = ""
+        else:
+            self.current_word += " "
+        self.current_string += " "
+
+    def appendkey(self, key):
+        self.current_word += key
+        self.current_string += key
+
+    def UpdateState(self, win):
         win.addstr(self.line_count, 0, " " * self.win_width)
         win.addstr(self.line_count, 0, self.current_word)
 
@@ -141,55 +192,19 @@ class App:
 
             self.start_time = 0
 
-    def main(self, win):
-        """Main function. This is where the infinite loop is executed to
-        continuously serve events.
-
-        Args:
-            win (object): Curses window object.
-        """
-        self.initialize(win)
-
-        while True:
-
-            if self.mode == 0:
-                try:
-                    key = win.getkey()
-                except curses.error:
-                    continue
-
-                if not self.first_key_pressed:
-                    self.start_time = time.time()
-                    self.first_key_pressed = True
-
-                self.key_strokes.append([time.time(), key])
-
-                self.key_printer(win, key)
-
-            elif self.mode == 1:
-                key = ""
-                try:
-                    key = win.getkey()
-                except curses.error:
-                    pass
-                if keycheck.is_enter(key):
-                    win.addstr(self.line_count + 2, 0, " " * self.win_width)
-                    self.setup_print(win)
-                    for j in self.key_strokes:
-                        time.sleep(j[0])
-                        self.key_printer(win, j[1])
-                        key_within_replay = ""
-                        try:
-                            key_within_replay = win.getkey()
-                        except curses.error:
-                            pass
-                        if keycheck.is_escape(key_within_replay):
-                            sys.exit(0)
-                        win.refresh()
-
-                elif keycheck.is_escape(key):
-                    sys.exit(0)
-
+    def Replay(self, win):
+        win.addstr(self.line_count + 2, 0, " " * self.win_width)
+        self.setup_print(win)
+        for j in self.key_strokes:
+            time.sleep(j[0])
+            self.key_printer(win, j[1])
+            key_within_replay = ""
+            try:
+                key_within_replay = win.getkey()
+            except curses.error:
+                pass
+            if keycheck.is_escape(key_within_replay):
+                sys.exit(0)
             win.refresh()
 
     def start(self):
