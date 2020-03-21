@@ -39,11 +39,11 @@ def search(entry_id):
     return rows
 
 
-def generate():
+def generate(limit):
     """Generate a random integer [1, number of database entries].
     This function later calls the 'search' function by passing the
     generated integer as 'entry_id'.
     """
-    number_of_text_entries = 6000
-    string = search(random.randrange(1, number_of_text_entries + 1))
+    
+    string = search(random.randrange(limit-1200, limit + 1))
     return string[0][0]

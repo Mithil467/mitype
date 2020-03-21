@@ -49,7 +49,6 @@ class App:
         curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_CYAN)
         curses.init_pair(6, curses.COLOR_WHITE, curses.COLOR_MAGENTA)
         win.nodelay(True)
-        self.text = database.generate()
         self.tokens = self.text.split()
 
         self.win_width = self.get_dimensions(win)
@@ -81,6 +80,10 @@ class App:
         if keycheck.is_escape(key):
             sys.exit(0)
 
+        elif keycheck.is_resize(key):
+            # TODO handle resize
+            pass
+
         elif keycheck.is_backspace(key):
             self.EraseKey()
 
@@ -106,9 +109,16 @@ class App:
             if self.mode == 0:
                 key = self.keyinput(win)
 
+
+                if keycheck.is_escape(key):
+                    sys.exit(0)
+
                 if not self.first_key_pressed:
-                    self.start_time = time.time()
-                    self.first_key_pressed = True
+                    if(keycheck.is_valid_initial_key(key)):
+                        self.start_time = time.time()
+                        self.first_key_pressed = True
+                    else:
+                        continue
 
                 self.key_strokes.append([time.time(), key])
 
@@ -209,5 +219,24 @@ class App:
 
     def start(self):
         """Start app. Starts main in curses wrapper."""
+        
+        self.parse()
         os.environ.setdefault("ESCDELAY", "0")
         curses.wrapper(self.main)
+
+    def parse(self):
+        opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
+        args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
+        if "-f" in opts:
+            self.text = open(args[0]).read()
+        elif "-d" in opts:
+            limit = int(args[0])
+            if limit not in range(1,6):
+                print('Please enter a difficulty level between 1 and 5')
+                sys.exit(0)
+
+            # total entries in db = 6000
+            # 5 sections of each difficulty
+            self.text = database.generate(limit*1200)
+        else:
+            self.text = database.generate(6000)
