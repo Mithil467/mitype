@@ -238,7 +238,11 @@ class App:
                 print("Cannot open file -", args[0])
                 sys.exit(0)
         elif "-d" in opts:
-            limit = int(args[0])
+            try:
+                limit = int(args[0])
+            except:
+                print("Expected an integer")
+                sys.exit(0)
             if limit not in range(1, 6):
                 print("Please enter a difficulty level between 1 and 5")
                 sys.exit(0)
