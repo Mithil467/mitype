@@ -43,7 +43,7 @@ def is_backspace(key):
 def is_null(key):
     """Detect null keys like super key."""
     if len(key) == 1:
-        return ord(key)==0
+        return ord(key) == 0
     return key == ""
 
 
@@ -56,8 +56,9 @@ def is_resize(key):
     """Detect is terminal was resized"""
     return key == "KEY_RESIZE"
 
+
 def is_valid_initial_key(key):
     """Detect if the pressed key is a valid key to start timer"""
-    if len(key)==1:
+    if len(key) == 1:
         return ord(key) in range(32, 127)
     return False

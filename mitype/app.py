@@ -56,8 +56,7 @@ class App:
 
         self.text = self.word_wrap(self.text, self.win_width)
 
-        self.line_count = calculations.count_lines(
-            self.text, self.win_width) + 2 + 2
+        self.line_count = calculations.count_lines(self.text, self.win_width) + 2 + 1
 
         self.setup_print(win)
 
@@ -117,7 +116,7 @@ class App:
                     sys.exit(0)
 
                 if not self.first_key_pressed:
-                    if(keycheck.is_valid_initial_key(key)):
+                    if keycheck.is_valid_initial_key(key):
                         self.start_time = time.time()
                         self.first_key_pressed = True
                     else:
@@ -148,17 +147,15 @@ class App:
 
     def EraseKey(self):
         if len(self.current_word) > 0:
-            self.current_word = self.current_word[0: len(
-                self.current_word) - 1]
-            self.current_string = self.current_string[0: len(
-                self.current_string) - 1]
+            self.current_word = self.current_word[0 : len(self.current_word) - 1]
+            self.current_string = self.current_string[0 : len(self.current_string) - 1]
 
     def check_word(self):
         spc = calculations.get_spc_count(len(self.current_string), self.text)
         if self.current_word == self.tokens[self.i]:
             self.i += 1
             self.current_word = ""
-            self.current_string += spc*" "
+            self.current_string += spc * " "
         else:
             self.current_word += " "
             self.current_string += " "
@@ -172,22 +169,20 @@ class App:
         win.addstr(self.line_count, 0, self.current_word)
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
-        win.addstr(2, 0, self.text[0: len(
-            self.current_string)], curses.A_DIM)
+        win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
 
         index = calculations.change_index(self.current_string, self.text)
         win.addstr(
             2 + index // self.win_width,
             index % self.win_width,
-            self.text[index: len(self.current_string)],
+            self.text[index : len(self.current_string)],
             curses.color_pair(2),
         )
 
         if index == len(self.text):
             win.addstr(self.line_count, 0, "Your typing speed is ")
             if self.mode == 0:
-                self.curr_wpm = calculations.get_wpm(
-                    self.tokens, self.start_time)
+                self.curr_wpm = calculations.get_wpm(self.tokens, self.start_time)
             win.addstr(self.curr_wpm, curses.color_pair(1))
             win.addstr(" WPM ")
 
@@ -237,32 +232,36 @@ class App:
         opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
         args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
         if "-f" in opts:
-            self.text = open(args[0]).read()
+            try:
+                self.text = open(args[0]).read()
+            except:
+                print("Cannot open file -", args[0])
+                sys.exit(0)
         elif "-d" in opts:
             limit = int(args[0])
             if limit not in range(1, 6):
-                print('Please enter a difficulty level between 1 and 5')
+                print("Please enter a difficulty level between 1 and 5")
                 sys.exit(0)
 
             # total entries in db = 6000
             # 5 sections of each difficulty
-            self.text = database.generate(limit*1200)
+            self.text = database.generate(limit * 1200)
         else:
             # Default difficulty when no parameters are passed
             limit = 3
-            self.text = database.generate(limit*1200)
+            self.text = database.generate(limit * 1200)
 
     def word_wrap(self, text, width):
         x = 1
-        while x<=calculations.count_lines(text, width):
-            if x*width >= len(text):
+        while x <= calculations.count_lines(text, width):
+            if x * width >= len(text):
                 pass
-            elif text[x*width-1] == ' ':
+            elif text[x * width - 1] == " ":
                 pass
             else:
-                i = x*width-1
-                while text[i] != ' ':
+                i = x * width - 1
+                while text[i] != " ":
                     i -= 1
-                text = text[:i] + " "*(x*width-i) + text[i+1:]
+                text = text[:i] + " " * (x * width - i) + text[i + 1 :]
             x += 1
         return text

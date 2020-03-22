@@ -44,6 +44,6 @@ def generate(limit):
     This function later calls the 'search' function by passing the
     generated integer as 'entry_id'.
     """
-    
-    string = search(random.randrange(limit-1200, limit + 1))
+
+    string = search(random.randrange(limit - 1200, limit + 1))
     return string[0][0]
