@@ -2,6 +2,7 @@
 
 import curses
 import os
+import random
 import sys
 import time
 
@@ -239,4 +240,6 @@ class App:
             # 5 sections of each difficulty
             self.text = database.generate(limit*1200)
         else:
-            self.text = database.generate(6000)
+            # Default difficulty when no parameters are passed
+            limit = 3
+            self.text = database.generate(limit*1200)
