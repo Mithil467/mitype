@@ -53,3 +53,12 @@ def count_lines(string, win_width):
         integer: The number of lines required to display sample text
     """
     return int(math.ceil(len(string) / win_width))
+
+def get_spc_count(i, ogtext):
+    count = 0
+    # count number of spaces after the ith word in ogtext
+    while ogtext[i] == ' ':
+        i+=1
+        count += 1   
+            
+    return count
