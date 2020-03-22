@@ -1,5 +1,7 @@
 """Calculations"""
 
+from __future__ import division
+
 import math
 
 from mitype import timer
