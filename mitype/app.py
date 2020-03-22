@@ -54,9 +54,11 @@ class App:
 
         self.win_width = self.get_dimensions(win)
 
-        self.line_count = calculations.count_lines(
-            self.text, self.win_width) + 2 + 1
         self.text = self.word_wrap(self.text, self.win_width)
+
+        self.line_count = calculations.count_lines(
+            self.text, self.win_width) + 2 + 2
+
         self.setup_print(win)
 
     def setup_print(self, win):
