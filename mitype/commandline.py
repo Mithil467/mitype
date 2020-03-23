@@ -91,7 +91,7 @@ def load_from_database(text_id):
     return text
 
 
-def load_based_on_difficulty(difficulty_level):
+def load_based_on_difficulty(difficulty_level = random.randrange(1,6)):
     """Load text of given difficulty from database"""
 
     max_level = 5
@@ -108,16 +108,6 @@ def load_based_on_difficulty(difficulty_level):
     text = mitype.database.search(text_id)
 
     return text
-
-
-def load_random_text():
-    """Load random text from database"""
-
-    number_of_entries = 6000
-    text_id = random.randrange(0, number_of_entries + 1)
-
-    return load_from_database(text_id)
-
 
 def main():
     """The main methor for parsing command line arguments
@@ -138,6 +128,6 @@ def main():
         text = load_based_on_difficulty(opt.difficulty)
 
     else:
-        text = load_random_text()
+        text = load_based_on_difficulty()
 
-    print(text)
+    return text

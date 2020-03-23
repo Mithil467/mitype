@@ -22,10 +22,13 @@ def change_index(string1, string2):
     """
     if len(string1) == 0:
         return 0
+
     length = min(len(string1), len(string2))
+
     for i in range(length):
         if string1[i] != string2[i]:
             return i
+
     return length
 
 
@@ -41,6 +44,7 @@ def get_wpm(txt, start_time):
         string: Speed in WPM upto 2 decimal places.
     """
     time_taken = 60 * len(txt) / timer.get_time_elasped(start_time)
+
     return "{0:.2f}".format(time_taken)
 
 
@@ -58,7 +62,9 @@ def count_lines(string, win_width):
 
 
 def get_spc_count(i, ogtext):
+
     count = 0
+
     # count number of spaces after the ith word in ogtext
     while ogtext[i] == " ":
         i += 1

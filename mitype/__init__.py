@@ -1,3 +1,4 @@
-""" Init file for packaging """
+"""Mitype"""
 
-__author__ = "Mithil"
+__author__ = "Mithil Poojary"
+__version__ = "0.1.3"

@@ -11,14 +11,24 @@ def directory_path():
     Returns:
         string: The path of directory of source file.
     """
-    path = os.path.abspath(__file__)
+
+    db_file_name = "data.db"
+
+    module_path = os.path.abspath(__file__)
+
     last_index = 0
-    slash_character1 = "\\"
-    slash_character2 = "/"
-    for idx, character in enumerate(path):
-        if character in (slash_character1, slash_character2):
+
+    slash_characters = ("/", "\\")
+
+    for idx, character in enumerate(module_path):
+        if character in slash_characters:
             last_index = idx
-    return path[0 : last_index + 1]
+
+    db_directory_path = module_path[: last_index + 1]
+
+    db_file_path = db_directory_path + db_file_name
+
+    return db_file_path
 
 
 def search(entry_id):
@@ -30,20 +40,15 @@ def search(entry_id):
     Returns:
         list: The text corresponding to the entry_id.
     """
-    path_str = directory_path() + "data.db"
+    path_str = directory_path()
+
     conn = sqlite3.connect(path_str)
     cur = conn.cursor()
     cur.execute("SELECT txt FROM data where id=?", (entry_id,))
+
     rows = cur.fetchall()
     conn.close()
-    return rows
 
+    text = rows[0][0]
 
-def generate(limit):
-    """Generate a random integer [1, number of database entries].
-    This function later calls the 'search' function by passing the
-    generated integer as 'entry_id'.
-    """
-
-    string = search(random.randrange(limit - 1200, limit + 1))
-    return string[0][0]
+    return text

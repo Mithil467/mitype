@@ -1,8 +1,7 @@
-#!/usr/bin/env python
-
-""" Called when command python -m mitype is executed """
+"""Mitype"""
 
 from mitype.app import App
+import mitype.commandline
 
 if __name__ == "__main__":
     OBJ = App()
