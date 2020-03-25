@@ -137,11 +137,10 @@ class App:
             win (object): Curses window object.
         """
 
-        # Color top strip in blue
-        win.addstr(0, 0, " " * (self.win_width), curses.color_pair(3))
-
-        # Print stats
-        win.addstr(0, 0, " Made by Mithil", curses.color_pair(3))
+        # Top strip
+        win.addstr(0, int(self.win_width/2)-8, "⌨   ")
+        win.addstr(" MITYPE ", curses.color_pair(3))
+        win.addstr(" ⌨  ")
 
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -228,20 +227,20 @@ class App:
         )
 
         if index == len(self.text):
-            win.addstr(self.line_count, 0, "Your typing speed is ")
+            win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
                 self.curr_wpm = mitype.calculations.get_wpm(
                     self.tokens, self.start_time
                 )
-            win.addstr(self.curr_wpm, curses.color_pair(1))
-            win.addstr(" WPM ")
 
-            win.addstr(
-                self.line_count + 2,
-                0,
-                "Press enter to see a replay!",
-                curses.color_pair(6),
-            )
+            win.addstr(" " + self.curr_wpm + " ", curses.color_pair(1))
+            win.addstr(" WPM 🤩")
+
+            win.addstr(self.line_count + 2, 0, " Press ")
+
+            win.addstr(" Enter ", curses.color_pair(6))
+
+            win.addstr(" to see a replay! ")
 
             if self.mode == 0:
                 self.mode = 1
