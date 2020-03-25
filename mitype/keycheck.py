@@ -36,7 +36,7 @@ def is_backspace(key):
     if key in ("KEY_BACKSPACE", "\b"):
         return True
     if len(key) == 1:
-        return ord(key) == curses.ascii.BS
+        return (ord(key) in (curses.ascii.DEL, curses.ascii.BS))
     return False
 
 
