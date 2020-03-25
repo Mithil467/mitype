@@ -4,26 +4,14 @@
 
 |Climate| |PyPI Latest Release| |License| |Black|
 
-.. |Generic badge| image:: https://img.shields.io/badge/Author-Mithil-BLUE.svg
-    :target: https://www.github.com/mithil467/   
-
 .. |forthebadge made-with-python| image:: https://ForTheBadge.com/images/badges/made-with-python.svg
     :target: https://www.python.org/
 
 .. |PyPI Latest Release| image:: https://img.shields.io/pypi/v/mitype.svg
     :target: https://pypi.org/project/mitype/
 
-.. |Package Status| image:: https://img.shields.io/pypi/status/mitype.svg
-    :target: https://pypi.org/project/mitype/
-
 .. |License| image:: https://img.shields.io/pypi/l/mitype.svg
     :target: LICENSE.txt
-
-.. |PyPI pyversions| image:: https://img.shields.io/pypi/pyversions/mitype.svg
-   :target: https://pypi.python.org/pypi/mitype/
-
-.. |Make-a-PR| image:: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-   :target: https://github.com/Mithil467/mitype/pulls
 
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
     :target: https://github.com/ambv/black
@@ -41,18 +29,31 @@
 What is it?
 ===========
 
-**Mitype** is a Python package to test (and improve) your typing speed in your terminal. Test text is taken from
-data.db database which is a collection of 6000 strings taken from typeracerdata.com (I do not own any of the
-strings and the text content is not given with my license).
+**Mitype** is a Python package to test (and hence improve) your typing speed right from the ease of your terminal. 
+
+Features
+========
+
+💻 For Linux, Windows and macOS  
+
+😄 No external dependencies*   
+
+📝 Choose custom text from a file  
+
+🤸 And difficulty level  
+
+😉  Or let the app decide! (From over 6000️ text sets)  
+
+🌈 Colored texts  
+
+
+*For windows, you need windows-curses to run
 
 Where to get it?
 ================
 
 The source code is hosted on GitHub at:
 https://github.com/mithil467/mitype
-
-Binary installers for the latest released version are available at:
-Get the latest news at `Python package index`_.
 
 .. _Python package index: https://pypi.org/project/mitype/#files
 
@@ -70,7 +71,20 @@ Once installed, you can run it by
 
 ``python -m mitype``
 
-You can quit the app anytime by pressing ESC key.
+You can choose difficulty in between 1 and 5.
+
+```python -m mitype -d <value>``
+
+Example:
+
+```python -m mitype -d 2``
+
+You can use text from your own file by
+
+``python -m mitype -f SampleTextFile``
+
+
+You can quit the app anytime by pressing the **ESC** key.
 
 Dependencies
 ============
@@ -82,9 +96,9 @@ For windows only - `windows-curses`_.
 Installation from sources
 =========================
 
-To install mitype from source - 
+To install ``mitype`` from source - 
 
-In the `mitype` directory (same one where you found this file after
+In the ``mitype`` directory (same one where you found this file after
 cloning the git repo), execute:
 
 ``python setup.py install``
@@ -95,3 +109,4 @@ License
 `GPL`_
 
 .. _GPL: license.txt
+Test text is taken from data.db database which is a collection of 6000 strings taken from typeracerdata.com (not given under my license).
