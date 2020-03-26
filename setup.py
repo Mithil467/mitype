@@ -8,13 +8,13 @@ with open("README.rst") as f:
 setup(
     name="mitype",
     packages=["mitype"],
-    version="0.1.3",
+    version="0.1.6",
     license="GPL",
     description="A command line tool to improve typing speed",
     author="MITHIL POOJARY",
     author_email="mithil467@gmail.com",
     url="https://github.com/mithil467/mitype",
-    download_url="https://github.com/mithil467/mitype/archive/v0.1.3.tar.gz",
+    download_url="https://github.com/mithil467/mitype/archive/v0.1.6.tar.gz",
     keywords=["TYPE", "MITYPE", "WPM"],
     long_description=LONG_DESCRIPTION,
     classifiers=[
