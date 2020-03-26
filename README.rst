@@ -36,6 +36,8 @@ Features
 
 💻 For Linux, Windows and macOS  
 
+🐍 Runs on python 3 and 2 both
+
 😄 No external dependencies*   
 
 📝 Choose custom text from a file  
@@ -85,6 +87,10 @@ You can use text from your own file by
 
 
 You can quit the app anytime by pressing the **ESC** key.
+
+Do directly run from repo:
+
+```python local_host.py```
 
 Dependencies
 ============
