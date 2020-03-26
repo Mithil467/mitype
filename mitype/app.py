@@ -18,6 +18,7 @@ class App:
 
         # Start the parser
         self.text = mitype.commandline.main()
+        self.ogtext = self.text
 
         self.tokens = self.text.split()
 
@@ -82,6 +83,9 @@ class App:
             self.start_time = time.time()
             self.first_key_pressed = True
 
+        if mitype.keycheck.is_resize(key):
+            self.Resize(win)
+
         if not self.first_key_pressed:
             return
 
@@ -138,9 +142,7 @@ class App:
         """
 
         # Top strip
-        win.addstr(0, int(self.win_width/2)-8, "⌨   ")
-        win.addstr(" MITYPE ", curses.color_pair(3))
-        win.addstr(" ⌨  ")
+        win.addstr(0, int(self.win_width/2)-4, " MITYPE ", curses.color_pair(3))
 
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -162,7 +164,9 @@ class App:
 
         # Handle resizing
         elif mitype.keycheck.is_resize(key):
+            self.Resize(win)
             pass
+            
 
         # Check for backspace
         elif mitype.keycheck.is_backspace(key):
@@ -234,7 +238,7 @@ class App:
                 )
 
             win.addstr(" " + self.curr_wpm + " ", curses.color_pair(1))
-            win.addstr(" WPM 🤩")
+            win.addstr(" WPM ")
 
             win.addstr(self.line_count + 2, 0, " Press ")
 
@@ -254,6 +258,7 @@ class App:
             self.i = 0
 
             self.start_time = 0
+        win.refresh()
 
     def Replay(self, win):
 
@@ -292,3 +297,16 @@ class App:
 
             x += 1
         return text
+
+    def Resize(self, win):
+        win.clear()
+        self.win_width = self.get_dimensions(win)[1]
+        self.text = self.word_wrap(self.ogtext, self.win_width)
+        self.line_count = (
+            mitype.calculations.count_lines(self.text, self.win_width) + 2 + 1
+        )
+        self.setup_print(win)
+        
+        self.UpdateState(win)
+
+        win.refresh()
