@@ -4,9 +4,6 @@
 
 |Climate| |PyPI Latest Release| |License| |Black|
 
-.. |forthebadge made-with-python| image:: https://ForTheBadge.com/images/badges/made-with-python.svg
-    :target: https://www.python.org/
-
 .. |PyPI Latest Release| image:: https://img.shields.io/pypi/v/mitype.svg
     :target: https://pypi.org/project/mitype/
 
@@ -34,20 +31,16 @@ What is it?
 Features
 ========
 
-💻 For Linux, Windows and macOS  
-
-😄 No external dependencies*   
-
-📝 Choose custom text from a file  
-
-🤸 And difficulty level  
-
-😉  Or let the app decide! (From over 6000️ text sets)  
-
-🌈 Colored texts  
+- For Linux, Windows and macOS  
+- Runs on python 3 and 2 both
+- No external dependencies*   
+- Choose custom text from a file  
+- And difficulty level  
+-  Or let the app decide! (From over 6000️ text sets)  
+- Colored texts  
 
 
-*For windows, you need windows-curses to run
+* For windows, you need windows-curses to run
 
 Where to get it?
 ================
@@ -86,6 +79,10 @@ You can use text from your own file by
 
 You can quit the app anytime by pressing the **ESC** key.
 
+Do directly run from repo:
+
+```python local_host.py```
+
 Dependencies
 ============
 
@@ -109,4 +106,5 @@ License
 `GPL`_
 
 .. _GPL: license.txt
+
 Test text is taken from data.db database which is a collection of 6000 strings taken from typeracerdata.com (not given under my license).
