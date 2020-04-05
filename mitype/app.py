@@ -17,9 +17,11 @@ class App:
 
         # Start the parser
         self.text = mitype.commandline.main()
-        self.ogtext = self.text
-
         self.tokens = self.text.split()
+        
+        # Convert multiple spaces, tabs, newlines to single space
+        self.text = " ".join(self.tokens)
+        self.ogtext = self.text
 
         self.current_word = ""
         self.current_string = ""
