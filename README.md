@@ -3,6 +3,7 @@
     Typing Speed Test in your Terminal 
     <br />
   <br />
+    <a href="https://repl.it/github/Mithil467/mitype"><img src="https://repl.it/badge/github/Mithil467/mitype"></a>
 <a href="https://codeclimate.com/github/Mithil467/mitype/maintainability"><img src="https://api.codeclimate.com/v1/badges/4d0397d4c7dd3b81a205/maintainability"></a>
 <a href="https://pypi.org/project/mitype/"><img src="https://img.shields.io/pypi/v/mitype.svg"></a>
 <a href="LICENSE.txt"><img src="https://img.shields.io/pypi/l/mitype.svg"></a>
@@ -67,6 +68,8 @@ You can quit the app anytime by pressing the *ESC* key.
 To directly run from clone:
 
 ```python local_host.py```
+
+You can also directly <a href="https://mitype.mithil467.repl.run/"><img src="https://repl.it/badge/github/Mithil467/mitype"></a> in your browser.
 
 ### Dependencies
 
