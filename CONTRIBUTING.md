@@ -4,6 +4,16 @@
 
 The following is a set of guidelines for contributing to **Mitype**. Feel free to propose changes to this document in a pull request.
 
+## Running locally
+
+To run mitype locally -
+
+```
+git clone https://github.com/Mithil467/mitype.git
+cd mitype
+python local_test.py
+```
+
 ## Git commits
 
 ### In-general
