@@ -304,6 +304,7 @@ class App:
         return text
 
     def Resize(self, win):
+        win.clear()
         self.win_height, self.win_width = self.get_dimensions(win)
         self.text = self.word_wrap(self.ogtext, self.win_width)
         self.line_count = (
