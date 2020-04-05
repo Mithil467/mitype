@@ -9,7 +9,6 @@ import mitype.calculations
 import mitype.commandline
 import mitype.keycheck
 
-
 class App:
 
     """Class for enclosing all methods required to run Mitype"""
@@ -35,10 +34,13 @@ class App:
         self.i = 0
         self.mode = 0
 
+        self.win_height = 0
         self.win_width = 0
         self.line_count = 0
 
         self.curr_wpm = 0
+
+        sys.stdout = sys.__stdout__
 
         # Set ESC delay to 0 (default 1 on linux)
         os.environ.setdefault("ESCDELAY", "0")
@@ -94,9 +96,23 @@ class App:
         self.key_printer(win, key)
 
     def initialize(self, win):
-        """Initialize curses"""
 
-        curses.initscr()
+        # Find window dimensions
+        self.win_height, self.win_width = self.get_dimensions(win)
+
+         # Adding word wrap to text
+        self.text = self.word_wrap(self.text, self.win_width)
+
+        # Find number of lines required to print text
+        self.line_count = (
+            mitype.calculations.count_lines(self.text, self.win_width) + 2 + 1
+        )
+        
+        # If required number of lines are more than the window height, exit
+        if self.line_count > self.win_height:
+            self.size_error(win)
+        
+        
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
@@ -106,17 +122,6 @@ class App:
         curses.init_pair(6, curses.COLOR_WHITE, curses.COLOR_MAGENTA)
 
         win.nodelay(True)
-
-        # Find window width
-        self.win_width = self.get_dimensions(win)[1]
-
-        # Adding word wrap to text
-        self.text = self.word_wrap(self.text, self.win_width)
-
-        # Find number of lines required to print text
-        self.line_count = (
-            mitype.calculations.count_lines(self.text, self.win_width) + 2 + 1
-        )
 
         self.setup_print(win)
 
@@ -286,8 +291,7 @@ class App:
 
     def word_wrap(self, text, width):
 
-        x = 1
-        while x <= mitype.calculations.count_lines(text, width):
+        for x in range(1, mitype.calculations.count_lines(text, width)+1):
 
             if not(x * width >= len(text) or text[x * width - 1] == " "):
                 i = x * width - 1
@@ -295,12 +299,10 @@ class App:
                     i -= 1
                 text = text[:i] + " " * (x * width - i) + text[i + 1:]
 
-            x += 1
         return text
 
     def Resize(self, win):
-        win.clear()
-        self.win_width = self.get_dimensions(win)[1]
+        self.win_height, self.win_width = self.get_dimensions(win)
         self.text = self.word_wrap(self.ogtext, self.win_width)
         self.line_count = (
             mitype.calculations.count_lines(self.text, self.win_width) + 2 + 1
@@ -310,3 +312,8 @@ class App:
         self.UpdateState(win)
 
         win.refresh()
+
+    def size_error(self, win):
+        sys.stdout.write("Window too small to print given text")
+        curses.endwin()
+        sys.exit(-1)
