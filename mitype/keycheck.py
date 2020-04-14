@@ -16,7 +16,7 @@ def is_escape(key):
         bool: Returns true if pressed key is ESC key.
                 Returns false otherwise.
     """
-    if len(key) == 1:
+    if isinstance(key, str) and len(key) == 1:
         return ord(key) == curses.ascii.ESC
     return False
 
@@ -35,14 +35,12 @@ def is_backspace(key):
                 Returns false otherwise."""
     if key in ("KEY_BACKSPACE", "\b"):
         return True
-    if len(key) == 1:
-        return (ord(key) in (curses.ascii.DEL, curses.ascii.BS))
-    return False
+    return key in (curses.KEY_BACKSPACE, curses.KEY_DC)
 
 
 def is_null(key):
     """Detect null keys like super key."""
-    if len(key) == 1:
+    if isinstance(key, str) and len(key) == 1:
         return ord(key) == 0
     return key == ""
 
@@ -59,6 +57,12 @@ def is_resize(key):
 
 def is_valid_initial_key(key):
     """Detect if the pressed key is a valid key to start timer"""
-    if len(key) == 1:
-        return ord(key) in range(32, 127)
-    return False
+    if (
+        is_resize(key)
+        or is_null(key)
+        or is_enter(key)
+        or is_escape(key)
+        or is_backspace(key)
+    ):
+        return False
+    return True

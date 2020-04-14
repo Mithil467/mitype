@@ -1,6 +1,7 @@
 """This is the Mitype main app script"""
 
 import curses
+import locale
 import os
 import sys
 import time
@@ -8,6 +9,7 @@ import time
 import mitype.calculations
 import mitype.commandline
 import mitype.keycheck
+
 
 class App:
 
@@ -18,7 +20,7 @@ class App:
         # Start the parser
         self.text = mitype.commandline.main()
         self.tokens = self.text.split()
-        
+
         # Convert multiple spaces, tabs, newlines to single space
         self.text = " ".join(self.tokens)
         self.ogtext = self.text
@@ -102,19 +104,17 @@ class App:
         # Find window dimensions
         self.win_height, self.win_width = self.get_dimensions(win)
 
-         # Adding word wrap to text
+        # Adding word wrap to text
         self.text = self.word_wrap(self.text, self.win_width)
 
         # Find number of lines required to print text
         self.line_count = (
             mitype.calculations.count_lines(self.text, self.win_width) + 2 + 1
         )
-        
+
         # If required number of lines are more than the window height, exit
         if self.line_count > self.win_height:
             self.size_error(win)
-        
-        
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
@@ -149,7 +149,7 @@ class App:
         """
 
         # Top strip
-        win.addstr(0, int(self.win_width/2)-4, " MITYPE ", curses.color_pair(3))
+        win.addstr(0, int(self.win_width / 2) - 4, " MITYPE ", curses.color_pair(3))
 
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -173,7 +173,6 @@ class App:
         elif mitype.keycheck.is_resize(key):
             self.Resize(win)
             pass
-            
 
         # Check for backspace
         elif mitype.keycheck.is_backspace(key):
@@ -194,21 +193,26 @@ class App:
         key = ""
         while key == "":
             try:
-                key = win.getkey()
+                if sys.version_info[0] < 3:
+                    key = win.getkey()
+                else:
+                    key = win.get_wch()
+                    if isinstance(key, int):
+                        if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
+                            return "KEY_BACKSPACE"
+                        if key == curses.KEY_RESIZE:
+                            return "KEY_RESIZE"
             except curses.error:
                 continue
         return key
 
     def EraseKey(self):
         if len(self.current_word) > 0:
-            self.current_word = self.current_word[0: len(
-                self.current_word) - 1]
-            self.current_string = self.current_string[0: len(
-                self.current_string) - 1]
+            self.current_word = self.current_word[0 : len(self.current_word) - 1]
+            self.current_string = self.current_string[0 : len(self.current_string) - 1]
 
     def check_word(self):
-        spc = mitype.calculations.get_spc_count(
-            len(self.current_string), self.text)
+        spc = mitype.calculations.get_spc_count(len(self.current_string), self.text)
         if self.current_word == self.tokens[self.i]:
             self.i += 1
             self.current_word = ""
@@ -226,14 +230,13 @@ class App:
         win.addstr(self.line_count, 0, self.current_word)
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
-        win.addstr(2, 0, self.text[0: len(self.current_string)], curses.A_DIM)
+        win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
 
-        index = mitype.calculations.change_index(
-            self.current_string, self.text)
+        index = mitype.calculations.change_index(self.current_string, self.text)
         win.addstr(
             2 + index // self.win_width,
             index % self.win_width,
-            self.text[index: len(self.current_string)],
+            self.text[index : len(self.current_string)],
             curses.color_pair(2),
         )
 
@@ -282,7 +285,10 @@ class App:
             key = ""
 
             try:
-                key = win.getkey()
+                if sys.version_info[0] < 3:
+                    key = win.getkey()
+                else:
+                    key = win.get_wch()
             except curses.error:
                 pass
 
@@ -293,13 +299,13 @@ class App:
 
     def word_wrap(self, text, width):
 
-        for x in range(1, mitype.calculations.count_lines(text, width)+1):
+        for x in range(1, mitype.calculations.count_lines(text, width) + 1):
 
-            if not(x * width >= len(text) or text[x * width - 1] == " "):
+            if not (x * width >= len(text) or text[x * width - 1] == " "):
                 i = x * width - 1
                 while text[i] != " ":
                     i -= 1
-                text = text[:i] + " " * (x * width - i) + text[i + 1:]
+                text = text[:i] + " " * (x * width - i) + text[i + 1 :]
 
         return text
 
@@ -311,7 +317,7 @@ class App:
             mitype.calculations.count_lines(self.text, self.win_width) + 2 + 1
         )
         self.setup_print(win)
-        
+
         self.UpdateState(win)
 
         win.refresh()
