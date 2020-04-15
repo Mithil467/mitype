@@ -33,7 +33,7 @@ def is_backspace(key):
     Returns:
         bool: Returns true if pressed key is BACKSPACE key.
                 Returns false otherwise."""
-    if key in ("KEY_BACKSPACE", "\b"):
+    if key in ("KEY_BACKSPACE", "\b", "\x7f"):
         return True
     return key in (curses.KEY_BACKSPACE, curses.KEY_DC)
 
