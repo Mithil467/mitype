@@ -1,5 +1,5 @@
+"""Deals with fetching texts from database"""
 import os
-import random
 import sqlite3
 
 

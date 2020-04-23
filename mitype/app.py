@@ -1,7 +1,6 @@
 """This is the Mitype main app script"""
 
 import curses
-import locale
 import os
 import sys
 import time
@@ -73,24 +72,24 @@ class App:
 
             # Test mode
             if self.mode == 0:
-                self.TypingMode(win, key)
+                self.typing_mode(win, key)
 
             # Replay mode
             elif self.mode == 1 and mitype.keycheck.is_enter(key):
                 # Start replay if enter key is pressed
-                self.Replay(win)
+                self.replay(win)
 
             # Refresh for changes to show up on window
             win.refresh()
 
-    def TypingMode(self, win, key):
+    def typing_mode(self, win, key):
         # Note start time when first valid key is pressed
         if not self.first_key_pressed and mitype.keycheck.is_valid_initial_key(key):
             self.start_time = time.time()
             self.first_key_pressed = True
 
         if mitype.keycheck.is_resize(key):
-            self.Resize(win)
+            self.resize(win)
 
         if not self.first_key_pressed:
             return
@@ -114,7 +113,7 @@ class App:
 
         # If required number of lines are more than the window height, exit
         if self.line_count > self.win_height:
-            self.size_error(win)
+            self.size_error()
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
@@ -171,12 +170,11 @@ class App:
 
         # Handle resizing
         elif mitype.keycheck.is_resize(key):
-            self.Resize(win)
-            pass
+            self.resize(win)
 
         # Check for backspace
         elif mitype.keycheck.is_backspace(key):
-            self.EraseKey()
+            self.erase_key()
 
         # Check for space
         elif key == " ":
@@ -187,7 +185,7 @@ class App:
             self.appendkey(key)
 
         # Update state of window
-        self.UpdateState(win)
+        self.update_state(win)
 
     def keyinput(self, win):
         key = ""
@@ -206,7 +204,7 @@ class App:
                 continue
         return key
 
-    def EraseKey(self):
+    def erase_key(self):
         if len(self.current_word) > 0:
             self.current_word = self.current_word[0 : len(self.current_word) - 1]
             self.current_string = self.current_string[0 : len(self.current_string) - 1]
@@ -225,7 +223,7 @@ class App:
         self.current_word += key
         self.current_string += key
 
-    def UpdateState(self, win):
+    def update_state(self, win):
         win.addstr(self.line_count, 0, " " * self.win_width)
         win.addstr(self.line_count, 0, self.current_word)
 
@@ -270,7 +268,7 @@ class App:
             self.start_time = 0
         win.refresh()
 
-    def Replay(self, win):
+    def replay(self, win):
 
         win.addstr(self.line_count + 2, 0, " " * self.win_width)
 
@@ -309,7 +307,7 @@ class App:
 
         return text
 
-    def Resize(self, win):
+    def resize(self, win):
         win.clear()
         self.win_height, self.win_width = self.get_dimensions(win)
         self.text = self.word_wrap(self.ogtext, self.win_width)
@@ -318,11 +316,11 @@ class App:
         )
         self.setup_print(win)
 
-        self.UpdateState(win)
+        self.update_state(win)
 
         win.refresh()
 
-    def size_error(self, win):
+    def size_error(self):
         sys.stdout.write("Window too small to print given text")
         curses.endwin()
         sys.exit(-1)

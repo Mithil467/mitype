@@ -62,7 +62,15 @@ def count_lines(string, win_width):
 
 
 def get_spc_count(i, ogtext):
+    """Returns number of spaces after a given word.
 
+    Args:
+        i (int): Index of word in text list
+        ogtext(string): Text without appending extra spaces
+
+    Returns:
+        integer: The number of spaces required after ith word
+    """
     count = 0
 
     # count number of spaces after the ith word in ogtext
