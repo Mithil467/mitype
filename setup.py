@@ -37,4 +37,7 @@ setup(
     package_data={"mitype": ["data.db"]},
     include_package_data=True,
     zip_safe=False,
+    entry_points = {
+        'console_scripts': ['mitype=mitype.app:App'],
+    }
 )
