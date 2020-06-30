@@ -9,6 +9,7 @@ import mitype.calculations
 import mitype.commandline
 import mitype.keycheck
 
+from datetime import datetime, timedelta 
 
 class App:
 
@@ -275,24 +276,20 @@ class App:
         self.setup_print(win)
 
         for j in self.key_strokes:
-
-            time.sleep(j[0])
-
-            self.key_printer(win, j[1])
-
+            timer = time.time()
             key = ""
-
-            try:
-                if sys.version_info[0] < 3:
-                    key = win.getkey()
-                else:
-                    key = win.get_wch()
-            except curses.error:
-                pass
-
-            if mitype.keycheck.is_escape(key):
-                sys.exit(0)
-
+            while time.time() - timer < j[0]:
+                try:
+                    if sys.version_info[0] < 3:
+                        key = win.getkey()
+                    else:
+                        key = win.get_wch()
+                except curses.error:
+                    pass
+                    if mitype.keycheck.is_escape(key):
+                        sys.exit(0)
+       
+            self.key_printer(win, j[1])
             win.refresh()
 
     def word_wrap(self, text, width):
