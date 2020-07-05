@@ -194,13 +194,14 @@ class App:
             try:
                 if sys.version_info[0] < 3:
                     key = win.getkey()
-                else:
-                    key = win.get_wch()
-                    if isinstance(key, int):
-                        if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
-                            return "KEY_BACKSPACE"
-                        if key == curses.KEY_RESIZE:
-                            return "KEY_RESIZE"
+                    return key
+                
+                key = win.get_wch()
+                if isinstance(key, int):
+                    if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
+                        return "KEY_BACKSPACE"
+                    if key == curses.KEY_RESIZE:
+                        return "KEY_RESIZE"
             except curses.error:
                 continue
         return key
@@ -286,22 +287,17 @@ class App:
                         key = win.get_wch()
                 except curses.error:
                     pass
-                    if mitype.keycheck.is_escape(key):
-                        sys.exit(0)
+                if mitype.keycheck.is_escape(key):
+                    sys.exit(0)
        
             self.key_printer(win, j[1])
-            win.refresh()
 
     def word_wrap(self, text, width):
-
         for x in range(1, mitype.calculations.count_lines(text, width) + 1):
-
             if not (x * width >= len(text) or text[x * width - 1] == " "):
                 i = x * width - 1
-                while text[i] != " ":
-                    i -= 1
+                while text[i] != " ": i -= 1
                 text = text[:i] + " " * (x * width - i) + text[i + 1 :]
-
         return text
 
     def resize(self, win):
