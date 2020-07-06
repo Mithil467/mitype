@@ -17,7 +17,7 @@
 **Mitype** is a Python package to test (and hence improve) your typing speed right from the ease of your terminal.
 Features
 
-🖥️ For Linux, Windows and macOS  
+🖥️ For Linux, Windows, and macOS  
 
 🎦 See your replay!
 
@@ -37,39 +37,40 @@ Features
 
 ### Where to get it?
 
-The source code is hosted on GitHub at: [mithil467/mitype](https://github.com/Mithil467/mitype)
+The source code is hosted on GitHub at [mithil467/mitype](https://github.com/Mithil467/mitype)
 
 ```pip install mitype```
 
-That's all if you are on linux and mac OS. If you are on windows, you also need windows-curses, which can be installed from pypi:
+That's all if you are on Linux and macOS. If you are on windows, you also need windows-curses, which can be installed from pypi:
 
 ```pip install windows-curses```
 
 ### How to run it?
 
-Once installed, you can run it by
-
+Once installed, you can run it simply by
+```mitype```
+OR
 ```python -m mitype```
 
-You can choose difficulty in between 1 and 5.
+You can choose difficulty between 1 and 5.
 
-```python -m mitype -d <value>```
+```mitype -d <value>```
 
 Example:
 
-```python -m mitype -d 2```
+```mitype -d 2```
 
-You can use text from your own file by
+You can use text from your file by
 
-```python -m mitype -f SampleTextFile```
+```mitype -f SampleTextFile```
 
 You can quit the app anytime by pressing the *ESC* key.
 
-To directly run from clone:
+To directly run from clone without installing:
 
-```python local_host.py```
+```python -m mitype```
 
-You can also directly <a href="https://mitype.mithil467.repl.run/"><img src="https://repl.it/badge/github/Mithil467/mitype"></a> in your browser.
+You can also directly <a href="https://mitype.mithil467.repl.run/"><img src="https://repl.it/badge/github/Mithil467/mitype"></a> in your web browser.
 
 ### Dependencies
 
@@ -77,9 +78,9 @@ For windows only - [windows-curses](https://pypi.org/project/windows-curses/).
 
 ### Installation from sources
 
-To install mitype from source -
+To install mitype from the source -
 
-In the mitype directory (same one where you found this file after cloning the git repo), execute:
+In the mitype directory (the same one where you found this file after cloning the git repo), execute:
 
 ```python setup.py install```
 
