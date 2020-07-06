@@ -9,7 +9,7 @@
 <a href="LICENSE.txt"><img src="https://img.shields.io/pypi/l/mitype.svg"></a>
 <a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 <br />
-<img src="img/demo.gif">
+<img src="img/demo.gif" alt=>
 </p>
 
 ### What is it?

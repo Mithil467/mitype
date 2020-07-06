@@ -2,13 +2,13 @@
 
 from setuptools import setup
 
-with open("README.rst") as f:
+with open("README.md", encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
 
 setup(
     name="mitype",
     packages=["mitype"],
-    version="0.1.8",
+    version="0.12",
     license="GPL",
     description="A command line tool to improve typing speed",
     author="MITHIL POOJARY",
@@ -17,6 +17,7 @@ setup(
     download_url="https://github.com/mithil467/mitype/archive/v0.1.8.tar.gz",
     keywords=["MITYPE", "TERMINAL", "WPM", "SPEED", "TYPE"],
     long_description=LONG_DESCRIPTION,
+    long_description_content_type='text/markdown',
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
