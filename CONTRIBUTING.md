@@ -11,7 +11,7 @@ To run mitype locally -
 ```
 git clone https://github.com/Mithil467/mitype.git
 cd mitype
-python local_test.py
+python -m mitype
 ```
 
 ## Git commits
