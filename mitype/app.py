@@ -277,18 +277,7 @@ class App:
         self.setup_print(win)
 
         for j in self.key_strokes:
-            timer = time.time()
-            key = ""
-            while time.time() - timer < j[0]:
-                try:
-                    if sys.version_info[0] < 3:
-                        key = win.getkey()
-                    else:
-                        key = win.get_wch()
-                except curses.error:
-                    pass
-                if mitype.keycheck.is_escape(key):
-                    sys.exit(0)
+            time.sleep(j[0])
        
             self.key_printer(win, j[1])
 
