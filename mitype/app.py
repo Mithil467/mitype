@@ -9,7 +9,9 @@ import mitype.calculations
 import mitype.commandline
 import mitype.keycheck
 
-from datetime import datetime, timedelta 
+from datetime import datetime, timedelta
+import signal
+
 
 class App:
 
@@ -62,6 +64,12 @@ class App:
 
         # Initialize windows
         self.initialize(win)
+
+        # Signal logic
+        def signal_handler(sig, frame):
+            sys.exit(0)
+
+        signal.signal(signal.SIGINT, signal_handler)
 
         while True:
             # Typing mode
@@ -195,7 +203,7 @@ class App:
                 if sys.version_info[0] < 3:
                     key = win.getkey()
                     return key
-                
+
                 key = win.get_wch()
                 if isinstance(key, int):
                     if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
@@ -278,14 +286,15 @@ class App:
 
         for j in self.key_strokes:
             time.sleep(j[0])
-       
+
             self.key_printer(win, j[1])
 
     def word_wrap(self, text, width):
         for x in range(1, mitype.calculations.count_lines(text, width) + 1):
             if not (x * width >= len(text) or text[x * width - 1] == " "):
                 i = x * width - 1
-                while text[i] != " ": i -= 1
+                while text[i] != " ":
+                    i -= 1
                 text = text[:i] + " " * (x * width - i) + text[i + 1 :]
         return text
 
