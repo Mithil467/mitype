@@ -123,7 +123,7 @@ class App:
         curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_CYAN)
         curses.init_pair(6, curses.COLOR_WHITE, curses.COLOR_MAGENTA)
 
-        win.nodelay(True)
+        win.nodelay(False)
 
         self.setup_print(win)
 
