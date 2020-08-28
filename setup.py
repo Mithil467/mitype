@@ -8,7 +8,7 @@ with open("README.md", encoding="utf-8") as f:
 setup(
     name="mitype",
     packages=["mitype"],
-    version="0.12",
+    version="0.1.8",
     license="GPL",
     description="A command line tool to improve typing speed",
     author="MITHIL POOJARY",
