@@ -64,7 +64,8 @@ You can use text from your file by
 
 ```mitype -f SampleTextFile```
 
-You can quit the app anytime by pressing the *ESC* key.
+You can quit the app anytime by pressing the *ESC* key or *CTRL-C*.
+Note: If you are in replay mode, currently only *CTRL-C* is supported for exiting.
 
 To directly run from clone without installing:
 
