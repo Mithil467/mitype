@@ -1,3 +1,12 @@
+---
+name: Bug report
+about: Create a report to help us improve mitype!
+title: ''
+labels: bug
+assignees: ''
+
+---
+
 ### Subject of the issue
 Describe your issue here
 
