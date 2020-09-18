@@ -117,7 +117,11 @@ class App:
 
         # Find number of lines required to print text
         self.line_count = (
-            mitype.calculations.count_lines(self.text, self.win_width) + 2 + 1
+            mitype.calculations.number_of_lines_to_fit_string_in_window(
+                self.text, self.win_width
+            )
+            + 2
+            + 1
         )
 
         # If required number of lines are more than the window height, exit
@@ -220,7 +224,9 @@ class App:
             self.current_string = self.current_string[0 : len(self.current_string) - 1]
 
     def check_word(self):
-        spc = mitype.calculations.get_spc_count(len(self.current_string), self.text)
+        spc = mitype.calculations.get_space_count_after_ith_word(
+            len(self.current_string), self.text
+        )
         if self.current_word == self.tokens[self.i]:
             self.i += 1
             self.current_word = ""
@@ -240,7 +246,9 @@ class App:
         win.addstr(2, 0, self.text, curses.A_BOLD)
         win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
 
-        index = mitype.calculations.change_index(self.current_string, self.text)
+        index = mitype.calculations.first_index_at_which_strings_differ(
+            self.current_string, self.text
+        )
         win.addstr(
             2 + index // self.win_width,
             index % self.win_width,
@@ -251,7 +259,7 @@ class App:
         if index == len(self.text):
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
-                self.curr_wpm = mitype.calculations.get_wpm(
+                self.curr_wpm = mitype.calculations.speed_in_wpm(
                     self.tokens, self.start_time
                 )
 
@@ -290,7 +298,11 @@ class App:
             self.key_printer(win, j[1])
 
     def word_wrap(self, text, width):
-        for x in range(1, mitype.calculations.count_lines(text, width) + 1):
+        for x in range(
+            1,
+            mitype.calculations.number_of_lines_to_fit_string_in_window(text, width)
+            + 1,
+        ):
             if not (x * width >= len(text) or text[x * width - 1] == " "):
                 i = x * width - 1
                 while text[i] != " ":
@@ -303,7 +315,11 @@ class App:
         self.win_height, self.win_width = self.get_dimensions(win)
         self.text = self.word_wrap(self.ogtext, self.win_width)
         self.line_count = (
-            mitype.calculations.count_lines(self.text, self.win_width) + 2 + 1
+            mitype.calculations.number_of_lines_to_fit_string_in_window(
+                self.text, self.win_width
+            )
+            + 2
+            + 1
         )
         self.setup_print(win)
 

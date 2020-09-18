@@ -3,7 +3,7 @@
 import time
 
 
-def get_time_elasped(start_time):
+def get_elasped_minutes_since_first_keypress(start_time):
     """Get time elapsed since initial keypress. This is required to calculate
     speed.
 
