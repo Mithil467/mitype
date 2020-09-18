@@ -13,6 +13,30 @@ git clone https://github.com/Mithil467/mitype.git
 cd mitype
 python -m mitype
 ```
+To run with command line options -
+```
+python -m mitype -V
+python -m mitype -d 2
+```
+
+## Build mitype and install from latest source
+
+To make sure you don't already have mitype installed.
+
+```
+pip uninstall mitype
+```
+And then
+```
+python3 setup.py sdist
+pip install ./dist/*
+```
+
+## Writing code for mitype
+- `Docstrings` are a must for every function, class and module definition, but they are not an emergency.
+- Lint using [black](https://github.com/psf/black) by running `black .`
+- Test breaking changes by running `tox -e 27` and `tox -e 3x` where 3x is your python version.
+e.g. `tox -e 38`
 
 ## Git commits
 
