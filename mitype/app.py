@@ -40,11 +40,11 @@ class App:
         self.i = 0
         self.mode = 0
 
-        self.win_height = 0
-        self.win_width = 0
+        self.window_height = 0
+        self.window_width = 0
         self.line_count = 0
 
-        self.curr_wpm = 0
+        self.current_speed_wpm = 0
 
         sys.stdout = sys.__stdout__
 
@@ -110,22 +110,22 @@ class App:
     def initialize(self, win):
 
         # Find window dimensions
-        self.win_height, self.win_width = self.get_dimensions(win)
+        self.window_height, self.window_width = self.get_dimensions(win)
 
         # Adding word wrap to text
-        self.text = self.word_wrap(self.text, self.win_width)
+        self.text = self.word_wrap(self.text, self.window_width)
 
         # Find number of lines required to print text
         self.line_count = (
             mitype.calculations.number_of_lines_to_fit_string_in_window(
-                self.text, self.win_width
+                self.text, self.window_width
             )
             + 2
             + 1
         )
 
         # If required number of lines are more than the window height, exit
-        if self.line_count > self.win_height:
+        if self.line_count > self.window_height:
             self.size_error()
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
@@ -161,7 +161,7 @@ class App:
         """
 
         # Top strip
-        win.addstr(0, int(self.win_width / 2) - 4, " MITYPE ", curses.color_pair(3))
+        win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", curses.color_pair(3))
 
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -240,7 +240,7 @@ class App:
         self.current_string += key
 
     def update_state(self, win):
-        win.addstr(self.line_count, 0, " " * self.win_width)
+        win.addstr(self.line_count, 0, " " * self.window_width)
         win.addstr(self.line_count, 0, self.current_word)
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -250,8 +250,8 @@ class App:
             self.current_string, self.text
         )
         win.addstr(
-            2 + index // self.win_width,
-            index % self.win_width,
+            2 + index // self.window_width,
+            index % self.window_width,
             self.text[index : len(self.current_string)],
             curses.color_pair(2),
         )
@@ -259,11 +259,11 @@ class App:
         if index == len(self.text):
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
-                self.curr_wpm = mitype.calculations.speed_in_wpm(
+                self.current_speed_wpm = mitype.calculations.speed_in_wpm(
                     self.tokens, self.start_time
                 )
 
-            win.addstr(" " + self.curr_wpm + " ", curses.color_pair(1))
+            win.addstr(" " + self.current_speed_wpm + " ", curses.color_pair(1))
             win.addstr(" WPM ")
 
             win.addstr(self.line_count + 2, 0, " Press ")
@@ -288,7 +288,7 @@ class App:
 
     def replay(self, win):
 
-        win.addstr(self.line_count + 2, 0, " " * self.win_width)
+        win.addstr(self.line_count + 2, 0, " " * self.window_width)
 
         self.setup_print(win)
 
@@ -297,7 +297,21 @@ class App:
 
             self.key_printer(win, j[1])
 
-    def word_wrap(self, text, width):
+    @staticmethod
+    def word_wrap(text, width):
+
+        """Based on the window width, return text with extra spaces
+        which makes the string word wrap.
+
+        Args:
+            text (string): Text to wrap.
+            width (integer): Width to wrap around.
+
+        Returns:
+            (string): Return altered text.
+        """
+        # For the end of each line, move backwards until you find a space.
+        # When you do, append those many spaces after the single space.
         for x in range(
             1,
             mitype.calculations.number_of_lines_to_fit_string_in_window(text, width)
@@ -310,24 +324,24 @@ class App:
                 text = text[:i] + " " * (x * width - i) + text[i + 1 :]
         return text
 
+
     def resize(self, win):
         win.clear()
-        self.win_height, self.win_width = self.get_dimensions(win)
-        self.text = self.word_wrap(self.ogtext, self.win_width)
+        self.window_height, self.window_width = self.get_dimensions(win)
+
+        self.text = self.word_wrap(self.ogtext, self.window_width)
         self.line_count = (
             mitype.calculations.number_of_lines_to_fit_string_in_window(
-                self.text, self.win_width
+                self.text, self.window_width
             )
             + 2
             + 1
         )
         self.setup_print(win)
-
         self.update_state(win)
 
-        win.refresh()
-
-    def size_error(self):
+    @staticmethod
+    def size_error():
         sys.stdout.write("Window too small to print given text")
         curses.endwin()
-        sys.exit(-1)
+        sys.exit(4)
