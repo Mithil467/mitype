@@ -17,7 +17,7 @@ setup(
     download_url="https://github.com/mithil467/mitype/archive/v0.1.9.tar.gz",
     keywords=["MITYPE", "TERMINAL", "WPM", "SPEED", "TYPE"],
     long_description=LONG_DESCRIPTION,
-    long_description_content_type='text/markdown',
+    long_description_content_type="text/markdown",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -38,7 +38,7 @@ setup(
     package_data={"mitype": ["data.db"]},
     include_package_data=True,
     zip_safe=False,
-    entry_points = {
-        'console_scripts': ['mitype=mitype.app:App'],
-    }
+    entry_points={
+        "console_scripts": ["mitype=mitype.app:App"],
+    },
 )

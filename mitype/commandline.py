@@ -14,6 +14,29 @@ import mitype
 import mitype.database
 
 
+def main():
+    """The main method for parsing command line arguments
+    and returning text"""
+    opt = parse_arguments()
+    if opt.version:
+        display_version()
+        sys.exit(0)
+
+    elif opt.file:
+        text = load_text_from_file(opt.file)
+
+    elif opt.id:
+        text = load_from_database(opt.id)
+
+    elif opt.difficulty:
+        text = load_based_on_difficulty(opt.difficulty)
+
+    else:
+        text = load_based_on_difficulty()
+
+    return text
+
+
 def parse_arguments():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser(
@@ -43,7 +66,7 @@ def parse_arguments():
         metavar="id",
         default=None,
         type=int,
-        help="ID to retreive corresponding text",
+        help="ID to retreive text from database",
     )
 
     parser.add_argument(
@@ -62,73 +85,48 @@ def parse_arguments():
 def display_version():
     """Display version"""
 
-    print("Mitype %s" % mitype.__version__)
+    print("Mitype version %s" % mitype.__version__)
 
 
-def load_file(file_path):
+def load_text_from_file(file_path):
     """Load file contents"""
 
-    if not os.path.isfile(file_path):
-        print("Cannot open file -", file_path)
-        sys.exit(0)
+    if os.path.isfile(file_path):
+        text = open(file_path).read()
+        return text
 
-    text = open(file_path).read()
-
-    return text
+    print("Cannot open file -", file_path)
+    sys.exit(0)
 
 
 def load_from_database(text_id):
-    """Load given text from database referring given id"""
+    """Load given text from database with given id"""
 
-    number_of_entries = 6000
+    row_count = 6000
+    if 1 <= text_id <= row_count:
+        text = mitype.database.fetch_text_from_id(text_id)
+        return text
 
-    if text_id not in range(1, number_of_entries + 1):
-        print("ID is out of range. Please make sure ID is in range [1,6000]")
-        sys.exit(0)
-
-    text = mitype.database.search(text_id)
-
-    return text
+    print("ID must be in range [1,6000]")
+    sys.exit(1)
 
 
 def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
-    """Load text of given difficulty from database"""
+    """Load text of given difficulty from database if parameter is passed.
+    Else pick difficulty randomly
+    """
 
     max_level = 5
 
-    if difficulty_level not in range(1, max_level + 1):
-        print("Select a difficulty level in range [1,5]")
-        sys.exit(0)
+    if 1 <= difficulty_level <= max_level:
+        # Each difficulty section has 6000/5 = 1200 texts each
+        upper_limit = difficulty_level * 1200
+        lower_limit = upper_limit - 1200 + 1
 
-    # Each difficulty section has 1200 texts each
-    upper_limit = difficulty_level * 1200
-    lower_limit = upper_limit - 1200
+        text_id = random.randrange(lower_limit, upper_limit + 1)
+        text = mitype.database.fetch_text_from_id(text_id)
 
-    text_id = random.randrange(lower_limit, upper_limit + 1)
-    text = mitype.database.search(text_id)
+        return text
 
-    return text
-
-
-def main():
-    """The main methor for parsing command line arguments
-    and returning text"""
-    opt = parse_arguments()
-
-    if opt.version:
-        display_version()
-        sys.exit(0)
-
-    if opt.file:
-        text = load_file(opt.file)
-
-    elif opt.id:
-        text = load_from_database(opt.id)
-
-    elif opt.difficulty:
-        text = load_based_on_difficulty(opt.difficulty)
-
-    else:
-        text = load_based_on_difficulty()
-
-    return text
+    print("Select a difficulty level in range [1,5]")
+    sys.exit(2)

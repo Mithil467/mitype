@@ -3,7 +3,7 @@ import os
 import sqlite3
 
 
-def directory_path():
+def database_file_absolute_path():
     """Get full path of directory where source files are stored.
     This is required for later fetching entry from data.db which is
     stored in same directory as app.
@@ -12,43 +12,31 @@ def directory_path():
         string: The path of directory of source file.
     """
 
-    db_file_name = "data.db"
-
-    module_path = os.path.abspath(__file__)
-
-    last_index = 0
-
-    slash_characters = ("/", "\\")
-
-    for idx, character in enumerate(module_path):
-        if character in slash_characters:
-            last_index = idx
-
-    db_directory_path = module_path[: last_index + 1]
-
-    db_file_path = db_directory_path + db_file_name
-
-    return db_file_path
+    database_filename = "data.db"
+    database_directory_absolute_path = os.path.dirname(os.path.abspath(__file__))
+    database_file_absolute_path = os.path.join(
+        database_directory_absolute_path, database_filename
+    )
+    return database_file_absolute_path
 
 
-def search(entry_id):
+def fetch_text_from_id(serial_id):
     """Fetch row from data.db database.
 
     Args:
-        entry_id (int): The unique ID of database entry.
+        serial_id (int): The unique ID of database entry.
 
     Returns:
         list: The text corresponding to the entry_id.
     """
-    path_str = directory_path()
 
-    conn = sqlite3.connect(path_str)
-    cur = conn.cursor()
-    cur.execute("SELECT txt FROM data where id=?", (entry_id,))
+    database_file = database_file_absolute_path()
+    connection = sqlite3.connect(database_file)
+    cursor = connection.cursor()
 
-    rows = cur.fetchall()
-    conn.close()
-
-    text = rows[0][0]
+    # For details related to the database schema check CONTRIBUTING.md
+    cursor.execute("SELECT txt FROM data where id=?", (serial_id,))
+    text = cursor.fetchone()[0]
+    connection.close()
 
     return text
