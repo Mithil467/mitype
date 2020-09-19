@@ -33,7 +33,7 @@ Features
 
 🌈 Colored texts
 
-* For windows, you need windows-curses to run  
+\* For windows, you need windows-curses to run  
 
 ### Where to get it?
 
@@ -60,7 +60,7 @@ Example:
 
 ```mitype -d 2```
 
-You can use text from your file by
+You can use text from a sample file by
 
 ```mitype -f SampleTextFile```
 
@@ -84,9 +84,10 @@ To install mitype from the source -
 In the mitype directory (the same one where you found this file after cloning the git repo), execute:
 
 ```python setup.py install```
+### Contribute to Mitype
+
+Please check our [Contributing Guidelines](CONTRIBUTING.md).
 
 ### License
 
 [GPL](LICENSE.txt)
-
-Test text is taken from data.db database which is a collection of 6000 strings taken from typeracerdata.com (not given under my license).
