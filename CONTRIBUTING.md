@@ -38,6 +38,15 @@ pip install ./dist/*
 - Test breaking changes by running `tox -e 27` and `tox -e 3x` where 3x is your python version.
 e.g. `tox -e 38`
 
+## About the database
+`data.db` is a sqlite3 database file with the table named `data` with following schema:
+```
+CREATE TABLE data(id INTEGER PRIMARY KEY, txt TEXT);
+CREATE INDEX ind_name ON data(id);
+```
+There are exactly 6000 rows each having an ID from 1 to 6000.
+The data is provided by typeracerdata.com.
+
 ## Git commits
 
 ### In-general
