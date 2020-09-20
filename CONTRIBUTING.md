@@ -4,33 +4,31 @@
 
 The following is a set of guidelines for contributing to **Mitype**. Feel free to propose changes to this document in a pull request.
 
-## Running locally
+## Pull requests
 
-To run mitype locally -
+1. Single feature or bug-fix per PR.
+3. Always try to make sure you checkout from latest master.
+3. Make your modification compact - don't reformat source code in your request. It makes code review more difficult.
+4. Typo fixing and code refactoring won't be accepted - please create issues with title starting with TYPO to request the changing.
 
-```
-git clone https://github.com/Mithil467/mitype.git
-cd mitype
-python -m mitype
-```
-To run with command line options -
-```
-python -m mitype -V
-python -m mitype -d 2
-```
+## Git commits
 
-## Build mitype and install from latest source
+Please have a look at the previous git commit history and write newer commits accordingly to respect the standard of the project.
+Follow correct grammar.
 
-To make sure you don't already have mitype installed.
+### In-general
+- Use the present tense ("Add feature" not "Added feature")
+- Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
 
-```
-pip uninstall mitype
-```
-And then
-```
-python3 setup.py sdist
-pip install ./dist/*
-```
+### Commit title
+- Do not end the title with full-stops (.)
+- Limit the title to 60 characters or less
+
+### Commit Body
+- There should be one line empty after your title
+- The body should be very descriptive
+- Explain your commit as much as possible
+- Refer issue ID like "This fixes bug #ID" at the end of the body
 
 ## Writing code for mitype
 - `Docstrings` are a must for every function, class and module definition, but they are not an emergency.
@@ -47,18 +45,4 @@ CREATE INDEX ind_name ON data(id);
 There are exactly 6000 rows each having an ID from 1 to 6000.
 The data is provided by typeracerdata.com.
 
-## Git commits
 
-### In-general
-- Use the present tense ("Add feature" not "Added feature")
-- Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-
-### Commit title
-- Do not end the title with full-stops (.)
-- Limit the title to 60 characters or less
-
-### Commit Body
-- There should be one line empty after your title
-- The body should be very descriptive
-- Explain your commit as much as possible
-- Refer issue ID like "This fixes bug #ID" at the end of the body
