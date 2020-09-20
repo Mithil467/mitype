@@ -70,7 +70,7 @@ def get_space_count_after_ith_word(index, text):
         integer: The number of spaces required after ith word
     """
     count = 0
-    while text[index] == " ":
+    while index < len(text) and text[index] == " ":
         index += 1
         count += 1
     return count
