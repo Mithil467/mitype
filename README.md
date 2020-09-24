@@ -1,9 +1,8 @@
 <h1 align="center"> ⌨ Mitype ⌨ </h1>
 <p align="center">
-    Typing Speed Test in your Terminal 
+    Typing Speed Test in Terminal 
     <br />
   <br />
-    <a href="https://repl.it/github/Mithil467/mitype"><img src="https://repl.it/badge/github/Mithil467/mitype"></a>
 <a href="https://codeclimate.com/github/Mithil467/mitype/maintainability"><img src="https://api.codeclimate.com/v1/badges/4d0397d4c7dd3b81a205/maintainability"></a>
 <a href="https://pypi.org/project/mitype/"><img src="https://img.shields.io/pypi/v/mitype.svg"></a>
 <a href="LICENSE.txt"><img src="https://img.shields.io/pypi/l/mitype.svg"></a>
@@ -12,82 +11,55 @@
 <img src="img/demo.gif" alt=>
 </p>
 
-### What is it?
+**Mitype** is a program to test (and hence improve) your typing speed right from the ease of your terminal.
 
-**Mitype** is a Python package to test (and hence improve) your typing speed right from the ease of your terminal.
-Features
+Written completely in python with no external dependencies!
 
-🖥️ For Linux, Windows, and macOS  
+## ✨ Main Features
 
-🎦 See your replay!
+- 🖥️ Cross-platform
+- 🎦 See your replay
+- 🐍 Supports Python 2 and 3
+- 📝 Choose custom text input
+- 🅰️ 6000️ text samples
+- 🌈 Colored texts
 
-🐍 Runs on python 3 and 2 both  
+## 🔧 Install
 
-😊 No external dependencies*  
-
-📝 Choose custom text from a file  
-
-🤸 And difficulty level
-
-😉 Or let the app decide! (From over 6000️ text sets)  
-
-🌈 Colored texts
-
-\* For windows, you need windows-curses to run  
-
-### Where to get it?
-
-The source code is hosted on GitHub at [mithil467/mitype](https://github.com/Mithil467/mitype)
+Mitype can be easily installed by:
 
 ```pip install mitype```
 
-That's all if you are on Linux and macOS. If you are on windows, you also need windows-curses, which can be installed from pypi:
+> If you are on windows, you'll also need [windows-curses](https://pypi.org/project/windows-curses/):
 
-```pip install windows-curses```
+>```pip install windows-curses```
 
-### How to run it?
+## 📈 Usage
 
-Once installed, you can run it simply by
+Once installed, you can run it simply as:
+
 ```mitype```
-OR
-```python -m mitype```
 
-You can choose difficulty between 1 and 5.
+You can also customize each run by specifying the following options as:
 
-```mitype -d <value>```
+- ```-f FILENAME, --file FILENAME```  
+  Uses contents of file as sample text.  
+- ```-d N, --difficulty N```  
+  N can be in range [1, 5] with 1 being the easiest. This decides the length of the text.  
+- ```-i ID, --id ID```  
+  ID can be in range [1, 6000].  
 
-Example:
+You can quit mitype anytime by pressing the `ESC` key or `CTRL-C`.
+While in replay mode, you can quit by pressing `CTRL-C` only.
 
-```mitype -d 2```
+You can also directly [run on repl.it](https://mitype.mithil467.repl.run/) in your web browser although, the latency is pretty high.
 
-You can use text from a sample file by
+## 💚 Contributing
 
-```mitype -f SampleTextFile```
+We encourage you to contribute to mitype! Please check out the [Contributing Guidelines](CONTRIBUTING.md) about how to proceed.
 
-You can quit the app anytime by pressing the *ESC* key or *CTRL-C*.  
-**Note**: If you are in replay mode, currently only *CTRL-C* is supported for exiting.
+## 📜 License
 
-To directly run from clone without installing:
+Licensed under the [GPL](LICENSE.txt) license.
 
-```python -m mitype```
-
-You can also directly <a href="https://mitype.mithil467.repl.run/"><img src="https://repl.it/badge/github/Mithil467/mitype"></a> in your web browser.
-
-### Dependencies
-
-For windows only - [windows-curses](https://pypi.org/project/windows-curses/).
-
-### Installation from sources
-
-To install mitype from the source -
-
-In the mitype directory (the same one where you found this file after cloning the git repo), execute:
-
-```python setup.py install```
-### Contribute to Mitype
-
-Please check our [Contributing Guidelines](CONTRIBUTING.md).
-
-### License
-
-[GPL](LICENSE.txt)
+Text samples in database are collected from [Typeracer Data](http://typeracerdata.com/texts).
