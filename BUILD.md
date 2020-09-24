@@ -1,28 +1,25 @@
+# Build and Run
 
-## Running locally
+If you want to understand how mitype works or want to debug an issue, you'll want to get the source, build it, and run it locally.
 
-To run mitype locally -
+## Getting the Source
 
+First, fork the mitype repository so that you can make a pull request. Clone your fork locally and then you can navigate to the directory where you've cloned the repository.
 ```
-git clone https://github.com/Mithil467/mitype.git
-cd mitype
-python -m mitype
-```
-To run with command line options -
-```
-python -m mitype -V
-python -m mitype -d 2
+git clone https://github.com/<<<your-github-account>>>/mitype.git
+cd where-you-cloned-mitype
 ```
 
-## Build mitype and install from latest source
+## Running in Development Mode
 
-To make sure you don't already have mitype installed.
+Once you have a local copy of mitype cloned, you can directly run mitype in Development Mode.
+```
+python -m mitype [OPTION]... [FILE]...
+```
 
+## Installing from Source
+
+You can install the module directly from sources by running the following command.
 ```
-pip uninstall mitype
-```
-And then
-```
-python3 setup.py sdist
-pip install ./dist/*
+python setup.py install
 ```
