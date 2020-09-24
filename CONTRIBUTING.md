@@ -2,47 +2,46 @@
 
 👏🎉 First off, thanks for taking the time to contribute! 🎉👏
 
-The following is a set of guidelines for contributing to **Mitype**. Feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to Mitype. These are mostly guidelines, not rules. Use your best judgment.
 
-## Pull requests
+#### Table of Contents
 
-1. Single feature or bug-fix per PR.
-3. Always try to make sure you checkout from latest master.
+[Code of Conduct](#code-of-conduct)
+
+[Pull Requests](#pull-requests)
+
+[Styleguides](#styleguides)
+  - [Git Commit Messages](#git-commit-messages)
+  - [Python Styleguide](#python-styleguide)
+
+## Code of Conduct
+
+While contributing to the project, it is very important to maintain a healthy environment! Hence I request you to follow the [Code of Conduct](CODE_OF_CONDUCT).
+
+## Pull Requests
+
+1. Follow the [styleguides](#styleguides).
+
+2. Single feature or bug-fix per PR.
+
 3. Make your modification compact - don't reformat source code in your request. It makes code review more difficult.
-4. Typo fixing and code refactoring won't be accepted - please create issues with title starting with TYPO to request the changing.
 
-## Git commits
+## Styleguides
 
-Please have a look at the previous git commit history and write newer commits accordingly to respect the standard of the project.
-Follow correct grammar.
+### Git Commit Messages
 
-### In-general
 - Use the present tense ("Add feature" not "Added feature")
 - Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
+- Do not end the title with full-stop
+- Limit the title to 72 characters or less
+- Leave one line empty after your title if the message has a body
+- Refer issues like "This fixes bug #ID" at the end of the body
 
-### Commit title
-- Do not end the title with full-stops (.)
-- Limit the title to 60 characters or less
+### Python Styleguide
 
-### Commit Body
-- There should be one line empty after your title
-- The body should be very descriptive
-- Explain your commit as much as possible
-- Refer issue ID like "This fixes bug #ID" at the end of the body
+All python code is linted with [black](https://black.readthedocs.io/).
 
-## Writing code for mitype
-- `Docstrings` are a must for every function, class and module definition, but they are not an emergency.
-- Lint using [black](https://github.com/psf/black) by running `black .`
-- Test breaking changes by running `tox -e 27` and `tox -e 3x` where 3x is your python version.
-e.g. `tox -e 38`
-
-## About the database
-`data.db` is a sqlite3 database file with the table named `data` with following schema:
-```
-CREATE TABLE data(id INTEGER PRIMARY KEY, txt TEXT);
-CREATE INDEX ind_name ON data(id);
-```
-There are exactly 6000 rows each having an ID from 1 to 6000.
-The data is provided by typeracerdata.com.
-
-
+- Place imports in the following order:
+  - Built-in Python Modules (such as `os`)
+  - Mitype Modules (using relative paths)
+- Avoid platform-dependent code
