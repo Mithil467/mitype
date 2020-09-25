@@ -20,7 +20,8 @@ class App:
     def __init__(self):
 
         # Start the parser
-        self.text = mitype.commandline.main()
+        self.text = mitype.commandline.main()[0]
+        self.text_id = mitype.commandline.main()[1]
         self.tokens = self.text.split()
 
         # Convert multiple spaces, tabs, newlines to single space
@@ -161,6 +162,10 @@ class App:
         """
 
         # Top strip
+        # Display text ID
+        win.addstr(0, 0, " ID:{} ".format(self.text_id), curses.color_pair(3))
+        
+        # Display Title
         win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", curses.color_pair(3))
 
         # Print text in BOLD from 3rd line
