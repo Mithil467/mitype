@@ -121,12 +121,13 @@ class App:
             mitype.calculations.number_of_lines_to_fit_string_in_window(
                 self.text, self.window_width
             )
-            + 2
-            + 1
+            + 2 # Top 2 lines
+            + 1 # One empty line after text
         )
 
         # If required number of lines are more than the window height, exit
-        if self.line_count > self.window_height:
+        # +3 for printing stats at the end of the test
+        if self.line_count + 3 > self.window_height:
             self.size_error()
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
