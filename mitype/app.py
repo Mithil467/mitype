@@ -75,8 +75,8 @@ class App:
             # Typing mode
             key = self.keyinput(win)
 
-            # Exit when escape key is pressed
-            if mitype.keycheck.is_escape(key):
+            # Exit when escape key is pressed and test hasn't started
+            if mitype.keycheck.is_escape(key) and self.start_time == 0:
                 sys.exit(0)
 
             # Test mode
@@ -177,9 +177,9 @@ class App:
                           KEY_UP or ^G.
         """
 
-        # Exit on escape
+        # Reset test
         if mitype.keycheck.is_escape(key):
-            sys.exit(0)
+            self.reset_test()
 
         # Handle resizing
         elif mitype.keycheck.is_resize(key):
@@ -286,6 +286,15 @@ class App:
             self.start_time = 0
         win.refresh()
 
+    def reset_test(self):
+        self.current_word = ""
+        self.current_string = ""
+        self.first_key_pressed = False
+        self.key_strokes = []
+        self.start_time = 0
+        self.i = 0
+        self.current_speed_wpm = 0
+
     def replay(self, win):
 
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
@@ -323,7 +332,6 @@ class App:
                     i -= 1
                 text = text[:i] + " " * (x * width - i) + text[i + 1 :]
         return text
-
 
     def resize(self, win):
         win.clear()
