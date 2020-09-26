@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-with open("README.md", encoding="utf-8") as f:
+with open("README.md", "U") as f:
     LONG_DESCRIPTION = f.read()
 
 setup(

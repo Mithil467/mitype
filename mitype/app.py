@@ -200,7 +200,7 @@ class App:
             self.check_word()
 
         # Check for any other typable characters
-        elif mitype.keycheck.is_valid_initial_key(key):
+        elif mitype.keycheck.is_valid_initial_key(key) and (not(mitype.keycheck.is_ignored_keys(key))):
             self.appendkey(key)
 
         # Update state of window

@@ -20,6 +20,16 @@ def is_escape(key):
         return ord(key) == curses.ascii.ESC
     return False
 
+def is_ignored_keys(key):
+    
+    keys = ["KEY_UP","KEY_DOWN","KEY_LEFT","KEY_RIGHT"]
+    for x in range(12):
+        keys.append("KEY_F(" + str((x+1)) +")")
+    if isinstance(key, str):
+        if key in keys:
+            return True
+        
+    return False
 
 def is_backspace(key):
     """Detect BACKSPACE key. This is used to exit the application.
