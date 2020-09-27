@@ -6,7 +6,7 @@ The following is a set of guidelines for contributing to Mitype. These are mostl
 
 #### Table of Contents
 
-[Code of Conduct](#code-of-conduct)
+[Build and Run](#build-and-run)
 
 [Pull Requests](#pull-requests)
 
@@ -14,9 +14,12 @@ The following is a set of guidelines for contributing to Mitype. These are mostl
   - [Git Commit Messages](#git-commit-messages)
   - [Python Styleguide](#python-styleguide)
 
-## Code of Conduct
+[Code of Conduct](#code-of-conduct)
 
-While contributing to the project, it is very important to maintain a healthy environment! Hence I request you to follow the [Code of Conduct](CODE_OF_CONDUCT).
+## Build and Run
+
+Read [build](BUILD.md) document if you want to understand how mitype works or want to debug an issue and run it locally.
+
 
 ## Pull Requests
 
@@ -45,3 +48,7 @@ All python code is linted with [black](https://black.readthedocs.io/).
   - Built-in Python Modules (such as `os`)
   - Mitype Modules (using relative paths)
 - Avoid platform-dependent code
+
+## Code of Conduct
+
+While contributing to the project, it is very important to maintain a healthy environment! Hence I request you to follow the [Code of Conduct](CODE_OF_CONDUCT).
