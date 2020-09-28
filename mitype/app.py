@@ -277,6 +277,7 @@ class App:
             win.addstr(" Enter ", curses.color_pair(6))
 
             win.addstr(" to see a replay! ")
+            curses.curs_set(0)
 
             if self.mode == 0:
                 self.mode = 1
@@ -302,7 +303,7 @@ class App:
         self.current_speed_wpm = 0
 
     def replay(self, win):
-
+        curses.curs_set(1)
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
 
         self.setup_print(win)
