@@ -277,6 +277,7 @@ class App:
             win.addstr(" Enter ", curses.color_pair(6))
 
             win.addstr(" to see a replay! ")
+            curses.curs_set(0)
 
             if self.mode == 0:
                 self.mode = 1
