@@ -26,6 +26,7 @@ Written completely in python with no external dependencies!
 
 ## 🔧 Install
 
+
 Mitype can be easily installed by:
 
 ```pip install mitype```
@@ -33,6 +34,14 @@ Mitype can be easily installed by:
 > If you are on windows, you'll also need [windows-curses](https://pypi.org/project/windows-curses/):
 
 >```pip install windows-curses```
+
+(Note : If your pip is not upgraded first upgrade your pip by:
+for Python 3:
+python3 -m pip install --upgrade pip
+for Python 2:
+python2 -m pip install --upgrade pip )
+
+
 
 ## 📈 Usage
 
