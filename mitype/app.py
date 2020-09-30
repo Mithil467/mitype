@@ -121,8 +121,8 @@ class App:
             mitype.calculations.number_of_lines_to_fit_string_in_window(
                 self.text, self.window_width
             )
-            + 2 # Top 2 lines
-            + 1 # One empty line after text
+            + 2  # Top 2 lines
+            + 1  # One empty line after text
         )
 
         # If required number of lines are more than the window height, exit
@@ -165,7 +165,7 @@ class App:
         # Top strip
         # Display text ID
         win.addstr(0, 0, " ID:{} ".format(self.text_id), curses.color_pair(3))
-        
+
         # Display Title
         win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", curses.color_pair(3))
 
