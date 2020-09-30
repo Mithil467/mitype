@@ -23,6 +23,11 @@ Read [build](BUILD.md) document if you want to understand how mitype works or wa
 
 ## Pull Requests
 
+- All pull requests must have an issue linked with it. Please create an issue if it doesn't exist already before creating a pull request.
+- Do not create pull requests for typo fixes or renaming items, you may create issues instead.
+- Creating an issue beforehand helps discuss bugs and enhancements before work begins, preventing wasted effort.
+- Comment on an issue if you are willing to work on it if no one else is assigned already.
+
 1. Follow the [styleguides](#styleguides).
 
 2. Single feature or bug-fix per PR.
