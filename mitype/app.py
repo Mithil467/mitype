@@ -121,8 +121,8 @@ class App:
             mitype.calculations.number_of_lines_to_fit_string_in_window(
                 self.text, self.window_width
             )
-            + 2 # Top 2 lines
-            + 1 # One empty line after text
+            + 2  # Top 2 lines
+            + 1  # One empty line after text
         )
 
         # If required number of lines are more than the window height, exit
@@ -165,7 +165,7 @@ class App:
         # Top strip
         # Display text ID
         win.addstr(0, 0, " ID:{} ".format(self.text_id), curses.color_pair(3))
-        
+
         # Display Title
         win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", curses.color_pair(3))
 
@@ -210,6 +210,19 @@ class App:
         key = ""
         while key == "":
             try:
+                if self.mode == 0:
+                    self.current_speed_wpm = mitype.calculations.speed_in_wpm(
+                        self.tokens, self.start_time
+                    )
+                win.addstr(
+                    0,
+                    int(self.window_width) - 14,
+                    " " + str(self.current_speed_wpm) + " ",
+                    curses.color_pair(1),
+                )
+                win.addstr(" WPM ")
+                win.move(2, len(self.text))
+
                 if sys.version_info[0] < 3:
                     key = win.getkey()
                     return key
