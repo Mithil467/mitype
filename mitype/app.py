@@ -294,7 +294,7 @@ class App:
 
             win.addstr(" TAB ", curses.color_pair(5))
 
-            win.addstr(" to try again! ")
+            win.addstr(" to try a new test! ")
 
             if self.mode == 0:
                 self.mode = 1
