@@ -50,6 +50,11 @@ def is_enter(key):
     return key == "\n"
 
 
+def is_tab(key):
+    """Detect tab key to start mitype again"""
+    return key == "\t"
+
+
 def is_resize(key):
     """Detect is terminal was resized"""
     return key == "KEY_RESIZE"
@@ -63,6 +68,7 @@ def is_valid_initial_key(key):
         or is_enter(key)
         or is_escape(key)
         or is_backspace(key)
+        or is_tab(key)
     ):
         return False
     return True

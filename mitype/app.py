@@ -89,6 +89,11 @@ class App:
                 # Start replay if enter key is pressed
                 self.replay(win)
 
+            # Again mode
+            elif self.mode == 1 and mitype.keycheck.is_tab(key):
+                win.clear()
+                self.__init__()
+
             # Refresh for changes to show up on window
             win.refresh()
 
@@ -121,8 +126,8 @@ class App:
             mitype.calculations.number_of_lines_to_fit_string_in_window(
                 self.text, self.window_width
             )
-            + 2 # Top 2 lines
-            + 1 # One empty line after text
+            + 2  # Top 2 lines
+            + 1  # One empty line after text
         )
 
         # If required number of lines are more than the window height, exit
@@ -165,7 +170,7 @@ class App:
         # Top strip
         # Display text ID
         win.addstr(0, 0, " ID:{} ".format(self.text_id), curses.color_pair(3))
-        
+
         # Display Title
         win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", curses.color_pair(3))
 
@@ -194,6 +199,11 @@ class App:
         # Check for backspace
         elif mitype.keycheck.is_backspace(key):
             self.erase_key()
+
+        # Check for tab
+        elif mitype.keycheck.is_tab(key):
+            win.clear()
+            self.__init__()
 
         # Check for space
         elif key == " ":
@@ -247,6 +257,8 @@ class App:
 
     def update_state(self, win):
         win.addstr(self.line_count, 0, " " * self.window_width)
+        win.addstr(self.line_count + 2, 0, " " * self.window_width)
+        win.addstr(self.line_count + 4, 0, " " * self.window_width)
         win.addstr(self.line_count, 0, self.current_word)
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -277,6 +289,12 @@ class App:
             win.addstr(" Enter ", curses.color_pair(6))
 
             win.addstr(" to see a replay! ")
+
+            win.addstr(self.line_count + 4, 0, " Press ")
+
+            win.addstr(" TAB ", curses.color_pair(5))
+
+            win.addstr(" to try again! ")
 
             if self.mode == 0:
                 self.mode = 1
