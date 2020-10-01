@@ -37,6 +37,7 @@ class App:
 
         self.start_time = 0
         self.end_time = 0
+        self.wpm_start_time = 0
 
         self.i = 0
         self.mode = 0
@@ -97,6 +98,7 @@ class App:
         if not self.first_key_pressed and mitype.keycheck.is_valid_initial_key(key):
             self.start_time = time.time()
             self.first_key_pressed = True
+            self.wpm_start_time = self.start_time
 
         if mitype.keycheck.is_resize(key):
             self.resize(win)
@@ -105,6 +107,8 @@ class App:
             return
 
         self.key_strokes.append([time.time(), key])
+
+        self._wpm_realtime(win,time.time())
 
         self.key_printer(win, key)
 
@@ -169,6 +173,15 @@ class App:
         # Display Title
         win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", curses.color_pair(3))
 
+        win.addstr(
+            0,
+            int(self.window_width) - 14,
+            " 0.00 ",
+            curses.color_pair(1),
+        )
+        win.addstr(" WPM ")
+        # win.move(2, len(self.text))
+
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
 
@@ -210,19 +223,6 @@ class App:
         key = ""
         while key == "":
             try:
-                if self.mode == 0:
-                    self.current_speed_wpm = mitype.calculations.speed_in_wpm(
-                        self.tokens, self.start_time
-                    )
-                win.addstr(
-                    0,
-                    int(self.window_width) - 14,
-                    " " + str(self.current_speed_wpm) + " ",
-                    curses.color_pair(1),
-                )
-                win.addstr(" WPM ")
-                win.move(2, len(self.text))
-
                 if sys.version_info[0] < 3:
                     key = win.getkey()
                     return key
@@ -257,6 +257,20 @@ class App:
     def appendkey(self, key):
         self.current_word += key
         self.current_string += key
+
+    def _wpm_realtime(self, win, currentTime):
+        if(int(round(time.time() * 1000))>=100):
+            self.current_speed_wpm = mitype.calculations.speed_in_wpm(
+                self.tokens, self.start_time
+            )
+            win.addstr(
+                0,
+                int(self.window_width) - 14,
+                " " + str(self.current_speed_wpm) + " ",
+                curses.color_pair(1),
+            )
+            win.addstr(" WPM ")
+            self.wpm_start_time = currentTime
 
     def update_state(self, win):
         win.addstr(self.line_count, 0, " " * self.window_width)
