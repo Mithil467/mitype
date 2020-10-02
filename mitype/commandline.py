@@ -1,7 +1,7 @@
 """
 Start of app.
-Parses command line arguments.
-Decides and fills text accordingly.
+
+Parses command line arguments and decides and fills text accordingly.
 """
 
 import argparse
@@ -15,8 +15,7 @@ import mitype.database
 
 
 def main():
-    """The main method for parsing command line arguments
-    and returning text"""
+    """Parse CLI arguments and return practice text."""
     opt = parse_arguments()
     if opt.version:
         display_version()
@@ -38,7 +37,7 @@ def main():
 
 
 def parse_arguments():
-    """Parse command line arguments"""
+    """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description="Process mitype command line arguments"
     )
@@ -83,14 +82,12 @@ def parse_arguments():
 
 
 def display_version():
-    """Display version"""
-
+    """Display version."""
     print("Mitype version %s" % mitype.__version__)
 
 
 def load_text_from_file(file_path):
-    """Load file contents"""
-
+    """Load file contents."""
     if os.path.isfile(file_path):
         text = open(file_path).read()
         filename = os.path.basename(file_path)
@@ -101,8 +98,7 @@ def load_text_from_file(file_path):
 
 
 def load_from_database(text_id):
-    """Load given text from database with given id"""
-
+    """Load given text from database with given id."""
     row_count = 6000
     if 1 <= text_id <= row_count:
         text = mitype.database.fetch_text_from_id(text_id)
@@ -113,10 +109,11 @@ def load_from_database(text_id):
 
 
 def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
-    """Load text of given difficulty from database if parameter is passed.
-    Else pick difficulty randomly
     """
+    Load text of given difficulty from database if parameter is passed.
 
+    Defaults to random difficulty level when none is provided.
+    """
     max_level = 5
 
     if 1 <= difficulty_level <= max_level:

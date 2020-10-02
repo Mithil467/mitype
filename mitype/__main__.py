@@ -1,4 +1,4 @@
-"""Mitype"""
+"""Mitype."""
 
 from mitype.app import App
 

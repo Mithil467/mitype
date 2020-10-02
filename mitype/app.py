@@ -1,4 +1,4 @@
-"""This is the Mitype main app script"""
+"""This is the Mitype main app script."""
 
 import curses
 import os
@@ -14,11 +14,9 @@ import signal
 
 
 class App:
-
-    """Class for enclosing all methods required to run Mitype"""
+    """Class for enclosing all methods required to run Mitype."""
 
     def __init__(self):
-
         # Start the parser
         self.text = mitype.commandline.main()[0]
         self.text_id = mitype.commandline.main()[1]
@@ -56,13 +54,13 @@ class App:
         curses.wrapper(self.main)
 
     def main(self, win):
-        """Main function. This is where the infinite loop is executed to
-        continuously serve events.
+        """Respond to user inputs.
+
+        This is where the infinite loop is executed to continuously serve events.
 
         Args:
             win (object): Curses window object.
         """
-
         # Initialize windows
         self.initialize(win)
 
@@ -109,7 +107,6 @@ class App:
         self.key_printer(win, key)
 
     def initialize(self, win):
-
         # Find window dimensions
         self.window_height, self.window_width = self.get_dimensions(win)
 
@@ -161,7 +158,6 @@ class App:
         Args:
             win (object): Curses window object.
         """
-
         # Top strip
         # Display text ID
         win.addstr(0, 0, " ID:{} ".format(self.text_id), curses.color_pair(3))
@@ -178,11 +174,10 @@ class App:
         Args:
             win (object): Curses window object.
             key (string): Individual characters are returned as 1-character
-                          strings, and special keys such as function keys
-                          return longer strings containing a key name such as
-                          KEY_UP or ^G.
+                strings, and special keys such as function keys
+                return longer strings containing a key name such as
+                KEY_UP or ^G.
         """
-
         # Reset test
         if mitype.keycheck.is_escape(key):
             self.reset_test()
@@ -314,9 +309,9 @@ class App:
 
     @staticmethod
     def word_wrap(text, width):
+        """Wrap text on the screen according to the window width.
 
-        """Based on the window width, return text with extra spaces
-        which makes the string word wrap.
+        Returns text with extra spaces which makes the string word wrap.
 
         Args:
             text (string): Text to wrap.
