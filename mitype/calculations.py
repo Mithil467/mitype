@@ -42,7 +42,7 @@ def speed_in_wpm(text, start_time):
         string: Speed in WPM upto 2 decimal places.
     """
     time_taken = (
-        60 * len(text) / timer.get_elasped_minutes_since_first_keypress(start_time)
+        60 * len(text) / timer.get_elapsed_minutes_since_first_keypress(start_time)
     )
 
     return "{0:.2f}".format(time_taken)

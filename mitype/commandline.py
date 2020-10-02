@@ -64,7 +64,7 @@ def parse_arguments():
         metavar="id",
         default=None,
         type=int,
-        help="ID to retreive text from database",
+        help="ID to retrieve text from database",
     )
 
     parser.add_argument(
