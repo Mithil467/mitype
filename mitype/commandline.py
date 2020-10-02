@@ -10,7 +10,6 @@ import random
 import sys
 
 import mitype
-
 import mitype.database
 
 

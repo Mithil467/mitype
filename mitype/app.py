@@ -2,15 +2,13 @@
 
 import curses
 import os
+import signal
 import sys
 import time
 
 import mitype.calculations
 import mitype.commandline
 import mitype.keycheck
-
-from datetime import datetime, timedelta
-import signal
 
 
 class App:
