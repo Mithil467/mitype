@@ -74,6 +74,8 @@ class App:
         signal.signal(signal.SIGINT, signal_handler)
 
         while True:
+            if self.mode == 1:
+                curses.curs_set(0)
             # Typing mode
             key = self.keyinput(win)
 
@@ -262,7 +264,6 @@ class App:
             self.text[index : len(self.current_string)],
             curses.color_pair(2),
         )
-
         if index == len(self.text):
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
@@ -305,7 +306,7 @@ class App:
         self.current_speed_wpm = 0
 
     def replay(self, win):
-
+        curses.curs_set(1)
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
 
         self.setup_print(win)
