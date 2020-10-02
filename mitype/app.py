@@ -9,8 +9,9 @@ import mitype.calculations
 import mitype.commandline
 import mitype.keycheck
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import signal
+import json
 
 
 class App:
@@ -290,6 +291,8 @@ class App:
             self.i = 0
 
             self.start_time = 0
+
+            self.save_history()
         win.refresh()
 
     def reset_test(self):
@@ -359,3 +362,23 @@ class App:
         sys.stdout.write("Window too small to print given text")
         curses.endwin()
         sys.exit(4)
+
+    def save_history(self):
+        # Saving stats in file
+        with open('mitype/history.json', 'r') as file:
+            history = json.load(file)
+        
+        history['date'].append(str(date.today()))
+
+        t = time.localtime()
+        current_time = time.strftime("%H:%M:%S", t)
+        history['time'].append(str(current_time))
+
+        history['wpm'].append(self.current_speed_wpm)
+        
+        history['id'].append(self.text_id)
+
+        # history['accuracy'].append(self.accuracy)
+
+        with open('mitype/history.json', 'w') as file:
+            json.dump(history, file, indent=4)

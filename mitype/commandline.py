@@ -8,6 +8,7 @@ import argparse
 import os
 import random
 import sys
+import json
 
 import mitype
 
@@ -20,6 +21,10 @@ def main():
     opt = parse_arguments()
     if opt.version:
         display_version()
+        sys.exit(0)
+
+    elif opt.history:
+        show_history()
         sys.exit(0)
 
     elif opt.file:
@@ -78,6 +83,13 @@ def parse_arguments():
         help="Choose difficulty within range 1-5",
     )
 
+    parser.add_argument(
+        "-H",
+        "--history",
+        action='store_true',
+        help="Show mitype score history",
+    )
+
     opt = parser.parse_args()
     return opt
 
@@ -131,3 +143,24 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
 
     print("Select a difficulty level in range [1,5]")
     sys.exit(2)
+
+
+def show_history():
+    with open('mitype/history.json') as file:
+        history = json.load(file)
+
+    date = history['date']
+    time = history['time']
+    wpm = history['wpm']
+    text_id = history['id']
+
+    # acc = history['accuracy']
+
+    print("\nMitype test Scores: ")
+    print("| date       | time     | wpm   | id   |")
+    print("----------------------------------------")
+
+    for i in range(len(date)):
+        print('| ' + date[i] + ' | ' + time[i] + ' | ' + wpm[i] + ' | ' + str(text_id[i]) + " |")
+    
+    print()
