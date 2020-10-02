@@ -1,8 +1,8 @@
 """ Setup script for mitype """
-
+import io
 from setuptools import setup
 
-with open("README.md", encoding="utf-8") as f:
+with io.open("README.md", encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
 
 setup(
