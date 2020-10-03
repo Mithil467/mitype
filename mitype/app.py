@@ -197,13 +197,16 @@ class App:
         elif mitype.keycheck.is_backspace(key):
             self.erase_key()
 
-        # Check for space
-        elif key == " ":
-            self.check_word()
+        # Ignore spaces at the start of the word (Plover support)
+        elif not (key == " " and len(self.current_word) == 0):
+            
+            # Check for space
+            if key == " ":
+                self.check_word()
 
-        # Check for any other typable characters
-        elif mitype.keycheck.is_valid_initial_key(key):
-            self.appendkey(key)
+            # Check for any other typable characters
+            elif mitype.keycheck.is_valid_initial_key(key):
+                self.appendkey(key)
 
         # Update state of window
         self.update_state(win)
