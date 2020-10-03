@@ -90,7 +90,7 @@ def load_text_from_file(file_path):
     if os.path.isfile(file_path):
         text = open(file_path).read()
         filename = os.path.basename(file_path)
-        return (text, filename)
+        return text, filename
 
     print("Cannot open file -", file_path)
     sys.exit(0)
@@ -101,7 +101,7 @@ def load_from_database(text_id):
     row_count = 6000
     if 1 <= text_id <= row_count:
         text = mitype.database.fetch_text_from_id(text_id)
-        return (text, text_id)
+        return text, text_id
 
     print("ID must be in range [1,6000]")
     sys.exit(1)
@@ -123,7 +123,7 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
         text_id = random.randrange(lower_limit, upper_limit + 1)
         text = mitype.database.fetch_text_from_id(text_id)
 
-        return (text, text_id)
+        return text, text_id
 
     print("Select a difficulty level in range [1,5]")
     sys.exit(2)
