@@ -11,7 +11,8 @@ import mitype.keycheck
 
 from datetime import datetime, timedelta, date
 import signal
-import json
+import csv
+import ctypes
 
 
 class App:
@@ -45,6 +46,8 @@ class App:
         self.window_height = 0
         self.window_width = 0
         self.line_count = 0
+
+        self.test_complete = False
 
         self.current_speed_wpm = 0
 
@@ -292,8 +295,9 @@ class App:
             self.i = 0
 
             self.start_time = 0
-
-            self.save_history()
+            if not self.test_complete:
+                self.save_history()
+                self.test_complete = True
         win.refresh()
 
     def reset_test(self):
@@ -366,20 +370,29 @@ class App:
 
     def save_history(self):
         # Saving stats in file
-        with open('mitype/history.json', 'r') as file:
-            history = json.load(file)
-        
-        history['date'].append(str(date.today()))
+        FILE_ATTRIBUTE_HIDDEN = 0x02
+
+        history_file = '.mitype_history.csv'
+        history_path = os.path.join(os.path.expanduser('~'), history_file)
+
+        try:
+            history = open(history_path, 'a+', newline='\n')
+        except FileNotFoundError:
+            history = open(history_path, 'w', newline='\n')
+            row = ['ID','WPM','DATE','TIME']
+            csv_history = csv.writer(history)
+
+            csv_history.writerow(row)
+
+        csv_history = csv.writer(history)
 
         t = time.localtime()
         current_time = time.strftime("%H:%M:%S", t)
-        history['time'].append(str(current_time))
 
-        history['wpm'].append(self.current_speed_wpm)
-        
-        history['id'].append(self.text_id)
+        h = [str(self.text_id), str(self.current_speed_wpm), str(date.today()), str(current_time)]
+        csv_history.writerow(h)
 
-        # history['accuracy'].append(self.accuracy)
+        if os.name == 'nt':
+            ctypes.windll.kernel32.SetFileAttributesW(history_path, FILE_ATTRIBUTE_HIDDEN)
 
-        with open('mitype/history.json', 'w') as file:
-            json.dump(history, file, indent=4)
+        history.close()

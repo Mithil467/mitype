@@ -8,7 +8,8 @@ import argparse
 import os
 import random
 import sys
-import json
+import csv
+import ctypes
 
 import mitype
 
@@ -146,21 +147,34 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
 
 
 def show_history():
-    with open('mitype/history.json') as file:
-        history = json.load(file)
+    FILE_ATTRIBUTE_HIDDEN = 0x02
 
-    date = history['date']
-    time = history['time']
-    wpm = history['wpm']
-    text_id = history['id']
+    history_file = '.mitype_history.csv'
+    history_path = os.path.join(os.path.expanduser('~'), history_file)
+    try:
+        with open(history_path, 'r') as file:
+            history_reader = csv.reader(file)
+            next(history_reader)
 
-    # acc = history['accuracy']
+            print("\nMitype test Scores: ")
+            print("| ID   | WPM   | DATE       | TIME     |")
+            print("----------------------------------------")
 
-    print("\nMitype test Scores: ")
-    print("| date       | time     | wpm   | id   |")
-    print("----------------------------------------")
-
-    for i in range(len(date)):
-        print('| ' + date[i] + ' | ' + time[i] + ' | ' + wpm[i] + ' | ' + str(text_id[i]) + " |")
+            for row in history_reader:
+                print('| ' + row[0] + ' | ' + row[1] + ' | ' + row[2] + ' | ' + row[3] + ' |')
+            
+            print()
     
-    print()
+    except FileNotFoundError:
+        with open(history_path, 'w', newline='\n') as file:
+            row = ['ID','WPM','DATE','TIME']
+            history_writer = csv.writer(file)
+            history_writer.writerow(row)
+
+            print("\nMitype test Scores: ")
+            print("| ID   | WPM   | DATE       | TIME     |")
+            print("----------------------------------------")
+
+        if os.name == 'nt':
+            ctypes.windll.kernel32.SetFileAttributesW(history_file, FILE_ATTRIBUTE_HIDDEN)
+
