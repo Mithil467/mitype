@@ -1,8 +1,8 @@
 """ Setup script for mitype """
-
+import io
 from setuptools import setup
 
-with open("README.md", encoding="utf-8") as f:
+with io.open("README.md", encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
 
 setup(
@@ -18,6 +18,7 @@ setup(
     keywords=["MITYPE", "TERMINAL", "WPM", "SPEED", "TYPE"],
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
+    install_requires=["windows-curses; platform_system=='Windows'"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",

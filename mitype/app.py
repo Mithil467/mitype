@@ -70,6 +70,8 @@ class App:
         signal.signal(signal.SIGINT, signal_handler)
 
         while True:
+            if self.mode == 1:
+                curses.curs_set(0)
             # Typing mode
             key = self.keyinput(win)
 
@@ -177,6 +179,9 @@ class App:
 
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
+
+        # Set cursor position to beginning of text
+        win.move(2, 0)
 
     def key_printer(self, win, key):
         """Print required key to terminal.
@@ -286,7 +291,6 @@ class App:
             self.text[index : len(self.current_string)],
             curses.color_pair(2),
         )
-
         if index == len(self.text):
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
