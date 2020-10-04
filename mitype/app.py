@@ -15,6 +15,7 @@ class App:
     """Class for enclosing all methods required to run Mitype."""
 
     def __init__(self):
+        """Initialize the application class."""
         # Start the parser
         self.text = mitype.commandline.main()[0]
         self.text_id = mitype.commandline.main()[1]
@@ -89,6 +90,12 @@ class App:
             win.refresh()
 
     def typing_mode(self, win, key):
+        """Start recording typing session progress.
+
+        Args:
+            win (any): Curses window.
+            key (string): First typed character of the session.
+        """
         # Note start time when first valid key is pressed
         if not self.first_key_pressed and mitype.keycheck.is_valid_initial_key(key):
             self.start_time = time.time()
@@ -105,6 +112,11 @@ class App:
         self.key_printer(win, key)
 
     def initialize(self, win):
+        """Configure the initial state of the curses interface.
+
+        Args:
+            win (any): Curses window.
+        """
         # Find window dimensions
         self.window_height, self.window_width = self.get_dimensions(win)
 
@@ -200,6 +212,14 @@ class App:
         self.update_state(win)
 
     def keyinput(self, win):
+        """Retrieve next character of text input.
+
+        Args:
+            win (any): Curses window.
+
+        Returns:
+            str: Value of typed key.
+        """
         key = ""
         while key == "":
             try:
@@ -218,11 +238,13 @@ class App:
         return key
 
     def erase_key(self):
+        """Erase the last typed character."""
         if len(self.current_word) > 0:
             self.current_word = self.current_word[0 : len(self.current_word) - 1]
             self.current_string = self.current_string[0 : len(self.current_string) - 1]
 
     def check_word(self):
+        """Accept finalized word."""
         spc = mitype.calculations.get_space_count_after_ith_word(
             len(self.current_string), self.text
         )
@@ -235,10 +257,20 @@ class App:
             self.current_string += " "
 
     def appendkey(self, key):
+        """Append a character to the end of the current word.
+
+        Args:
+            key (key): character to append
+        """
         self.current_word += key
         self.current_string += key
 
     def update_state(self, win):
+        """Report on typing session results.
+
+        Args:
+            win (any): Curses window.
+        """
         win.addstr(self.line_count, 0, " " * self.window_width)
         win.addstr(self.line_count, 0, self.current_word)
 
@@ -286,6 +318,7 @@ class App:
         win.refresh()
 
     def reset_test(self):
+        """Reset the current typing session."""
         self.current_word = ""
         self.current_string = ""
         self.first_key_pressed = False
@@ -295,7 +328,11 @@ class App:
         self.current_speed_wpm = 0
 
     def replay(self, win):
+        """Play out a recording of the users last session.
 
+        Args:
+            win (any): Curses window.
+        """
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
 
         self.setup_print(win)
@@ -333,6 +370,11 @@ class App:
         return text
 
     def resize(self, win):
+        """Respond to window resize events.
+
+        Args:
+            win (any): Curses window.
+        """
         win.clear()
         self.window_height, self.window_width = self.get_dimensions(win)
 
@@ -349,6 +391,7 @@ class App:
 
     @staticmethod
     def size_error():
+        """Inform user that current window size is too small."""
         sys.stdout.write("Window too small to print given text")
         curses.endwin()
         sys.exit(4)
