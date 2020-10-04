@@ -378,15 +378,14 @@ class App:
         history_file = '.mitype_history.csv'
         history_path = os.path.join(os.path.expanduser('~'), history_file)
 
-        try:
-            history = open(history_path, 'a+', newline='\n')
-        except FileNotFoundError:
-            history = open(history_path, 'w', newline='\n')
+        if not os.path.isfile(history_path):
             row = ['ID','WPM','DATE','TIME']
+            history = open(history_path, 'a', newline='\n')
             csv_history = csv.writer(history)
-
             csv_history.writerow(row)
-
+            history.close()
+        
+        history = open(history_path, 'a', newline='\n')
         csv_history = csv.writer(history)
 
         t = time.localtime()

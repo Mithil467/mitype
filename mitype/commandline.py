@@ -166,14 +166,10 @@ def show_history():
             print()
     
     except FileNotFoundError:
-        with open(history_path, 'w', newline='\n') as file:
-            row = ['ID','WPM','DATE','TIME']
-            history_writer = csv.writer(file)
-            history_writer.writerow(row)
-
-            print("\nMitype test Scores: ")
-            print("| ID   | WPM   | DATE       | TIME     |")
-            print("----------------------------------------")
+        
+        print("\nMitype test Scores: ")
+        print("| ID   | WPM   | DATE       | TIME     |")
+        print("----------------------------------------")
 
         if os.name == 'nt':
             ctypes.windll.kernel32.SetFileAttributesW(history_file, FILE_ATTRIBUTE_HIDDEN)
