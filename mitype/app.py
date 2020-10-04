@@ -178,6 +178,9 @@ class App:
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
 
+        # Set cursor position to beginning of text
+        win.move(2, 0)
+
     def key_printer(self, win, key):
         """Print required key to terminal.
 

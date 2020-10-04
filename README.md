@@ -30,10 +30,6 @@ Mitype can be easily installed by:
 
 ```pip install mitype```
 
-> If you are on windows, you'll also need [windows-curses](https://pypi.org/project/windows-curses/):
-
->```pip install windows-curses```
-
 ## 📈 Usage
 
 Once installed, you can run it simply as:

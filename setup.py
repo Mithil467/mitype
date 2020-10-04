@@ -18,6 +18,7 @@ setup(
     keywords=["MITYPE", "TERMINAL", "WPM", "SPEED", "TYPE"],
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
+    install_requires=["windows-curses; platform_system=='Windows'"],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
