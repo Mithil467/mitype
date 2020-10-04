@@ -58,7 +58,7 @@ class App:
         This is where the infinite loop is executed to continuously serve events.
 
         Args:
-            win (object): Curses window object.
+            win (any): Curses window object.
         """
         # Initialize windows
         self.initialize(win)
@@ -153,10 +153,10 @@ class App:
         """Get the width of terminal.
 
         Args:
-            win (object): Curses window object.
+            win (any): Curses window object.
 
         Returns:
-            (integer): Return width of terminal window.
+            int: Return width of terminal window.
         """
         dimension_tuple = win.getmaxyx()
 
@@ -166,7 +166,7 @@ class App:
         """Print setup text at beginning of each typing session.
 
         Args:
-            win (object): Curses window object.
+            win (any): Curses window object.
         """
         # Top strip
         # Display text ID
@@ -182,7 +182,7 @@ class App:
         """Print required key to terminal.
 
         Args:
-            win (object): Curses window object.
+            win (any): Curses window object.
             key (string): Individual characters are returned as 1-character
                 strings, and special keys such as function keys
                 return longer strings containing a key name such as
@@ -353,7 +353,7 @@ class App:
             width (integer): Width to wrap around.
 
         Returns:
-            (string): Return altered text.
+            str: Return altered text.
         """
         # For the end of each line, move backwards until you find a space.
         # When you do, append those many spaces after the single space.

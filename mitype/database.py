@@ -11,7 +11,7 @@ def database_file_absolute_path():
     stored in same directory as app.
 
     Returns:
-        string: The path of directory of source file.
+        str: The path of directory of source file.
     """
     database_filename = "data.db"
     database_directory_absolute_path = os.path.dirname(os.path.abspath(__file__))
@@ -28,7 +28,7 @@ def fetch_text_from_id(serial_id):
         serial_id (int): The unique ID of database entry.
 
     Returns:
-        list: The text corresponding to the entry_id.
+        str: The text corresponding to the entry_id.
     """
     database_file = database_file_absolute_path()
     connection = sqlite3.connect(database_file)

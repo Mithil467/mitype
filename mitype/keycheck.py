@@ -44,24 +44,52 @@ def is_backspace(key):
 
 
 def is_null(key):
-    """Detect null keys like super key."""
+    """Detect null keys like super key.
+
+    Args:
+        key (str): Character to check.
+
+    Returns:
+        bool: `True` if "null" key or `False` otherwise.
+    """
     if isinstance(key, str) and len(key) == 1:
         return ord(key) == 0
     return key == ""
 
 
 def is_enter(key):
-    """Detect enter key."""
+    """Detect enter key.
+
+    Args:
+        key (str): Character to check.
+
+    Returns:
+        bool: `True` if line feed or `False` otherwise.
+    """
     return key == "\n"
 
 
 def is_resize(key):
-    """Detect is terminal was resized."""
+    """Detect is terminal was resized.
+
+    Args:
+        key (str): Character to check.
+
+    Returns:
+        bool: `True` if resize request or `False` otherwise.
+    """
     return key == "KEY_RESIZE"
 
 
 def is_valid_initial_key(key):
-    """Detect if the pressed key is a valid key to start timer."""
+    """Detect if the pressed key is a valid key to start timer.
+
+    Args:
+        key (str): Character to check.
+
+    Returns:
+        bool: `True` if key is a valid text character or `False` otherwise.
+    """
     if (
         is_resize(key)
         or is_null(key)
