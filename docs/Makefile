@@ -1,13 +1,10 @@
 # Minimal makefile for Sphinx documentation
-#
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
-BUILDDIR      = ../../mitype-docs
-PDFBUILDDIR   = /tmp
-PDF           = ../manual.pdf
+BUILDDIR      = build
 
 # Put it first so that "make" without argument is like "make help".
 help:

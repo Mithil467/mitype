@@ -1,26 +1,13 @@
 Welcome to Mitype's documentation!
 ==================================
 
-.. automodule:: mitype.app
-    :members:
-
-.. automodule:: mitype.__init__
-    :members:
-
-.. automodule:: mitype.__main__
-    :members:
-
-
-.. automodule:: mitype.local_test
-    :members:
-
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
+    :caption: Contents:
 
-   includeme
+    api
 
-Indices and tables
+Indices and Tables
 ==================
 
 * :ref:`genindex`
