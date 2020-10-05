@@ -12,17 +12,20 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../..'))
 
+import mitype
+
 # -- Project information -----------------------------------------------------
 project = 'Mitype'
-copyright = '2020, Mithil Poojary'
-author = 'Mithil Poojary'
-release = '0.2.0'
+author = mitype.__author__
+copyright = '2020, ' + author
+release = mitype.__version__
 
 # -- General configuration ---------------------------------------------------
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.napoleon",
+    "sphinx_rtd_theme",
 ]
 
 templates_path = ['_templates']
@@ -42,7 +45,7 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -53,5 +56,5 @@ html_static_path = ['_static']
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Mitype.tex', 'Mitype Documentation', 'Mithil Poojary', 'manual'),
+    (master_doc, project + '.tex', project + ' Documentation', author, 'manual'),
 ]
