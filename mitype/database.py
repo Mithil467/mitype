@@ -1,17 +1,18 @@
-"""Deals with fetching texts from database"""
+"""Deals with fetching texts from database."""
+
 import os
 import sqlite3
 
 
 def database_file_absolute_path():
     """Get full path of directory where source files are stored.
+
     This is required for later fetching entry from data.db which is
     stored in same directory as app.
 
     Returns:
-        string: The path of directory of source file.
+        str: The path of directory of source file.
     """
-
     database_filename = "data.db"
     database_directory_absolute_path = os.path.dirname(os.path.abspath(__file__))
     database_file_absolute_path = os.path.join(
@@ -27,9 +28,8 @@ def fetch_text_from_id(serial_id):
         serial_id (int): The unique ID of database entry.
 
     Returns:
-        list: The text corresponding to the entry_id.
+        str: The text corresponding to the entry_id.
     """
-
     database_file = database_file_absolute_path()
     connection = sqlite3.connect(database_file)
     cursor = connection.cursor()
