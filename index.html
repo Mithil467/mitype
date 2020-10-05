@@ -1,418 +1,244 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Welcome to Mitype’s documentation! &#8212; Mitype 0.1.3 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Mitype &mdash; Mitype 0.2.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Mitype : Typing Speed Test right in your terminal" href="includeme.html" />
+    <link rel="next" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> Mitype
+          
+
+          
+          </a>
+
+          
             
-  <div class="section" id="module-mitype.app">
-<span id="welcome-to-mitype-s-documentation"></span><h1>Welcome to Mitype’s documentation!<a class="headerlink" href="#module-mitype.app" title="Permalink to this headline">¶</a></h1>
-<p>This is the Mitype main app script</p>
-<dl class="class">
-<dt id="mitype.app.App">
-<em class="property">class </em><code class="descclassname">mitype.app.</code><code class="descname">App</code><a class="reference internal" href="_modules/mitype/app.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class for enclosing all methods required to run Mitype</p>
-<dl class="staticmethod">
-<dt id="mitype.app.App.change_index">
-<em class="property">static </em><code class="descname">change_index</code><span class="sig-paren">(</span><em>string1</em>, <em>string2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.change_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.change_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return index at which there is a change in strings. This is used
-to determine the index upto which text must be dimmed and after which
-must be coloured red (indicating mismatch).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>string1</strong> (<em>string</em>) – The string which is a combination of
-last typed keys in a session.</li>
-<li><strong>string2</strong> (<em>string</em>) – The string corresponsing to sample text.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Index at which mismatch occurs for the first time.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">integer</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+            
+          
 
-<dl class="staticmethod">
-<dt id="mitype.app.App.count_lines">
-<em class="property">static </em><code class="descname">count_lines</code><span class="sig-paren">(</span><em>string</em>, <em>win_width</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.count_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.count_lines" title="Permalink to this definition">¶</a></dt>
-<dd><p>Count number of lines required for displaying text.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>string</strong> (<em>string</em>) – String containing sample text.</li>
-<li><strong>win_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Width of terminal.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The number of lines required to display sample text</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">integer</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
 
-<dl class="staticmethod">
-<dt id="mitype.app.App.directory_path">
-<em class="property">static </em><code class="descname">directory_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.directory_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.directory_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get full path of directory where source files are stored.
-This is required for later fetching entry from data.db which is
-stored in same directory as app.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The path of directory of source file.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+          
+        </div>
 
-<dl class="method">
-<dt id="mitype.app.App.generate">
-<code class="descname">generate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.generate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate a random integer [1, number of database entries].
-This function later calls the ‘search’ function by passing the
-generated integer as ‘entry_id’.</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="mitype.app.App.get_dimensions">
-<em class="property">static </em><code class="descname">get_dimensions</code><span class="sig-paren">(</span><em>win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.get_dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.get_dimensions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the width of terminal.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>win</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><em>object</em></a>) – Curses window object.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Return width of terminal window.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(integer)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="mitype.app.App.get_time_elasped">
-<em class="property">static </em><code class="descname">get_time_elasped</code><span class="sig-paren">(</span><em>start_time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.get_time_elasped"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.get_time_elasped" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get time elapsed since initial keypress. This is required to calculate
-speed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The time when user starts typing the sample text.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>Time elasped since start of typing session till calling</dt>
-<dd>this function.</dd>
-</dl>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mitype.app.App.get_wpm">
-<code class="descname">get_wpm</code><span class="sig-paren">(</span><em>txt</em>, <em>start_time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.get_wpm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.get_wpm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate typing speed in WPM.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>txt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of words from sample text.</li>
-<li><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The time when user starts typing the sample text.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Speed in WPM upto 2 decimal places.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="mitype.app.App.initialize">
-<em class="property">static </em><code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.initialize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize color pairs for curses</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="mitype.app.App.is_backspace">
-<em class="property">static </em><code class="descname">is_backspace</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.is_backspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.is_backspace" title="Permalink to this definition">¶</a></dt>
-<dd><p>Detect BACKSPACE key. This is used to exit the application.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>string</em>) – Individual characters are returned as 1-character
-strings, and special keys such as function keys
-return longer strings containing a key name such as
-KEY_UP or ^G.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>Returns true if pressed key is BACKSPACE key.</dt>
-<dd>Returns false otherwise.</dd>
-</dl>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="mitype.app.App.is_escape">
-<em class="property">static </em><code class="descname">is_escape</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.is_escape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.is_escape" title="Permalink to this definition">¶</a></dt>
-<dd><p>Detect ESC key. This is used to exit the application.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>string</em>) – Individual characters are returned as 1-character
-strings, and special keys such as function keys
-return longer strings containing a key name such as
-KEY_UP or ^G.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>Returns true if pressed key is ESC key.</dt>
-<dd>Returns false otherwise.</dd>
-</dl>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)">bool</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mitype.app.App.key_printer">
-<code class="descname">key_printer</code><span class="sig-paren">(</span><em>win</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.key_printer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.key_printer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print required key to terminal.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>win</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><em>object</em></a>) – Curses window object.</li>
-<li><strong>key</strong> (<em>string</em>) – Individual characters are returned as 1-character
-strings, and special keys such as function keys
-return longer strings containing a key name such as
-KEY_UP or ^G.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mitype.app.App.main">
-<code class="descname">main</code><span class="sig-paren">(</span><em>win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.main" title="Permalink to this definition">¶</a></dt>
-<dd><p>Main function. This is where the infinite loop is executed to
-continuousle serve events.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>win</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><em>object</em></a>) – Curses window object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mitype.app.App.search">
-<code class="descname">search</code><span class="sig-paren">(</span><em>entry_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fetch row from data.db database.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entry_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The unique ID of database entry.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The text corresponding to the entry_id.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mitype.app.App.setup_print">
-<code class="descname">setup_print</code><span class="sig-paren">(</span><em>win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.setup_print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.setup_print" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print setup text at beginning of each typing session.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>win</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><em>object</em></a>) – Curses window object.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="mitype.app.App.start">
-<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start app. Starts main in curses wrapper.</p>
-</dd></dl>
-
-</dd></dl>
-
-<span class="target" id="module-mitype.__init__"></span><p>Init file for packaging</p>
-<span class="target" id="module-mitype.__main__"></span><p>Called when command python -m mitype is executed</p>
-<span class="target" id="module-mitype.local_test"></span><p>Run this file to execute locally</p>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html">Mitype : Typing Speed Test right in your terminal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#what-is-it">What is it?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#where-to-get-it">Where to get it?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#how-to-run-it">How to run it?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#dependencies">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#installation-from-sources">Installation from sources</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#license">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 </ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Mitype</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Mitype</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mitype">
+<h1>Mitype<a class="headerlink" href="#mitype" title="Permalink to this headline">¶</a></h1>
+<div class="figure align-center" id="id1">
+<img alt="_images/demo.gif" src="_images/demo.gif" />
+<p class="caption"><span class="caption-text">Terminal based typing speed tester</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p><strong>Mitype</strong> is a program to test (and hence improve) your typing speed right from
+the ease of your terminal.</p>
+<div class="section" id="main-features">
+<h2>Main Features<a class="headerlink" href="#main-features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>🖥️ Cross-platform</p></li>
+<li><p>🎦 See your replay</p></li>
+<li><p>🐍 Supports Python 2 and 3</p></li>
+<li><p>📝 Choose custom text input</p></li>
+<li><p>🅰️ 6000 text samples</p></li>
+<li><p>🌈 Colored texts</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h1>Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 </ul>
 </div>
 
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">Mitype</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html">Mitype : Typing Speed Test right in your terminal</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#what-is-it">What is it?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#where-to-get-it">Where to get it?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#how-to-run-it">How to run it?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#dependencies">Dependencies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#installation-from-sources">Installation from sources</a></li>
-<li class="toctree-l1"><a class="reference internal" href="includeme.html#license">License</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="includeme.html" title="next chapter">Mitype : Typing Speed Test right in your terminal</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
     </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Mithil Poojary
 
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, Mithil Poojary.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>

@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mitype.keycheck &mdash; Mitype 0.2.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Mitype
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Mitype</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mitype.keycheck</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mitype.keycheck</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Keypress.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">curses.ascii</span>
+
+
+<div class="viewcode-block" id="is_escape"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_escape">[docs]</a><span class="k">def</span> <span class="nf">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect ESC key.</span>
+
+<span class="sd">    This is used to exit the application.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (string): Individual characters are returned as 1-character</span>
+<span class="sd">            strings, and special keys such as function keys</span>
+<span class="sd">            return longer strings containing a key name such as</span>
+<span class="sd">            KEY_UP or ^G.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Returns true if pressed key is ESC key.</span>
+<span class="sd">            Returns false otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">ascii</span><span class="o">.</span><span class="n">ESC</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="is_backspace"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_backspace">[docs]</a><span class="k">def</span> <span class="nf">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect BACKSPACE key.</span>
+
+<span class="sd">    This is used to exit the application.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (string): Individual characters are returned as 1-character</span>
+<span class="sd">            strings, and special keys such as function keys</span>
+<span class="sd">            return longer strings containing a key name such as</span>
+<span class="sd">            KEY_UP or ^G.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Returns true if pressed key is BACKSPACE key.</span>
+<span class="sd">            Returns false otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;KEY_BACKSPACE&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\b</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\x7f</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">curses</span><span class="o">.</span><span class="n">KEY_BACKSPACE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_DC</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_null"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_null">[docs]</a><span class="k">def</span> <span class="nf">is_null</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect null keys like super key.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (str): Character to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: `True` if &quot;null&quot; key or `False` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="is_enter"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_enter">[docs]</a><span class="k">def</span> <span class="nf">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect enter key.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (str): Character to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: `True` if line feed or `False` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="is_resize"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_resize">[docs]</a><span class="k">def</span> <span class="nf">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect is terminal was resized.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (str): Character to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: `True` if resize request or `False` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;KEY_RESIZE&quot;</span></div>
+
+
+<div class="viewcode-block" id="is_valid_initial_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_valid_initial_key">[docs]</a><span class="k">def</span> <span class="nf">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect if the pressed key is a valid key to start timer.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (str): Character to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: `True` if key is a valid text character or `False` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">is_null</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Mithil Poojary
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+mitype package
+==============
+
+Submodules
+----------
+
+mitype.app module
+-----------------
+
+.. automodule:: mitype.app
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mitype.calculations module
+--------------------------
+
+.. automodule:: mitype.calculations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mitype.commandline module
+-------------------------
+
+.. automodule:: mitype.commandline
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mitype.database module
+----------------------
+
+.. automodule:: mitype.database
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mitype.keycheck module
+----------------------
+
+.. automodule:: mitype.keycheck
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mitype.timer module
+-------------------
+
+.. automodule:: mitype.timer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: mitype
+   :members:
+   :undoc-members:
+   :show-inheritance:

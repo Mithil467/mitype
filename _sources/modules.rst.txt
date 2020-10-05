@@ -1,0 +1,7 @@
+mitype
+======
+
+.. toctree::
+   :maxdepth: 4
+
+   mitype

@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mitype package &mdash; Mitype 0.2.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Mitype
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Mitype</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>mitype package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/mitype.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mitype-package">
+<h1>mitype package<a class="headerlink" href="#mitype-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mitype.app">
+<span id="mitype-app-module"></span><h2>mitype.app module<a class="headerlink" href="#module-mitype.app" title="Permalink to this headline">¶</a></h2>
+<p>This is the Mitype main app script.</p>
+<dl class="class">
+<dt id="mitype.app.App">
+<em class="property">class </em><code class="sig-prename descclassname">mitype.app.</code><code class="sig-name descname">App</code><a class="reference internal" href="_modules/mitype/app.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for enclosing all methods required to run Mitype.</p>
+<dl class="method">
+<dt id="mitype.app.App.appendkey">
+<code class="sig-name descname">appendkey</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.appendkey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.appendkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a character to the end of the current word.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>key</em>) – character to append</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.check_word">
+<code class="sig-name descname">check_word</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.check_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.check_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accept finalized word.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.erase_key">
+<code class="sig-name descname">erase_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.erase_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.erase_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Erase the last typed character.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.get_dimensions">
+<em class="property">static </em><code class="sig-name descname">get_dimensions</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.get_dimensions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.get_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the width of terminal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window object.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Return width of terminal window.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.initialize">
+<code class="sig-name descname">initialize</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure the initial state of the curses interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.key_printer">
+<code class="sig-name descname">key_printer</code><span class="sig-paren">(</span><em class="sig-param">win</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.key_printer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.key_printer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print required key to terminal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>win</strong> (<em>any</em>) – Curses window object.</p></li>
+<li><p><strong>key</strong> (<em>string</em>) – Individual characters are returned as 1-character
+strings, and special keys such as function keys
+return longer strings containing a key name such as
+KEY_UP or ^G.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.keyinput">
+<code class="sig-name descname">keyinput</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.keyinput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.keyinput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve next character of text input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Value of typed key.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.main">
+<code class="sig-name descname">main</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Respond to user inputs.</p>
+<p>This is where the infinite loop is executed to continuously serve events.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.replay">
+<code class="sig-name descname">replay</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.replay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.replay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Play out a recording of the users last session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.reset_test">
+<code class="sig-name descname">reset_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.reset_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.reset_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the current typing session.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.resize">
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Respond to window resize events.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.setup_print">
+<code class="sig-name descname">setup_print</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.setup_print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.setup_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print setup text at beginning of each typing session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.size_error">
+<em class="property">static </em><code class="sig-name descname">size_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.size_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.size_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inform user that current window size is too small.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.typing_mode">
+<code class="sig-name descname">typing_mode</code><span class="sig-paren">(</span><em class="sig-param">win</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.typing_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.typing_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start recording typing session progress.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>win</strong> (<em>any</em>) – Curses window.</p></li>
+<li><p><strong>key</strong> (<em>string</em>) – First typed character of the session.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.update_state">
+<code class="sig-name descname">update_state</code><span class="sig-paren">(</span><em class="sig-param">win</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.update_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.update_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Report on typing session results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mitype.app.App.word_wrap">
+<em class="property">static </em><code class="sig-name descname">word_wrap</code><span class="sig-paren">(</span><em class="sig-param">text</em>, <em class="sig-param">width</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.word_wrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.word_wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap text on the screen according to the window width.</p>
+<p>Returns text with extra spaces which makes the string word wrap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>string</em>) – Text to wrap.</p></li>
+<li><p><strong>width</strong> (<em>integer</em>) – Width to wrap around.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Return altered text.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mitype.calculations">
+<span id="mitype-calculations-module"></span><h2>mitype.calculations module<a class="headerlink" href="#module-mitype.calculations" title="Permalink to this headline">¶</a></h2>
+<p>Calculations.</p>
+<dl class="function">
+<dt id="mitype.calculations.first_index_at_which_strings_differ">
+<code class="sig-prename descclassname">mitype.calculations.</code><code class="sig-name descname">first_index_at_which_strings_differ</code><span class="sig-paren">(</span><em class="sig-param">string1</em>, <em class="sig-param">string2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#first_index_at_which_strings_differ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.calculations.first_index_at_which_strings_differ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return index at which there is a change in strings.</p>
+<p>This is used to determine the index upto which text must be dimmed and after which
+must be coloured red (indicating mismatch).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string1</strong> (<em>string</em>) – The string which is a combination of
+last typed keys in a session.</p></li>
+<li><p><strong>string2</strong> (<em>string</em>) – The string corresponding to sample text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Index at which mismatch occurs for the first time.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.calculations.get_space_count_after_ith_word">
+<code class="sig-prename descclassname">mitype.calculations.</code><code class="sig-name descname">get_space_count_after_ith_word</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#get_space_count_after_ith_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.calculations.get_space_count_after_ith_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of spaces after a given word.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – Index of word in text list</p></li>
+<li><p><strong>text</strong> (<em>string</em>) – Text without appending extra spaces</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of spaces required after ith word</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.calculations.number_of_lines_to_fit_string_in_window">
+<code class="sig-prename descclassname">mitype.calculations.</code><code class="sig-name descname">number_of_lines_to_fit_string_in_window</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">window_width</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#number_of_lines_to_fit_string_in_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.calculations.number_of_lines_to_fit_string_in_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count number of lines required for displaying text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>string</strong> (<em>string</em>) – String containing sample text.</p></li>
+<li><p><strong>window_width</strong> (<em>int</em>) – Width of terminal.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of lines required to display sample text</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>integer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.calculations.speed_in_wpm">
+<code class="sig-prename descclassname">mitype.calculations.</code><code class="sig-name descname">speed_in_wpm</code><span class="sig-paren">(</span><em class="sig-param">text</em>, <em class="sig-param">start_time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#speed_in_wpm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.calculations.speed_in_wpm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate typing speed in WPM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>list</em>) – List of words from sample text.</p></li>
+<li><p><strong>start_time</strong> (<em>float</em>) – The time when user starts typing
+the sample text.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Speed in WPM upto 2 decimal places.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mitype.commandline">
+<span id="mitype-commandline-module"></span><h2>mitype.commandline module<a class="headerlink" href="#module-mitype.commandline" title="Permalink to this headline">¶</a></h2>
+<p>Start of app.</p>
+<p>Parses command line arguments and decides and fills text accordingly.</p>
+<dl class="function">
+<dt id="mitype.commandline.display_version">
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">display_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#display_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.display_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display version.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.commandline.load_based_on_difficulty">
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_based_on_difficulty</code><span class="sig-paren">(</span><em class="sig-param">difficulty_level=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load text of given difficulty from database if parameter is passed.</p>
+<p>Defaults to random difficulty level when none is provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>difficulty_level</strong> (<em>int</em>) – difficulty leven in a range of 1 - 5</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple of text content followed by DB row identifier.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str, int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.commandline.load_from_database">
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_from_database</code><span class="sig-paren">(</span><em class="sig-param">text_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_from_database"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_from_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load given text from database with given id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_id</strong> (<em>int</em>) – Row identifier of database text to load.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple of text content followed by DB row identifier.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str, int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.commandline.load_text_from_file">
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_text_from_file</code><span class="sig-paren">(</span><em class="sig-param">file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_text_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_text_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load file contents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>string</em>) – Full path to text to load.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple of text content followed by file path.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str, str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.commandline.main">
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse CLI arguments and return practice text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Text content to have user attempt to type.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.commandline.parse_arguments">
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">parse_arguments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#parse_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse command line arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Parsed command line arguments.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mitype.database">
+<span id="mitype-database-module"></span><h2>mitype.database module<a class="headerlink" href="#module-mitype.database" title="Permalink to this headline">¶</a></h2>
+<p>Deals with fetching texts from database.</p>
+<dl class="function">
+<dt id="mitype.database.database_file_absolute_path">
+<code class="sig-prename descclassname">mitype.database.</code><code class="sig-name descname">database_file_absolute_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/database.html#database_file_absolute_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.database.database_file_absolute_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get full path of directory where source files are stored.</p>
+<p>This is required for later fetching entry from data.db which is
+stored in same directory as app.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The path of directory of source file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.database.fetch_text_from_id">
+<code class="sig-prename descclassname">mitype.database.</code><code class="sig-name descname">fetch_text_from_id</code><span class="sig-paren">(</span><em class="sig-param">serial_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/database.html#fetch_text_from_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.database.fetch_text_from_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch row from data.db database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>serial_id</strong> (<em>int</em>) – The unique ID of database entry.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The text corresponding to the entry_id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mitype.keycheck">
+<span id="mitype-keycheck-module"></span><h2>mitype.keycheck module<a class="headerlink" href="#module-mitype.keycheck" title="Permalink to this headline">¶</a></h2>
+<p>Keypress.</p>
+<dl class="function">
+<dt id="mitype.keycheck.is_backspace">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_backspace</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_backspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_backspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect BACKSPACE key.</p>
+<p>This is used to exit the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>string</em>) – Individual characters are returned as 1-character
+strings, and special keys such as function keys
+return longer strings containing a key name such as
+KEY_UP or ^G.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Returns true if pressed key is BACKSPACE key.</dt><dd><p>Returns false otherwise.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.keycheck.is_enter">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_enter</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_enter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_enter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect enter key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – Character to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if line feed or <cite>False</cite> otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.keycheck.is_escape">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_escape</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_escape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_escape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect ESC key.</p>
+<p>This is used to exit the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>string</em>) – Individual characters are returned as 1-character
+strings, and special keys such as function keys
+return longer strings containing a key name such as
+KEY_UP or ^G.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Returns true if pressed key is ESC key.</dt><dd><p>Returns false otherwise.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.keycheck.is_null">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_null</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_null"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_null" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect null keys like super key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – Character to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if “null” key or <cite>False</cite> otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.keycheck.is_resize">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_resize</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect is terminal was resized.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – Character to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if resize request or <cite>False</cite> otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="mitype.keycheck.is_valid_initial_key">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_valid_initial_key</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_valid_initial_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_valid_initial_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect if the pressed key is a valid key to start timer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – Character to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if key is a valid text character or <cite>False</cite> otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mitype.timer">
+<span id="mitype-timer-module"></span><h2>mitype.timer module<a class="headerlink" href="#module-mitype.timer" title="Permalink to this headline">¶</a></h2>
+<p>Timer.</p>
+<dl class="function">
+<dt id="mitype.timer.get_elapsed_minutes_since_first_keypress">
+<code class="sig-prename descclassname">mitype.timer.</code><code class="sig-name descname">get_elapsed_minutes_since_first_keypress</code><span class="sig-paren">(</span><em class="sig-param">start_time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/timer.html#get_elapsed_minutes_since_first_keypress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.timer.get_elapsed_minutes_since_first_keypress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get time elapsed since initial keypress.</p>
+<p>This is required to calculate speed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>start_time</strong> (<em>float</em>) – The time when user starts typing
+the sample text.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Time elapsed since start of typing session till calling</dt><dd><p>this function.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mitype">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mitype" title="Permalink to this headline">¶</a></h2>
+<p>Mitype.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Mithil Poojary
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
