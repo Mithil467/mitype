@@ -54,7 +54,7 @@ html_static_path = ['_static']
 
 # -- Options for LaTeX output ------------------------------------------------
 # Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title, author, documentclass [howto, manual, or own class]).
+# (source start file, target name, title, author, class [howto, manual, or own class]).
 latex_documents = [
     (master_doc, project + '.tex', project + ' Documentation', author, 'manual'),
 ]
