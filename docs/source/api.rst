@@ -1,6 +1,8 @@
 Internal API
 ############
 
+Contained within is exhaustive documentation of this application's internal Python API.
+
 .. automodule:: mitype.app
     :members:
 
