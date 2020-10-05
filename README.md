@@ -8,7 +8,7 @@
 <a href="LICENSE.txt"><img src="https://img.shields.io/pypi/l/mitype.svg"></a>
 <a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 <br />
-<img src="img/demo.gif" alt=>
+<img src="docs/source/_static/demo.gif" alt=>
 </p>
 
 **Mitype** is a program to test (and hence improve) your typing speed right from the ease of your terminal.
@@ -21,7 +21,7 @@ Written completely in python with no external dependencies!
 - 🎦 See your replay
 - 🐍 Supports Python 2 and 3
 - 📝 Choose custom text input
-- 🅰️ 6000️ text samples
+- 🅰️ 6000 text samples
 - 🌈 Colored texts
 
 ## 🔧 Install
