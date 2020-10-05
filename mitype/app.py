@@ -205,11 +205,11 @@ class App:
         elif mitype.keycheck.is_backspace(key):
             self.erase_key()
 
-        # Check for space
-        elif key == " ":
-            self.check_word()
+        # Ignore spaces at the start of the word (Plover support)
+        elif key==" ":
+            if self.current_word!="":
+                self.check_word()
 
-        # Check for any other typable characters
         elif mitype.keycheck.is_valid_initial_key(key):
             self.appendkey(key)
 
