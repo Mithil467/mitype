@@ -198,15 +198,12 @@ class App:
             self.erase_key()
 
         # Ignore spaces at the start of the word (Plover support)
-        elif not (key == " " and len(self.current_word) == 0):
-            
-            # Check for space
-            if key == " ":
+        elif key==" ":
+            if self.current_word!="":
                 self.check_word()
 
-            # Check for any other typable characters
-            elif mitype.keycheck.is_valid_initial_key(key):
-                self.appendkey(key)
+        elif mitype.keycheck.is_valid_initial_key(key):
+            self.appendkey(key)
 
         # Update state of window
         self.update_state(win)
