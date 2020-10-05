@@ -9,12 +9,22 @@ Mitype
 **Mitype** is a program to test (and hence improve) your typing speed right from
 the ease of your terminal.
 
-Following the content links below you can learn more about this application.
+Main Features
+-------------
+
+- 🖥️ Cross-platform
+- 🎦 See your replay
+- 🐍 Supports Python 2 and 3
+- 📝 Choose custom text input
+- 🅰️ 6000 text samples
+- 🌈 Colored texts
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
+   installation
+   usage
    api
 
 Indices and Tables
@@ -22,4 +32,3 @@ Indices and Tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`

@@ -21,7 +21,7 @@ Written completely in python with no external dependencies!
 - 🎦 See your replay
 - 🐍 Supports Python 2 and 3
 - 📝 Choose custom text input
-- 🅰️ 6000️ text samples
+- 🅰️ 6000 text samples
 - 🌈 Colored texts
 
 ## 🔧 Install
