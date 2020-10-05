@@ -301,6 +301,7 @@ class App:
             win.addstr(" " + self.current_speed_wpm + " ", curses.color_pair(1))
             win.addstr(" WPM ")
 
+            win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
             win.addstr(self.line_count + 2, 0, " Press ")
 
             win.addstr(" Enter ", curses.color_pair(6))
@@ -338,6 +339,10 @@ class App:
             win (any): Curses window.
         """
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
+        curses.curs_set(1)
+        
+        # Display the stats during replay at the bottom
+        win.addstr(self.window_height - 1, 0, " WPM:" + self.current_speed_wpm + " ", curses.color_pair(1))
 
         self.setup_print(win)
 
