@@ -1,7 +1,7 @@
 """
 Start of app.
-Parses command line arguments.
-Decides and fills text accordingly.
+
+Parses command line arguments and decides and fills text accordingly.
 """
 
 import argparse
@@ -12,13 +12,15 @@ import csv
 import ctypes
 
 import mitype
-
 import mitype.database
 
 
 def main():
-    """The main method for parsing command line arguments
-    and returning text"""
+    """Parse CLI arguments and return practice text.
+
+    Returns:
+        str: Text content to have user attempt to type.
+    """
     opt = parse_arguments()
     if opt.version:
         display_version()
@@ -44,7 +46,11 @@ def main():
 
 
 def parse_arguments():
-    """Parse command line arguments"""
+    """Parse command line arguments.
+
+    Returns:
+        str: Parsed command line arguments.
+    """
     parser = argparse.ArgumentParser(
         description="Process mitype command line arguments"
     )
@@ -72,7 +78,7 @@ def parse_arguments():
         metavar="id",
         default=None,
         type=int,
-        help="ID to retreive text from database",
+        help="ID to retrieve text from database",
     )
 
     parser.add_argument(
@@ -96,40 +102,58 @@ def parse_arguments():
 
 
 def display_version():
-    """Display version"""
-
+    """Display version."""
     print("Mitype version %s" % mitype.__version__)
 
 
 def load_text_from_file(file_path):
-    """Load file contents"""
+    """Load file contents.
 
+    Args:
+        file_path (string): Full path to text to load.
+
+    Returns:
+        (str, str): Tuple of text content followed by file path.
+    """
     if os.path.isfile(file_path):
         text = open(file_path).read()
         filename = os.path.basename(file_path)
-        return (text, filename)
+        return text, filename
 
     print("Cannot open file -", file_path)
     sys.exit(0)
 
 
 def load_from_database(text_id):
-    """Load given text from database with given id"""
+    """Load given text from database with given id.
 
+    Args:
+        text_id (int): Row identifier of database text to load.
+
+    Returns:
+        (str, int): Tuple of text content followed by DB row identifier.
+    """
     row_count = 6000
     if 1 <= text_id <= row_count:
         text = mitype.database.fetch_text_from_id(text_id)
-        return (text, text_id)
+        return text, text_id
 
     print("ID must be in range [1,6000]")
     sys.exit(1)
 
 
 def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
-    """Load text of given difficulty from database if parameter is passed.
-    Else pick difficulty randomly
     """
+    Load text of given difficulty from database if parameter is passed.
 
+    Defaults to random difficulty level when none is provided.
+
+    Args:
+        difficulty_level (int): difficulty leven in a range of 1 - 5
+
+    Returns:
+        (str, int): Tuple of text content followed by DB row identifier.
+    """
     max_level = 5
 
     if 1 <= difficulty_level <= max_level:
@@ -140,7 +164,7 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
         text_id = random.randrange(lower_limit, upper_limit + 1)
         text = mitype.database.fetch_text_from_id(text_id)
 
-        return (text, text_id)
+        return text, text_id
 
     print("Select a difficulty level in range [1,5]")
     sys.exit(2)
