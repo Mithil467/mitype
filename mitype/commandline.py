@@ -27,7 +27,7 @@ def main():
         sys.exit(0)
 
     elif opt.history:
-        show_history()
+        show_history(opt.history)
         sys.exit(0)
 
     elif opt.file:
@@ -93,7 +93,8 @@ def parse_arguments():
     parser.add_argument(
         "-H",
         "--history",
-        action='store_true',
+        nargs='?',
+        default=0,
         help="Show mitype score history",
     )
 
@@ -170,9 +171,8 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
     sys.exit(2)
 
 
-def show_history():
-    FILE_ATTRIBUTE_HIDDEN = 0x02
-
+def show_history(N):
+    N = int(N)
     history_file = '.mitype_history.csv'
     history_path = os.path.join(os.path.expanduser('~'), history_file)
     try:
@@ -180,21 +180,27 @@ def show_history():
             history_reader = csv.reader(file)
             next(history_reader)
 
-            print("\nMitype test Scores: ")
-            print("| ID   | WPM   | DATE       | TIME     |")
-            print("----------------------------------------")
+            data = list(history_reader)
+            no_of_records = len(data)
 
-            for row in history_reader:
-                print('| ' + row[0] + ' | ' + row[1] + ' | ' + row[2] + ' | ' + row[3] + ' |')
-            
-            print()
+            if N >= len(data):
+                print(f"\nLast {no_of_records} records: ")
+                print("ID\tWPM\tDATE\t\tTIME")
+
+                for i in range(no_of_records):
+                    print(data[i][0] + '\t' + data[i][1] + '\t' + data[i][2] + '\t' + data[i][3])
+
+                print()
+            else:
+                print(f"\nLast {N} records: ")
+                print("ID\tWPM\tDATE\t\tTIME")
+                for i in range(no_of_records-N, no_of_records):
+                    print(data[i][0] + '\t' + data[i][1] + '\t' + data[i][2] + '\t' + data[i][3])
+
+                print()
+
     
     except FileNotFoundError:
         
-        print("\nMitype test Scores: ")
-        print("| ID   | WPM   | DATE       | TIME     |")
-        print("----------------------------------------")
-
-        if os.name == 'nt':
-            ctypes.windll.kernel32.SetFileAttributesW(history_file, FILE_ATTRIBUTE_HIDDEN)
-
+        print("No records found!")
+        print("Take the test atleast once before viewing history.")
