@@ -1,6 +1,7 @@
 """Keypress."""
 
 import curses.ascii
+import sys
 
 
 def is_escape(key):
@@ -21,6 +22,13 @@ def is_escape(key):
     if isinstance(key, str) and len(key) == 1:
         return ord(key) == curses.ascii.ESC
     return False
+
+
+def is_ignored(key):
+    if sys.version_info[0] < 3:
+        return key.startswith("KEY") or (len(key) > 1 and key.startswith("k"))
+    else:
+        return isinstance(key, int)
 
 
 def is_backspace(key):
@@ -96,6 +104,7 @@ def is_valid_initial_key(key):
         or is_enter(key)
         or is_escape(key)
         or is_backspace(key)
+        or is_ignored(key)
     ):
         return False
     return True
