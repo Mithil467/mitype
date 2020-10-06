@@ -84,15 +84,16 @@ class App:
             if self.mode == 0:
                 self.typing_mode(win, key)
 
+            # Again mode
+            elif self.mode == 1 and mitype.keycheck.is_tab(key):
+                self.setup_print(win)
+                self.update_state(win)
+                self.reset_test()
+
             # Replay mode
             elif self.mode == 1 and mitype.keycheck.is_enter(key):
                 # Start replay if enter key is pressed
                 self.replay(win)
-
-            # Again mode
-            elif self.mode == 1 and mitype.keycheck.is_tab(key):
-                win.clear()
-                self.__init__()
 
             # Refresh for changes to show up on window
             win.refresh()
@@ -200,11 +201,6 @@ class App:
         elif mitype.keycheck.is_backspace(key):
             self.erase_key()
 
-        # Check for tab
-        elif mitype.keycheck.is_tab(key):
-            win.clear()
-            self.__init__()
-
         # Check for space
         elif key == " ":
             self.check_word()
@@ -294,7 +290,7 @@ class App:
 
             win.addstr(" TAB ", curses.color_pair(5))
 
-            win.addstr(" to try a new test! ")
+            win.addstr(" to try again! ")
 
             if self.mode == 0:
                 self.mode = 1
@@ -311,6 +307,7 @@ class App:
         win.refresh()
 
     def reset_test(self):
+        self.mode = 0
         self.current_word = ""
         self.current_string = ""
         self.first_key_pressed = False
