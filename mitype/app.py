@@ -34,6 +34,7 @@ class App:
 
         self.start_time = 0
         self.end_time = 0
+        self.time_taken = 0
 
         self.i = 0
         self.mode = 0
@@ -292,6 +293,7 @@ class App:
             curses.color_pair(2),
         )
         if index == len(self.text):
+            self.end_time = time.time()
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
                 self.current_speed_wpm = mitype.calculations.speed_in_wpm(
@@ -300,7 +302,9 @@ class App:
 
             win.addstr(" " + self.current_speed_wpm + " ", curses.color_pair(1))
             win.addstr(" WPM ")
-
+            self.time_taken = time.strftime(" X%Mmins X%Ssec ", time.gmtime(self.end_time-self.start_time)).replace('X0','X').replace('X','')
+            win.addstr(" Time Taken " )
+            win.addstr(" " + self.time_taken, curses.color_pair(1))
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
             win.addstr(self.line_count + 2, 0, " Press ")
 
@@ -340,7 +344,7 @@ class App:
         """
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         curses.curs_set(1)
-        
+
         # Display the stats during replay at the bottom
         win.addstr(self.window_height - 1, 0, " WPM:" + self.current_speed_wpm + " ", curses.color_pair(1))
 
