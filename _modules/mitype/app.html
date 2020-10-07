@@ -26,10 +26,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -165,7 +165,7 @@
 <div class="viewcode-block" id="App"><a class="viewcode-back" href="../../api.html#mitype.app.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Class for enclosing all methods required to run Mitype.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize the application class.&quot;&quot;&quot;</span>
         <span class="c1"># Start the parser</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">mitype</span><span class="o">.</span><span class="n">commandline</span><span class="o">.</span><span class="n">main</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
@@ -356,11 +356,11 @@
         <span class="k">elif</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">erase_key</span><span class="p">()</span>
 
-        <span class="c1"># Check for space</span>
+        <span class="c1"># Ignore spaces at the start of the word (Plover support)</span>
         <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_word</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">check_word</span><span class="p">()</span>
 
-        <span class="c1"># Check for any other typable characters</span>
         <span class="k">elif</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">appendkey</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
@@ -452,6 +452,7 @@
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
 
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; Press &quot;</span><span class="p">)</span>
 
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; Enter &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
@@ -489,6 +490,15 @@
 <span class="sd">            win (any): Curses window.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Display the stats during replay at the bottom</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot; WPM:&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
