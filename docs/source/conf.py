@@ -10,14 +10,14 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath("../.."))
 
 import mitype
 
 # -- Project information -----------------------------------------------------
-project = 'Mitype'
+project = "Mitype"
 author = mitype.__author__
-copyright = '2020, ' + author
+copyright = "2020, " + author
 release = mitype.__version__
 
 # -- General configuration ---------------------------------------------------
@@ -28,10 +28,10 @@ extensions = [
     "sphinx_rtd_theme",
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # The suffix(es) of source filenames.
-source_suffix = ['.rst']
+source_suffix = [".rst"]
 
 # The master document.
 master_doc = "index"
@@ -45,16 +45,16 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
 # -- Options for LaTeX output ------------------------------------------------
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, class [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, project + '.tex', project + ' Documentation', author, 'manual'),
+    (master_doc, project + ".tex", project + " Documentation", author, "manual"),
 ]

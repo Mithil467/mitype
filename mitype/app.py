@@ -206,8 +206,8 @@ class App:
             self.erase_key()
 
         # Ignore spaces at the start of the word (Plover support)
-        elif key==" ":
-            if self.current_word!="":
+        elif key == " ":
+            if self.current_word != "":
                 self.check_word()
 
         elif mitype.keycheck.is_valid_initial_key(key):
@@ -340,9 +340,14 @@ class App:
         """
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         curses.curs_set(1)
-        
+
         # Display the stats during replay at the bottom
-        win.addstr(self.window_height - 1, 0, " WPM:" + self.current_speed_wpm + " ", curses.color_pair(1))
+        win.addstr(
+            self.window_height - 1,
+            0,
+            " WPM:" + self.current_speed_wpm + " ",
+            curses.color_pair(1),
+        )
 
         self.setup_print(win)
 
