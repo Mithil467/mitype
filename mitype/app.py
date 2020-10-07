@@ -5,6 +5,8 @@ import os
 import signal
 import sys
 import time
+import csv
+from datetime import date
 
 import mitype.calculations
 import mitype.commandline
@@ -412,9 +414,8 @@ class App:
 
     def save_history(self):
         # Saving stats in file
-        FILE_ATTRIBUTE_HIDDEN = 0x02
 
-        history_file = '.mitype_history.csv'
+        history_file = 'mitype_history.csv'
         history_path = os.path.join(os.path.expanduser('~'), history_file)
 
         if not os.path.isfile(history_path):
@@ -432,8 +433,5 @@ class App:
 
         h = [str(self.text_id), str(self.current_speed_wpm), str(date.today()), str(current_time)]
         csv_history.writerow(h)
-
-        if os.name == 'nt':
-            ctypes.windll.kernel32.SetFileAttributesW(history_path, FILE_ATTRIBUTE_HIDDEN)
 
         history.close()

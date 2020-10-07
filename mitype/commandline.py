@@ -95,6 +95,7 @@ def parse_arguments():
         "--history",
         nargs='?',
         default=0,
+        const=-1,
         help="Show mitype score history",
     )
 
@@ -173,7 +174,7 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
 
 def show_history(N):
     N = int(N)
-    history_file = '.mitype_history.csv'
+    history_file = 'mitype_history.csv'
     history_path = os.path.join(os.path.expanduser('~'), history_file)
     try:
         with open(history_path, 'r') as file:
@@ -183,7 +184,7 @@ def show_history(N):
             data = list(history_reader)
             no_of_records = len(data)
 
-            if N >= len(data):
+            if N >= len(data) or N == -1:
                 print(f"\nLast {no_of_records} records: ")
                 print("ID\tWPM\tDATE\t\tTIME")
 
