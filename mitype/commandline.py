@@ -173,10 +173,11 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
 
 
 def show_history(N):
-    N = int(N)
+    N = abs(int(N))
     history_file = 'mitype_history.csv'
     history_path = os.path.join(os.path.expanduser('~'), history_file)
-    try:
+
+    if os.path.exists(history_path):
         with open(history_path, 'r') as file:
             history_reader = csv.reader(file)
             next(history_reader)
@@ -184,24 +185,15 @@ def show_history(N):
             data = list(history_reader)
             no_of_records = len(data)
 
-            if N >= len(data) or N == -1:
-                print(f"\nLast {no_of_records} records: ")
-                print("ID\tWPM\tDATE\t\tTIME")
+            k = no_of_records if N == -1 or N >= no_of_records else N
+            print("Last " + str(k) + " records: ")
+            print("ID\tWPM\tDATE\t\tTIME")
 
-                for i in range(no_of_records):
-                    print(data[i][0] + '\t' + data[i][1] + '\t' + data[i][2] + '\t' + data[i][3])
+            start_count = 0 if N >= len(data) or N == -1 else no_of_records-N
+            for i in range(start_count, no_of_records):
+                print(data[i][0] + '\t' + data[i][1] + '\t' + data[i][2] + '\t' + data[i][3])
+            print()
 
-                print()
-            else:
-                print(f"\nLast {N} records: ")
-                print("ID\tWPM\tDATE\t\tTIME")
-                for i in range(no_of_records-N, no_of_records):
-                    print(data[i][0] + '\t' + data[i][1] + '\t' + data[i][2] + '\t' + data[i][3])
-
-                print()
-
-    
-    except FileNotFoundError:
-        
+    else:
         print("No records found!")
         print("Take the test atleast once before viewing history.")
