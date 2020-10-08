@@ -1,19 +1,21 @@
-"""Calculations"""
+"""Calculations."""
 
 from __future__ import division
+
 import math
 
 from mitype import timer
 
 
 def first_index_at_which_strings_differ(string1, string2):
-    """Return index at which there is a change in strings. This is used
-    to determine the index upto which text must be dimmed and after which
+    """Return index at which there is a change in strings.
+
+    This is used to determine the index upto which text must be dimmed and after which
     must be coloured red (indicating mismatch).
 
     Args:
         string1 (string): The string which is a combination of
-                            last typed keys in a session.
+            last typed keys in a session.
         string2 (string): The string corresponding to sample text.
 
     Returns:
@@ -34,17 +36,14 @@ def speed_in_wpm(text, start_time):
     Args:
         text (list): List of words from sample text.
         start_time (float): The time when user starts typing
-        the sample text.
+            the sample text.
 
     Returns:
         string: Speed in WPM upto 2 decimal places.
     """
-    if timer.get_elasped_minutes_since_first_keypress(start_time) >= 1:
-        time_taken = (
-            60 * len(text) / timer.get_elasped_minutes_since_first_keypress(start_time)
-        )
-    else:
-        time_taken = 0
+    time_taken = (
+        60 * len(text) / timer.get_elapsed_minutes_since_first_keypress(start_time)
+    )
 
     return "{0:.2f}".format(time_taken)
 
@@ -63,10 +62,10 @@ def number_of_lines_to_fit_string_in_window(string, window_width):
 
 
 def get_space_count_after_ith_word(index, text):
-    """Returns number of spaces after a given word.
+    """Return number of spaces after a given word.
 
     Args:
-        i (int): Index of word in text list
+        index (int): Index of word in text list
         text(string): Text without appending extra spaces
 
     Returns:
