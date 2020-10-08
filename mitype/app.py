@@ -146,7 +146,8 @@ class App:
         curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_CYAN)
         curses.init_pair(6, curses.COLOR_WHITE, curses.COLOR_MAGENTA)
 
-        win.nodelay(False)
+        win.nodelay(True)
+        win.timeout(100)
 
         self.setup_print(win)
 
@@ -226,21 +227,20 @@ class App:
             str: Value of typed key.
         """
         key = ""
-        while key == "":
-            try:
-                if sys.version_info[0] < 3:
-                    key = win.getkey()
-                    return key
+        try:
+            if sys.version_info[0] < 3:
+                key = win.getkey()
+                return key
 
-                key = win.get_wch()
-                if isinstance(key, int):
-                    if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
-                        return "KEY_BACKSPACE"
-                    if key == curses.KEY_RESIZE:
-                        return "KEY_RESIZE"
-            except curses.error:
-                continue
-        return key
+            key = win.get_wch()
+            if isinstance(key, int):
+                if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
+                    return "KEY_BACKSPACE"
+                if key == curses.KEY_RESIZE:
+                    return "KEY_RESIZE"
+            return key
+        except curses.error:
+            return ""
 
     def erase_key(self):
         """Erase the last typed character."""
@@ -351,10 +351,14 @@ class App:
 
         self.setup_print(win)
 
+        win.timeout(10)
         for j in self.key_strokes:
             time.sleep(j[0])
-
+            key = self.keyinput(win)
+            if mitype.keycheck.is_escape(key):
+                sys.exit(0)
             self.key_printer(win, j[1])
+        win.timeout(100)
 
     @staticmethod
     def word_wrap(text, width):

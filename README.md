@@ -46,7 +46,6 @@ You can also customize each run by specifying the following options as:
   ID can be in range [1, 6000].  
 
 You can quit mitype anytime by pressing the `ESC` key or `CTRL-C`.
-While in replay mode, you can quit by pressing `CTRL-C` only.
 
 You can also directly [run on repl.it](https://mitype.mithil467.repl.run/) in your web browser although, the latency is pretty high.
 
