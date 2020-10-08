@@ -297,7 +297,8 @@
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_CYAN</span><span class="p">)</span>
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_MAGENTA</span><span class="p">)</span>
 
-        <span class="n">win</span><span class="o">.</span><span class="n">nodelay</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">nodelay</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
 
@@ -377,21 +378,20 @@
 <span class="sd">            str: Value of typed key.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">while</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-                    <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getkey</span><span class="p">()</span>
-                    <span class="k">return</span> <span class="n">key</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getkey</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">key</span>
 
-                <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">get_wch</span><span class="p">()</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-                    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">curses</span><span class="o">.</span><span class="n">KEY_BACKSPACE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_DC</span><span class="p">):</span>
-                        <span class="k">return</span> <span class="s2">&quot;KEY_BACKSPACE&quot;</span>
-                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_RESIZE</span><span class="p">:</span>
-                        <span class="k">return</span> <span class="s2">&quot;KEY_RESIZE&quot;</span>
-            <span class="k">except</span> <span class="n">curses</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
-                <span class="k">continue</span>
-        <span class="k">return</span> <span class="n">key</span></div>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">get_wch</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">curses</span><span class="o">.</span><span class="n">KEY_BACKSPACE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_DC</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="s2">&quot;KEY_BACKSPACE&quot;</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_RESIZE</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;KEY_RESIZE&quot;</span>
+            <span class="k">return</span> <span class="n">key</span>
+        <span class="k">except</span> <span class="n">curses</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
 
 <div class="viewcode-block" id="App.erase_key"><a class="viewcode-back" href="../../api.html#mitype.app.App.erase_key">[docs]</a>    <span class="k">def</span> <span class="nf">erase_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Erase the last typed character.&quot;&quot;&quot;</span>
@@ -502,10 +502,14 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
+        <span class="n">win</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="p">:</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+            <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyinput</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="App.word_wrap"><a class="viewcode-back" href="../../api.html#mitype.app.App.word_wrap">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">word_wrap</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
