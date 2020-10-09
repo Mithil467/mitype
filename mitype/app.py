@@ -83,6 +83,12 @@ class App:
             if self.mode == 0:
                 self.typing_mode(win, key)
 
+            # Again mode
+            elif self.mode == 1 and mitype.keycheck.is_tab(key):
+                self.setup_print(win)
+                self.update_state(win)
+                self.reset_test()
+
             # Replay mode
             elif self.mode == 1 and mitype.keycheck.is_enter(key):
                 # Start replay if enter key is pressed
@@ -277,6 +283,8 @@ class App:
             win (any): Curses window.
         """
         win.addstr(self.line_count, 0, " " * self.window_width)
+        win.addstr(self.line_count + 2, 0, " " * self.window_width)
+        win.addstr(self.line_count + 4, 0, " " * self.window_width)
         win.addstr(self.line_count, 0, self.current_word)
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -308,6 +316,12 @@ class App:
 
             win.addstr(" to see a replay! ")
 
+            win.addstr(self.line_count + 4, 0, " Press ")
+
+            win.addstr(" TAB ", curses.color_pair(5))
+
+            win.addstr(" to retry! ")
+
             if self.mode == 0:
                 self.mode = 1
                 for k in range(len(self.key_strokes) - 1, 0, -1):
@@ -324,6 +338,7 @@ class App:
 
     def reset_test(self):
         """Reset the current typing session."""
+        self.mode = 0
         self.current_word = ""
         self.current_string = ""
         self.first_key_pressed = False
