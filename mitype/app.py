@@ -70,8 +70,6 @@ class App:
         signal.signal(signal.SIGINT, signal_handler)
 
         while True:
-            if self.mode == 1:
-                curses.curs_set(0)
             # Typing mode
             key = self.keyinput(win)
 
@@ -300,6 +298,7 @@ class App:
             curses.color_pair(2),
         )
         if index == len(self.text):
+            curses.curs_set(0)
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
                 self.current_speed_wpm = mitype.calculations.speed_in_wpm(
@@ -346,6 +345,7 @@ class App:
         self.start_time = 0
         self.i = 0
         self.current_speed_wpm = 0
+        curses.curs_set(1)
 
     def replay(self, win):
         """Play out a recording of the users last session.
