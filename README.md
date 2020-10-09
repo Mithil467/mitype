@@ -8,7 +8,7 @@
 <a href="LICENSE.txt"><img src="https://img.shields.io/pypi/l/mitype.svg"></a>
 <a href="https://github.com/ambv/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 <br />
-<img src="img/demo.gif" alt=>
+<img src="docs/source/_static/demo.gif" alt=>
 </p>
 
 **Mitype** is a program to test (and hence improve) your typing speed right from the ease of your terminal.
@@ -21,7 +21,7 @@ Written completely in python with no external dependencies!
 - 🎦 See your replay
 - 🐍 Supports Python 2 and 3
 - 📝 Choose custom text input
-- 🅰️ 6000️ text samples
+- 🅰️ 6000 text samples
 - 🌈 Colored texts
 
 ## 🔧 Install
@@ -29,10 +29,6 @@ Written completely in python with no external dependencies!
 Mitype can be easily installed by:
 
 ```pip install mitype```
-
-> If you are on windows, you'll also need [windows-curses](https://pypi.org/project/windows-curses/):
-
->```pip install windows-curses```
 
 ## 📈 Usage
 
@@ -50,7 +46,6 @@ You can also customize each run by specifying the following options as:
   ID can be in range [1, 6000].  
 
 You can quit mitype anytime by pressing the `ESC` key or `CTRL-C`.
-While in replay mode, you can quit by pressing `CTRL-C` only.
 
 You can also directly [run on repl.it](https://mitype.mithil467.repl.run/) in your web browser although, the latency is pretty high.
 
