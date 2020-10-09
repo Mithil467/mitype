@@ -156,6 +156,8 @@
 <span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
 
 <span class="kn">import</span> <span class="nn">mitype.calculations</span>
 <span class="kn">import</span> <span class="nn">mitype.commandline</span>
@@ -192,6 +194,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_complete</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -484,6 +488,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_complete</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_history</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">test_complete</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="App.reset_test"><a class="viewcode-back" href="../../api.html#mitype.app.App.reset_test">[docs]</a>    <span class="k">def</span> <span class="nf">reset_test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -578,7 +585,36 @@
         <span class="sd">&quot;&quot;&quot;Inform user that current window size is too small.&quot;&quot;&quot;</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Window too small to print given text&quot;</span><span class="p">)</span>
         <span class="n">curses</span><span class="o">.</span><span class="n">endwin</span><span class="p">()</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span></div></div>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">save_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Saving stats in file</span>
+
+        <span class="n">history_file</span> <span class="o">=</span> <span class="s2">&quot;.mitype_history.csv&quot;</span>
+        <span class="n">history_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="n">history_file</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">history_path</span><span class="p">):</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;WPM&quot;</span><span class="p">,</span> <span class="s2">&quot;DATE&quot;</span><span class="p">,</span> <span class="s2">&quot;TIME&quot;</span><span class="p">]</span>
+            <span class="n">history</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">csv_history</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+            <span class="n">csv_history</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+            <span class="n">history</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">history</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">csv_history</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
+        <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+        <span class="n">h</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_id</span><span class="p">),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span><span class="p">),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">current_time</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="n">csv_history</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+        <span class="n">history</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 </pre></div>
 
            </div>

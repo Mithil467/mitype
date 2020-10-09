@@ -159,6 +159,8 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
 
 <span class="kn">import</span> <span class="nn">mitype</span>
 <span class="kn">import</span> <span class="nn">mitype.database</span>
@@ -173,6 +175,10 @@
     <span class="n">opt</span> <span class="o">=</span> <span class="n">parse_arguments</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
         <span class="n">display_version</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">opt</span><span class="o">.</span><span class="n">history</span><span class="p">:</span>
+        <span class="n">show_history</span><span class="p">(</span><span class="n">opt</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="k">elif</span> <span class="n">opt</span><span class="o">.</span><span class="n">file</span><span class="p">:</span>
@@ -233,6 +239,15 @@
         <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
         <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Choose difficulty within range 1-5&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-H&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--history&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">const</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show mitype score history&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">opt</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
@@ -306,6 +321,45 @@
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Select a difficulty level in range [1,5]&quot;</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">show_history</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">history_file</span> <span class="o">=</span> <span class="s2">&quot;.mitype_history.csv&quot;</span>
+    <span class="n">history_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="n">history_file</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">history_path</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">history_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+                <span class="nb">next</span><span class="p">(</span><span class="n">history_reader</span><span class="p">)</span>
+
+                <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">history_reader</span><span class="p">)</span>
+                <span class="n">no_of_records</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+                <span class="n">k</span> <span class="o">=</span> <span class="n">no_of_records</span> <span class="k">if</span> <span class="n">N</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">N</span> <span class="o">&gt;=</span> <span class="n">no_of_records</span> <span class="k">else</span> <span class="n">N</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Last &quot;</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="s2">&quot; records: &quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ID</span><span class="se">\t</span><span class="s2">WPM</span><span class="se">\t</span><span class="s2">DATE</span><span class="se">\t\t</span><span class="s2">TIME&quot;</span><span class="p">)</span>
+
+                <span class="n">start_count</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">N</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">or</span> <span class="n">N</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="n">no_of_records</span> <span class="o">-</span> <span class="n">N</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_count</span><span class="p">,</span> <span class="n">no_of_records</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
+                        <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
+                        <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span>
+                        <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="nb">print</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0 records found&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ID</span><span class="se">\t</span><span class="s2">WPM</span><span class="se">\t</span><span class="s2">DATE</span><span class="se">\t\t</span><span class="s2">TIME&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter a positive integer&quot;</span><span class="p">)</span>
 </pre></div>
 
            </div>
