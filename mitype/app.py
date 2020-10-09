@@ -210,8 +210,8 @@ class App:
             self.erase_key()
 
         # Ignore spaces at the start of the word (Plover support)
-        elif key==" ":
-            if self.current_word!="":
+        elif key == " ":
+            if self.current_word != "":
                 self.check_word()
 
         elif mitype.keycheck.is_valid_initial_key(key):
@@ -347,9 +347,14 @@ class App:
         """
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         curses.curs_set(1)
-        
+
         # Display the stats during replay at the bottom
-        win.addstr(self.window_height - 1, 0, " WPM:" + self.current_speed_wpm + " ", curses.color_pair(1))
+        win.addstr(
+            self.window_height - 1,
+            0,
+            " WPM:" + self.current_speed_wpm + " ",
+            curses.color_pair(1),
+        )
 
         self.setup_print(win)
 
@@ -415,23 +420,28 @@ class App:
     def save_history(self):
         # Saving stats in file
 
-        history_file = '.mitype_history.csv'
-        history_path = os.path.join(os.path.expanduser('~'), history_file)
+        history_file = ".mitype_history.csv"
+        history_path = os.path.join(os.path.expanduser("~"), history_file)
 
         if not os.path.isfile(history_path):
-            row = ['ID','WPM','DATE','TIME']
-            history = open(history_path, 'a', newline='\n')
+            row = ["ID", "WPM", "DATE", "TIME"]
+            history = open(history_path, "a", newline="\n")
             csv_history = csv.writer(history)
             csv_history.writerow(row)
             history.close()
-        
-        history = open(history_path, 'a', newline='\n')
+
+        history = open(history_path, "a", newline="\n")
         csv_history = csv.writer(history)
 
         t = time.localtime()
         current_time = time.strftime("%H:%M:%S", t)
 
-        h = [str(self.text_id), str(self.current_speed_wpm), str(date.today()), str(current_time)]
+        h = [
+            str(self.text_id),
+            str(self.current_speed_wpm),
+            str(date.today()),
+            str(current_time),
+        ]
         csv_history.writerow(h)
 
         history.close()
