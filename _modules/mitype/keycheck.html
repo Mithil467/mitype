@@ -228,6 +228,11 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
 
 
+<div class="viewcode-block" id="is_tab"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_tab">[docs]</a><span class="k">def</span> <span class="nf">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect tab key to start mitype again&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span></div>
+
+
 <div class="viewcode-block" id="is_resize"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_resize">[docs]</a><span class="k">def</span> <span class="nf">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Detect is terminal was resized.</span>
 
@@ -255,6 +260,7 @@
         <span class="ow">or</span> <span class="n">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="ow">or</span> <span class="n">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_ignored</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
