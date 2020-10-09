@@ -77,8 +77,8 @@ class App:
             # Typing mode
             key = self.keyinput(win)
 
-            # Exit when escape key is pressed and test hasn't started
-            if mitype.keycheck.is_escape(key) and self.start_time == 0:
+            # Exit when escape key is pressed and test hasn't started or ctrl+c is pressed
+            if (mitype.keycheck.is_escape(key) and self.start_time == 0) or mitype.keycheck.is_ctrl_c(key):
                 sys.exit(0)
 
             # Test mode
@@ -205,6 +205,9 @@ class App:
         # Reset test
         if mitype.keycheck.is_escape(key):
             self.reset_test()
+        
+        elif mitype.keycheck.is_ctrl_c(key):
+            sys.exit(0)
 
         # Handle resizing
         elif mitype.keycheck.is_resize(key):
@@ -377,7 +380,7 @@ class App:
         for j in self.key_strokes:
             time.sleep(j[0])
             key = self.keyinput(win)
-            if mitype.keycheck.is_escape(key):
+            if mitype.keycheck.is_escape(key) or mitype.keycheck.is_ctrl_c(key):
                 sys.exit(0)
             self.key_printer(win, j[1])
         win.timeout(100)
