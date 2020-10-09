@@ -5,6 +5,8 @@ import os
 import signal
 import sys
 import time
+import csv
+from datetime import date
 
 import mitype.calculations
 import mitype.commandline
@@ -41,6 +43,8 @@ class App:
         self.window_height = 0
         self.window_width = 0
         self.line_count = 0
+
+        self.test_complete = False
 
         self.current_speed_wpm = 0
 
@@ -333,6 +337,9 @@ class App:
             self.i = 0
 
             self.start_time = 0
+            if not self.test_complete:
+                self.save_history()
+                self.test_complete = True
         win.refresh()
 
     def reset_test(self):
@@ -428,3 +435,32 @@ class App:
         sys.stdout.write("Window too small to print given text")
         curses.endwin()
         sys.exit(4)
+
+    def save_history(self):
+        # Saving stats in file
+
+        history_file = ".mitype_history.csv"
+        history_path = os.path.join(os.path.expanduser("~"), history_file)
+
+        if not os.path.isfile(history_path):
+            row = ["ID", "WPM", "DATE", "TIME"]
+            history = open(history_path, "a", newline="\n")
+            csv_history = csv.writer(history)
+            csv_history.writerow(row)
+            history.close()
+
+        history = open(history_path, "a", newline="\n")
+        csv_history = csv.writer(history)
+
+        t = time.localtime()
+        current_time = time.strftime("%H:%M:%S", t)
+
+        h = [
+            str(self.text_id),
+            str(self.current_speed_wpm),
+            str(date.today()),
+            str(current_time),
+        ]
+        csv_history.writerow(h)
+
+        history.close()
