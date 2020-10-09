@@ -415,7 +415,7 @@ class App:
     def save_history(self):
         # Saving stats in file
 
-        history_file = 'mitype_history.csv'
+        history_file = '.mitype_history.csv'
         history_path = os.path.join(os.path.expanduser('~'), history_file)
 
         if not os.path.isfile(history_path):
