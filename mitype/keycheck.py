@@ -23,6 +23,20 @@ def is_escape(key):
         return ord(key) == curses.ascii.ESC
     return False
 
+def is_ctrl_c(key):
+    """Detects Ctrl+c key combination.
+
+    This is used to exit the application.
+
+    Args: 
+        key (string):
+
+    Returns:
+        bool: Returns true if Ctrl+c is pressed.
+            Returns false otherwise.
+    """
+    return key == "\x03"
+
 
 def is_ctrl_c(key):
     """Detects Ctrl+c key combination.
