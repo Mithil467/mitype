@@ -207,7 +207,7 @@ class App:
         # Reset test
         if mitype.keycheck.is_escape(key):
             self.reset_test()
-        
+
         elif mitype.keycheck.is_ctrl_c(key):
             sys.exit(0)
 
