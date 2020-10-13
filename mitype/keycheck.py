@@ -24,6 +24,21 @@ def is_escape(key):
     return False
 
 
+def is_ctrl_c(key):
+    """Detects Ctrl+c key combination.
+
+    This is used to exit the application.
+
+    Args:
+        key (string):
+
+    Returns:
+        bool: Returns true if Ctrl+c is pressed.
+            Returns false otherwise.
+    """
+    return key == "\x03"
+
+
 def is_ignored(key):
     if sys.version_info[0] < 3:
         return key.startswith("KEY") or (len(key) > 1 and key.startswith("k"))
@@ -77,6 +92,11 @@ def is_enter(key):
     return key == "\n"
 
 
+def is_tab(key):
+    """Detect tab key to start mitype again"""
+    return key == "\t"
+
+
 def is_resize(key):
     """Detect is terminal was resized.
 
@@ -104,6 +124,7 @@ def is_valid_initial_key(key):
         or is_enter(key)
         or is_escape(key)
         or is_backspace(key)
+        or is_tab(key)
         or is_ignored(key)
     ):
         return False

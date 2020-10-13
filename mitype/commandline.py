@@ -8,6 +8,8 @@ import argparse
 import os
 import random
 import sys
+import csv
+import ctypes
 
 import mitype
 import mitype.database
@@ -22,6 +24,10 @@ def main():
     opt = parse_arguments()
     if opt.version:
         display_version()
+        sys.exit(0)
+
+    elif opt.history:
+        show_history(opt.history)
         sys.exit(0)
 
     elif opt.file:
@@ -82,6 +88,15 @@ def parse_arguments():
         default=2,
         type=int,
         help="Choose difficulty within range 1-5",
+    )
+
+    parser.add_argument(
+        "-H",
+        "--history",
+        nargs="?",
+        default=0,
+        const=-1,
+        help="Show mitype score history",
     )
 
     opt = parser.parse_args()
@@ -155,3 +170,42 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
 
     print("Select a difficulty level in range [1,5]")
     sys.exit(2)
+
+
+def show_history(N):
+    N = int(N)
+    history_file = ".mitype_history.csv"
+    history_path = os.path.join(os.path.expanduser("~"), history_file)
+
+    if N >= -1:
+        if os.path.exists(history_path):
+            with open(history_path, "r") as file:
+                history_reader = csv.reader(file)
+                next(history_reader)
+
+                data = list(history_reader)
+                no_of_records = len(data)
+
+                k = no_of_records if N == -1 or N >= no_of_records else N
+                print("Last ", k, " records: ")
+                print("ID\tWPM\tDATE\t\tTIME")
+
+                start_count = 0 if N >= len(data) or N == -1 else no_of_records - N
+                for i in range(start_count, no_of_records):
+                    print(
+                        data[i][0]
+                        + "\t"
+                        + data[i][1]
+                        + "\t"
+                        + data[i][2]
+                        + "\t"
+                        + data[i][3]
+                    )
+                print()
+
+        else:
+            print("0 records found")
+            print("ID\tWPM\tDATE\t\tTIME")
+
+    else:
+        print("Please enter a positive integer")

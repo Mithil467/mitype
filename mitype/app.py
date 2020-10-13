@@ -5,6 +5,8 @@ import os
 import signal
 import sys
 import time
+import csv
+from datetime import date
 
 import mitype.calculations
 import mitype.commandline
@@ -42,6 +44,8 @@ class App:
         self.window_width = 0
         self.line_count = 0
 
+        self.test_complete = False
+
         self.current_speed_wpm = 0
 
         sys.stdout = sys.__stdout__
@@ -70,18 +74,24 @@ class App:
         signal.signal(signal.SIGINT, signal_handler)
 
         while True:
-            if self.mode == 1:
-                curses.curs_set(0)
             # Typing mode
             key = self.keyinput(win)
 
-            # Exit when escape key is pressed and test hasn't started
-            if mitype.keycheck.is_escape(key) and self.start_time == 0:
+            # Exit when escape key is pressed and test hasn't started or ctrl+c is pressed
+            if (
+                mitype.keycheck.is_escape(key) and self.start_time == 0
+            ) or mitype.keycheck.is_ctrl_c(key):
                 sys.exit(0)
 
             # Test mode
             if self.mode == 0:
                 self.typing_mode(win, key)
+
+            # Again mode
+            elif self.mode == 1 and mitype.keycheck.is_tab(key):
+                self.setup_print(win)
+                self.update_state(win)
+                self.reset_test()
 
             # Replay mode
             elif self.mode == 1 and mitype.keycheck.is_enter(key):
@@ -208,6 +218,9 @@ class App:
         if mitype.keycheck.is_escape(key):
             self.reset_test()
 
+        elif mitype.keycheck.is_ctrl_c(key):
+            sys.exit(0)
+
         # Handle resizing
         elif mitype.keycheck.is_resize(key):
             self.resize(win)
@@ -302,6 +315,8 @@ class App:
             win (any): Curses window.
         """
         win.addstr(self.line_count, 0, " " * self.window_width)
+        win.addstr(self.line_count + 2, 0, " " * self.window_width)
+        win.addstr(self.line_count + 4, 0, " " * self.window_width)
         win.addstr(self.line_count, 0, self.current_word)
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -317,6 +332,7 @@ class App:
             curses.color_pair(2),
         )
         if index == len(self.text):
+            curses.curs_set(0)
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
                 self.current_speed_wpm = mitype.calculations.speed_in_wpm(
@@ -333,6 +349,12 @@ class App:
 
             win.addstr(" to see a replay! ")
 
+            win.addstr(self.line_count + 4, 0, " Press ")
+
+            win.addstr(" TAB ", curses.color_pair(5))
+
+            win.addstr(" to retry! ")
+
             if self.mode == 0:
                 self.mode = 1
                 for k in range(len(self.key_strokes) - 1, 0, -1):
@@ -345,10 +367,14 @@ class App:
             self.i = 0
 
             self.start_time = 0
+            if not self.test_complete:
+                self.save_history()
+                self.test_complete = True
         win.refresh()
 
     def reset_test(self):
         """Reset the current typing session."""
+        self.mode = 0
         self.current_word = ""
         self.current_string = ""
         self.first_key_pressed = False
@@ -356,6 +382,7 @@ class App:
         self.start_time = 0
         self.i = 0
         self.current_speed_wpm = 0
+        curses.curs_set(1)
 
     def replay(self, win):
         """Play out a recording of the users last session.
@@ -388,7 +415,7 @@ class App:
         for j in self.key_strokes:
             time.sleep(j[0])
             key = self.keyinput(win)
-            if mitype.keycheck.is_escape(key):
+            if mitype.keycheck.is_escape(key) or mitype.keycheck.is_ctrl_c(key):
                 sys.exit(0)
             self.key_printer(win, j[1])
         win.timeout(100)
@@ -446,3 +473,32 @@ class App:
         sys.stdout.write("Window too small to print given text")
         curses.endwin()
         sys.exit(4)
+
+    def save_history(self):
+        # Saving stats in file
+
+        history_file = ".mitype_history.csv"
+        history_path = os.path.join(os.path.expanduser("~"), history_file)
+
+        if not os.path.isfile(history_path):
+            row = ["ID", "WPM", "DATE", "TIME"]
+            history = open(history_path, "a", newline="\n")
+            csv_history = csv.writer(history)
+            csv_history.writerow(row)
+            history.close()
+
+        history = open(history_path, "a", newline="\n")
+        csv_history = csv.writer(history)
+
+        t = time.localtime()
+        current_time = time.strftime("%H:%M:%S", t)
+
+        h = [
+            str(self.text_id),
+            str(self.current_speed_wpm),
+            str(date.today()),
+            str(current_time),
+        ]
+        csv_history.writerow(h)
+
+        history.close()
