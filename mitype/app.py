@@ -121,7 +121,8 @@ class App:
 
         self.key_strokes.append([time.time(), key])
 
-        # self._wpm_realtime(win,time.time())
+        if key:
+            self._wpm_realtime(win)
 
         self.key_printer(win, key)
 
@@ -262,8 +263,6 @@ class App:
                     return "KEY_BACKSPACE"
                 if key == curses.KEY_RESIZE:
                     return "KEY_RESIZE"
-            if self.mode == 0:
-                self._wpm_realtime(win)
             return key
         except curses.error:
             return ""
@@ -297,13 +296,14 @@ class App:
         self.current_string += key
 
     def _wpm_realtime(self, win):
-        self.current_speed_wpm = mitype.calculations.speed_in_wpm(
-            self.tokens, self.start_time
+        current_wpm = (
+        60 * len(self.current_string.split()) / mitype.timer.get_elapsed_minutes_since_first_keypress(self.start_time)
         )
+
         win.addstr(
             0,
             int(self.window_width) - 14,
-            " " + str(self.current_speed_wpm) + " ",
+            " " + "{0:.2f}".format(current_wpm) + " ",
             curses.color_pair(1),
         )
         win.addstr(" WPM ")
