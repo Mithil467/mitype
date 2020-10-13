@@ -121,8 +121,7 @@ class App:
 
         self.key_strokes.append([time.time(), key])
 
-        if key:
-            self._wpm_realtime(win)
+        self._wpm_realtime(win)
 
         self.key_printer(win, key)
 
