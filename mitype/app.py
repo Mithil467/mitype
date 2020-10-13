@@ -297,7 +297,9 @@ class App:
 
     def _wpm_realtime(self, win):
         current_wpm = (
-        60 * len(self.current_string.split()) / mitype.timer.get_elapsed_minutes_since_first_keypress(self.start_time)
+            60
+            * len(self.current_string.split())
+            / mitype.timer.get_elapsed_minutes_since_first_keypress(self.start_time)
         )
 
         win.addstr(
