@@ -121,6 +121,8 @@ class App:
 
         self.key_strokes.append([time.time(), key])
 
+        self._wpm_realtime(win)
+
         self.key_printer(win, key)
 
     def initialize(self, win):
@@ -158,6 +160,14 @@ class App:
 
         win.nodelay(True)
         win.timeout(100)
+
+        win.addstr(
+            0,
+            int(self.window_width) - 14,
+            " 0.00 ",
+            curses.color_pair(1),
+        )
+        win.addstr(" WPM ")
 
         self.setup_print(win)
 
@@ -240,6 +250,7 @@ class App:
             str: Value of typed key.
         """
         key = ""
+
         try:
             if sys.version_info[0] < 3:
                 key = win.getkey()
@@ -282,6 +293,21 @@ class App:
         """
         self.current_word += key
         self.current_string += key
+
+    def _wpm_realtime(self, win):
+        current_wpm = (
+            60
+            * len(self.current_string.split())
+            / mitype.timer.get_elapsed_minutes_since_first_keypress(self.start_time)
+        )
+
+        win.addstr(
+            0,
+            int(self.window_width) - 14,
+            " " + "{0:.2f}".format(current_wpm) + " ",
+            curses.color_pair(1),
+        )
+        win.addstr(" WPM ")
 
     def update_state(self, win):
         """Report on typing session results.
@@ -367,6 +393,14 @@ class App:
         """
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         curses.curs_set(1)
+
+        win.addstr(
+            0,
+            int(self.window_width) - 14,
+            " " + str(self.current_speed_wpm) + " ",
+            curses.color_pair(1),
+        )
+        win.addstr(" WPM ")
 
         # Display the stats during replay at the bottom
         win.addstr(
