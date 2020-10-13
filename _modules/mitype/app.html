@@ -272,6 +272,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">key</span><span class="p">])</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wpm_realtime</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="App.initialize"><a class="viewcode-back" href="../../api.html#mitype.app.App.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
@@ -309,6 +311,14 @@
 
         <span class="n">win</span><span class="o">.</span><span class="n">nodelay</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">-</span> <span class="mi">14</span><span class="p">,</span>
+            <span class="s2">&quot; 0.00 &quot;</span><span class="p">,</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
 
@@ -391,6 +401,7 @@
 <span class="sd">            str: Value of typed key.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getkey</span><span class="p">()</span>
@@ -433,6 +444,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">+=</span> <span class="n">key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">+=</span> <span class="n">key</span></div>
+
+    <span class="k">def</span> <span class="nf">_wpm_realtime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
+        <span class="n">current_wpm</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">60</span>
+            <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+            <span class="o">/</span> <span class="n">mitype</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">-</span> <span class="mi">14</span><span class="p">,</span>
+            <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_wpm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="App.update_state"><a class="viewcode-back" href="../../api.html#mitype.app.App.update_state">[docs]</a>    <span class="k">def</span> <span class="nf">update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Report on typing session results.</span>
@@ -518,6 +544,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
         <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">-</span> <span class="mi">14</span><span class="p">,</span>
+            <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
 
         <span class="c1"># Display the stats during replay at the bottom</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
