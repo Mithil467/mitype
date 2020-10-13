@@ -175,6 +175,21 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
+<div class="viewcode-block" id="is_ctrl_c"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ctrl_c">[docs]</a><span class="k">def</span> <span class="nf">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detects Ctrl+c key combination.</span>
+
+<span class="sd">    This is used to exit the application.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (string):</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Returns true if Ctrl+c is pressed.</span>
+<span class="sd">            Returns false otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x03</span><span class="s2">&quot;</span></div>
+
+
 <span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;KEY&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">))</span>

@@ -444,7 +444,7 @@ the sample text.</p></li>
 
 <dl class="py function">
 <dt id="mitype.commandline.load_based_on_difficulty">
-<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_based_on_difficulty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">difficulty_level</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_based_on_difficulty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">difficulty_level</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load text of given difficulty from database if parameter is passed.</p>
 <p>Defaults to random difficulty level when none is provided.</p>
 <dl class="field-list simple">
@@ -572,6 +572,28 @@ KEY_UP or ^G.</p>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>Returns true if pressed key is BACKSPACE key.</dt><dd><p>Returns false otherwise.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="mitype.keycheck.is_ctrl_c">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_ctrl_c</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_ctrl_c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_ctrl_c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detects Ctrl+c key combination.</p>
+<p>This is used to exit the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>string</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Returns true if Ctrl+c is pressed.</dt><dd><p>Returns false otherwise.</p>
 </dd>
 </dl>
 </p>
