@@ -166,10 +166,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">database_filename</span> <span class="o">=</span> <span class="s2">&quot;data.db&quot;</span>
     <span class="n">database_directory_absolute_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
-    <span class="n">database_file_absolute_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="n">database_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">database_directory_absolute_path</span><span class="p">,</span> <span class="n">database_filename</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="n">database_file_absolute_path</span></div>
+    <span class="k">return</span> <span class="n">database_file_path</span></div>
 
 
 <div class="viewcode-block" id="fetch_text_from_id"><a class="viewcode-back" href="../../api.html#mitype.database.fetch_text_from_id">[docs]</a><span class="k">def</span> <span class="nf">fetch_text_from_id</span><span class="p">(</span><span class="n">serial_id</span><span class="p">):</span>

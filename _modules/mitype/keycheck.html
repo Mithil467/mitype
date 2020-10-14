@@ -190,23 +190,11 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x03</span><span class="s2">&quot;</span></div>
 
 
-<span class="k">def</span> <span class="nf">is_ignored</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;KEY&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
-
-
 <div class="viewcode-block" id="is_backspace"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_backspace">[docs]</a><span class="k">def</span> <span class="nf">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Detect BACKSPACE key.</span>
 
-<span class="sd">    This is used to exit the application.</span>
-
 <span class="sd">    Args:</span>
-<span class="sd">        key (string): Individual characters are returned as 1-character</span>
-<span class="sd">            strings, and special keys such as function keys</span>
-<span class="sd">            return longer strings containing a key name such as</span>
-<span class="sd">            KEY_UP or ^G.</span>
+<span class="sd">        key (string): Character to check.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: Returns true if pressed key is BACKSPACE key.</span>
@@ -244,12 +232,19 @@
 
 
 <div class="viewcode-block" id="is_tab"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_tab">[docs]</a><span class="k">def</span> <span class="nf">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Detect tab key to start mitype again&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Detect tab key to start mitype again.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (str): Character to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: `True` if tab key or `False` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="is_resize"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_resize">[docs]</a><span class="k">def</span> <span class="nf">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Detect is terminal was resized.</span>
+    <span class="sd">&quot;&quot;&quot;Detect if terminal was resized.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        key (str): Character to check.</span>
@@ -258,6 +253,23 @@
 <span class="sd">        bool: `True` if resize request or `False` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;KEY_RESIZE&quot;</span></div>
+
+
+<div class="viewcode-block" id="is_ignored_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ignored_key">[docs]</a><span class="k">def</span> <span class="nf">is_ignored_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect if key press should be ignored.</span>
+
+<span class="sd">    Special function keys, page navigation keys must be ignored.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (string):</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Returns `True` if pressed key must be ignored or `False`</span>
+<span class="sd">            otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;KEY&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="is_valid_initial_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_valid_initial_key">[docs]</a><span class="k">def</span> <span class="nf">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
@@ -269,17 +281,15 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: `True` if key is a valid text character or `False` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="p">(</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span>
         <span class="n">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_null</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="ow">or</span> <span class="n">is_ignored</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-    <span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="ow">or</span> <span class="n">is_ignored_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="p">)</span></div>
 </pre></div>
 
            </div>

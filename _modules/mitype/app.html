@@ -153,15 +153,28 @@
 
 <span class="kn">import</span> <span class="nn">curses</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
 
-<span class="kn">import</span> <span class="nn">mitype.calculations</span>
-<span class="kn">import</span> <span class="nn">mitype.commandline</span>
-<span class="kn">import</span> <span class="nn">mitype.keycheck</span>
+<span class="kn">import</span> <span class="nn">mitype.signals</span>
+<span class="kn">from</span> <span class="nn">mitype.calculations</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">first_index_at_which_strings_differ</span><span class="p">,</span>
+    <span class="n">get_space_count_after_ith_word</span><span class="p">,</span>
+    <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">,</span>
+    <span class="n">speed_in_wpm</span><span class="p">,</span>
+    <span class="n">word_wrap</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">mitype.commandline</span> <span class="kn">import</span> <span class="n">resolve_commandline_arguments</span>
+<span class="kn">from</span> <span class="nn">mitype.history</span> <span class="kn">import</span> <span class="n">save_history</span>
+<span class="kn">from</span> <span class="nn">mitype.keycheck</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">is_backspace</span><span class="p">,</span>
+    <span class="n">is_ctrl_c</span><span class="p">,</span>
+    <span class="n">is_enter</span><span class="p">,</span>
+    <span class="n">is_escape</span><span class="p">,</span>
+    <span class="n">is_resize</span><span class="p">,</span>
+    <span class="n">is_tab</span><span class="p">,</span>
+    <span class="n">is_valid_initial_key</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="App"><a class="viewcode-back" href="../../api.html#mitype.app.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">:</span>
@@ -170,13 +183,13 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize the application class.&quot;&quot;&quot;</span>
         <span class="c1"># Start the parser</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">mitype</span><span class="o">.</span><span class="n">commandline</span><span class="o">.</span><span class="n">main</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text_id</span> <span class="o">=</span> <span class="n">mitype</span><span class="o">.</span><span class="n">commandline</span><span class="o">.</span><span class="n">main</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">resolve_commandline_arguments</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_id</span> <span class="o">=</span> <span class="n">resolve_commandline_arguments</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 
         <span class="c1"># Convert multiple spaces, tabs, newlines to single space</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ogtext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_text_formatted</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -210,7 +223,8 @@
 <div class="viewcode-block" id="App.main"><a class="viewcode-back" href="../../api.html#mitype.app.App.main">[docs]</a>    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Respond to user inputs.</span>
 
-<span class="sd">        This is where the infinite loop is executed to continuously serve events.</span>
+<span class="sd">        This is where the infinite loop is executed to continuously serve</span>
+<span class="sd">        events.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            win (any): Curses window object.</span>
@@ -218,20 +232,14 @@
         <span class="c1"># Initialize windows</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-        <span class="c1"># Signal logic</span>
-        <span class="k">def</span> <span class="nf">signal_handler</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-
-        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal_handler</span><span class="p">)</span>
-
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="c1"># Typing mode</span>
             <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyinput</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-            <span class="c1"># Exit when escape key is pressed and test hasn&#39;t started or ctrl+c is pressed</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">==</span> <span class="mi">0</span>
-            <span class="p">)</span> <span class="ow">or</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
             <span class="c1"># Test mode</span>
@@ -239,13 +247,13 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">typing_mode</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
 
             <span class="c1"># Again mode</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">reset_test</span><span class="p">()</span>
 
             <span class="c1"># Replay mode</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
                 <span class="c1"># Start replay if enter key is pressed</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">replay</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
@@ -260,11 +268,11 @@
 <span class="sd">            key (string): First typed character of the session.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Note start time when first valid key is pressed</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span> <span class="ow">and</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span> <span class="ow">and</span> <span class="n">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="k">if</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span><span class="p">:</span>
@@ -286,13 +294,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
         <span class="c1"># Adding word wrap to text</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
 
         <span class="c1"># Find number of lines required to print text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">mitype</span><span class="o">.</span><span class="n">calculations</span><span class="o">.</span><span class="n">number_of_lines_to_fit_string_in_window</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span>
-            <span class="p">)</span>
+            <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
             <span class="o">+</span> <span class="mi">2</span>  <span class="c1"># Top 2 lines</span>
             <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># One empty line after text</span>
         <span class="p">)</span>
@@ -300,7 +306,9 @@
         <span class="c1"># If required number of lines are more than the window height, exit</span>
         <span class="c1"># +3 for printing stats at the end of the test</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">size_error</span><span class="p">()</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">endwin</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Window too small to print given text&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_GREEN</span><span class="p">)</span>
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_RED</span><span class="p">)</span>
@@ -321,20 +329,6 @@
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="App.get_dimensions"><a class="viewcode-back" href="../../api.html#mitype.app.App.get_dimensions">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the width of terminal.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            win (any): Curses window object.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            int: Return width of terminal window.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dimension_tuple</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getmaxyx</span><span class="p">()</span>
-
-        <span class="k">return</span> <span class="n">dimension_tuple</span></div>
 
 <div class="viewcode-block" id="App.setup_print"><a class="viewcode-back" href="../../api.html#mitype.app.App.setup_print">[docs]</a>    <span class="k">def</span> <span class="nf">setup_print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Print setup text at beginning of each typing session.</span>
@@ -366,18 +360,18 @@
 <span class="sd">                KEY_UP or ^G.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Reset test</span>
-        <span class="k">if</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_test</span><span class="p">()</span>
 
-        <span class="k">elif</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="c1"># Handle resizing</span>
-        <span class="k">elif</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
         <span class="c1"># Check for backspace</span>
-        <span class="k">elif</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">erase_key</span><span class="p">()</span>
 
         <span class="c1"># Ignore spaces at the start of the word (Plover support)</span>
@@ -385,37 +379,11 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">check_word</span><span class="p">()</span>
 
-        <span class="k">elif</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">appendkey</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
         <span class="c1"># Update state of window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="App.keyinput"><a class="viewcode-back" href="../../api.html#mitype.app.App.keyinput">[docs]</a>    <span class="k">def</span> <span class="nf">keyinput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieve next character of text input.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            win (any): Curses window.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            str: Value of typed key.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getkey</span><span class="p">()</span>
-                <span class="k">return</span> <span class="n">key</span>
-
-            <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">get_wch</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">curses</span><span class="o">.</span><span class="n">KEY_BACKSPACE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_DC</span><span class="p">):</span>
-                    <span class="k">return</span> <span class="s2">&quot;KEY_BACKSPACE&quot;</span>
-                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_RESIZE</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="s2">&quot;KEY_RESIZE&quot;</span>
-            <span class="k">return</span> <span class="n">key</span>
-        <span class="k">except</span> <span class="n">curses</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
 
 <div class="viewcode-block" id="App.erase_key"><a class="viewcode-back" href="../../api.html#mitype.app.App.erase_key">[docs]</a>    <span class="k">def</span> <span class="nf">erase_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Erase the last typed character.&quot;&quot;&quot;</span>
@@ -425,9 +393,7 @@
 
 <div class="viewcode-block" id="App.check_word"><a class="viewcode-back" href="../../api.html#mitype.app.App.check_word">[docs]</a>    <span class="k">def</span> <span class="nf">check_word</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Accept finalized word.&quot;&quot;&quot;</span>
-        <span class="n">spc</span> <span class="o">=</span> <span class="n">mitype</span><span class="o">.</span><span class="n">calculations</span><span class="o">.</span><span class="n">get_space_count_after_ith_word</span><span class="p">(</span>
-            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
-        <span class="p">)</span>
+        <span class="n">spc</span> <span class="o">=</span> <span class="n">get_space_count_after_ith_word</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -474,9 +440,7 @@
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">A_BOLD</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">)],</span> <span class="n">curses</span><span class="o">.</span><span class="n">A_DIM</span><span class="p">)</span>
 
-        <span class="n">index</span> <span class="o">=</span> <span class="n">mitype</span><span class="o">.</span><span class="n">calculations</span><span class="o">.</span><span class="n">first_index_at_which_strings_differ</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
-        <span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">first_index_at_which_strings_differ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
             <span class="mi">2</span> <span class="o">+</span> <span class="n">index</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">,</span>
             <span class="n">index</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">,</span>
@@ -487,9 +451,7 @@
             <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; Your typing speed is &quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">=</span> <span class="n">mitype</span><span class="o">.</span><span class="n">calculations</span><span class="o">.</span><span class="n">speed_in_wpm</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
-                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">=</span> <span class="n">speed_in_wpm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
 
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
@@ -520,7 +482,7 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_complete</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">save_history</span><span class="p">()</span>
+                <span class="n">save_history</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">test_complete</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
 
@@ -567,37 +529,10 @@
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="p">:</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyinput</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">mitype</span><span class="o">.</span><span class="n">keycheck</span><span class="o">.</span><span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">win</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="App.word_wrap"><a class="viewcode-back" href="../../api.html#mitype.app.App.word_wrap">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">word_wrap</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Wrap text on the screen according to the window width.</span>
-
-<span class="sd">        Returns text with extra spaces which makes the string word wrap.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            text (string): Text to wrap.</span>
-<span class="sd">            width (integer): Width to wrap around.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            str: Return altered text.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># For the end of each line, move backwards until you find a space.</span>
-        <span class="c1"># When you do, append those many spaces after the single space.</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
-            <span class="mi">1</span><span class="p">,</span>
-            <span class="n">mitype</span><span class="o">.</span><span class="n">calculations</span><span class="o">.</span><span class="n">number_of_lines_to_fit_string_in_window</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
-            <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="ow">or</span> <span class="n">text</span><span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">):</span>
-                <span class="n">i</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span>
-                <span class="k">while</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
-                    <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
-                <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
-        <span class="k">return</span> <span class="n">text</span></div>
 
 <div class="viewcode-block" id="App.resize"><a class="viewcode-back" href="../../api.html#mitype.app.App.resize">[docs]</a>    <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Respond to window resize events.</span>
@@ -608,52 +543,52 @@
         <span class="n">win</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ogtext</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original_text_formatted</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">mitype</span><span class="o">.</span><span class="n">calculations</span><span class="o">.</span><span class="n">number_of_lines_to_fit_string_in_window</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span>
-            <span class="p">)</span>
-            <span class="o">+</span> <span class="mi">2</span>
-            <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="App.size_error"><a class="viewcode-back" href="../../api.html#mitype.app.App.size_error">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">size_error</span><span class="p">():</span>
-        <span class="sd">&quot;&quot;&quot;Inform user that current window size is too small.&quot;&quot;&quot;</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Window too small to print given text&quot;</span><span class="p">)</span>
-        <span class="n">curses</span><span class="o">.</span><span class="n">endwin</span><span class="p">()</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span></div>
+<div class="viewcode-block" id="App.get_dimensions"><a class="viewcode-back" href="../../api.html#mitype.app.App.get_dimensions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the width of terminal.</span>
 
-    <span class="k">def</span> <span class="nf">save_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Saving stats in file</span>
+<span class="sd">        Args:</span>
+<span class="sd">            win (any): Curses window object.</span>
 
-        <span class="n">history_file</span> <span class="o">=</span> <span class="s2">&quot;.mitype_history.csv&quot;</span>
-        <span class="n">history_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="n">history_file</span><span class="p">)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Return width of terminal window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dimension_tuple</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getmaxyx</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">history_path</span><span class="p">):</span>
-            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;WPM&quot;</span><span class="p">,</span> <span class="s2">&quot;DATE&quot;</span><span class="p">,</span> <span class="s2">&quot;TIME&quot;</span><span class="p">]</span>
-            <span class="n">history</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">csv_history</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
-            <span class="n">csv_history</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-            <span class="n">history</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dimension_tuple</span></div>
 
-        <span class="n">history</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">csv_history</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+<div class="viewcode-block" id="App.keyinput"><a class="viewcode-back" href="../../api.html#mitype.app.App.keyinput">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">keyinput</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve next character of text input.</span>
 
-        <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()</span>
-        <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="sd">        Args:</span>
+<span class="sd">            win (any): Curses window.</span>
 
-        <span class="n">h</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_id</span><span class="p">),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span><span class="p">),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">current_time</span><span class="p">),</span>
-        <span class="p">]</span>
-        <span class="n">csv_history</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Value of typed key.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getkey</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">key</span>
 
-        <span class="n">history</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">get_wch</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">curses</span><span class="o">.</span><span class="n">KEY_BACKSPACE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_DC</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="s2">&quot;KEY_BACKSPACE&quot;</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_RESIZE</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;KEY_RESIZE&quot;</span>
+            <span class="k">return</span> <span class="n">key</span>
+        <span class="k">except</span> <span class="n">curses</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span></div></div>
 </pre></div>
 
            </div>

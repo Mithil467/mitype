@@ -161,8 +161,8 @@
 <div class="viewcode-block" id="first_index_at_which_strings_differ"><a class="viewcode-back" href="../../api.html#mitype.calculations.first_index_at_which_strings_differ">[docs]</a><span class="k">def</span> <span class="nf">first_index_at_which_strings_differ</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return index at which there is a change in strings.</span>
 
-<span class="sd">    This is used to determine the index upto which text must be dimmed and after which</span>
-<span class="sd">    must be coloured red (indicating mismatch).</span>
+<span class="sd">    This is used to determine the index up to which text must be dimmed and</span>
+<span class="sd">    after which must be coloured red (indicating mismatch).</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        string1 (string): The string which is a combination of</span>
@@ -177,7 +177,6 @@
     <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">string1</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">!=</span> <span class="n">string2</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">index</span>
-    <span class="c1"># Both strings are</span>
     <span class="k">return</span> <span class="n">length</span></div>
 
 
@@ -190,16 +189,15 @@
 <span class="sd">            the sample text.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        string: Speed in WPM upto 2 decimal places.</span>
+<span class="sd">        string: Speed in WPM up to 2 decimal places.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">time_taken</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="mi">60</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">/</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">time_taken</span> <span class="o">=</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+    <span class="n">wpm</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">/</span> <span class="n">time_taken</span>
 
-    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_taken</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wpm</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="number_of_lines_to_fit_string_in_window"><a class="viewcode-back" href="../../api.html#mitype.calculations.number_of_lines_to_fit_string_in_window">[docs]</a><span class="k">def</span> <span class="nf">number_of_lines_to_fit_string_in_window</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">window_width</span><span class="p">):</span>
+<div class="viewcode-block" id="number_of_lines_to_fit_text_in_window"><a class="viewcode-back" href="../../api.html#mitype.calculations.number_of_lines_to_fit_text_in_window">[docs]</a><span class="k">def</span> <span class="nf">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">window_width</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Count number of lines required for displaying text.</span>
 
 <span class="sd">    Args:</span>
@@ -227,6 +225,32 @@
         <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">count</span></div>
+
+
+<div class="viewcode-block" id="word_wrap"><a class="viewcode-back" href="../../api.html#mitype.calculations.word_wrap">[docs]</a><span class="k">def</span> <span class="nf">word_wrap</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrap text on the screen according to the window width.</span>
+
+<span class="sd">    Returns text with extra spaces which makes the string word wrap.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (string): Text to wrap.</span>
+<span class="sd">        width (integer): Width to wrap around.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Return altered text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># For the end of each line, move backwards until you find a space.</span>
+    <span class="c1"># When you do, append those many spaces after the single space.</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="ow">or</span> <span class="n">text</span><span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">):</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+    <span class="k">return</span> <span class="n">text</span></div>
 </pre></div>
 
            </div>
