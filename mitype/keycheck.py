@@ -39,23 +39,11 @@ def is_ctrl_c(key):
     return key == "\x03"
 
 
-def is_ignored(key):
-    if sys.version_info[0] < 3:
-        return key.startswith("KEY") or (len(key) > 1 and key.startswith("k"))
-    else:
-        return isinstance(key, int)
-
-
 def is_backspace(key):
     """Detect BACKSPACE key.
 
-    This is used to exit the application.
-
     Args:
-        key (string): Individual characters are returned as 1-character
-            strings, and special keys such as function keys
-            return longer strings containing a key name such as
-            KEY_UP or ^G.
+        key (string): Character to check.
 
     Returns:
         bool: Returns true if pressed key is BACKSPACE key.
@@ -93,12 +81,19 @@ def is_enter(key):
 
 
 def is_tab(key):
-    """Detect tab key to start mitype again"""
+    """Detect tab key to start mitype again.
+
+    Args:
+        key (str): Character to check.
+
+    Returns:
+        bool: `True` if tab key or `False` otherwise.
+    """
     return key == "\t"
 
 
 def is_resize(key):
-    """Detect is terminal was resized.
+    """Detect if terminal was resized.
 
     Args:
         key (str): Character to check.
@@ -107,6 +102,23 @@ def is_resize(key):
         bool: `True` if resize request or `False` otherwise.
     """
     return key == "KEY_RESIZE"
+
+
+def is_ignored_key(key):
+    """Detect if key press should be ignored.
+
+    Special function keys, page navigation keys must be ignored.
+
+    Args:
+        key (string):
+
+    Returns:
+        bool: Returns `True` if pressed key must be ignored or `False`
+            otherwise.
+    """
+    if sys.version_info[0] < 3:
+        return key.startswith("KEY") or (len(key) > 1 and key.startswith("k"))
+    return isinstance(key, int)
 
 
 def is_valid_initial_key(key):
@@ -118,14 +130,12 @@ def is_valid_initial_key(key):
     Returns:
         bool: `True` if key is a valid text character or `False` otherwise.
     """
-    if (
+    return not (
         is_resize(key)
         or is_null(key)
         or is_enter(key)
         or is_escape(key)
         or is_backspace(key)
         or is_tab(key)
-        or is_ignored(key)
-    ):
-        return False
-    return True
+        or is_ignored_key(key)
+    )
