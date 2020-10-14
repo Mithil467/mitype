@@ -8,14 +8,13 @@ import argparse
 import os
 import random
 import sys
-import csv
-import ctypes
 
 import mitype
 import mitype.database
+from mitype.history import show_history
 
 
-def main():
+def resolve_commandline_arguments():
     """Parse CLI arguments and return practice text.
 
     Returns:
@@ -96,6 +95,7 @@ def parse_arguments():
         nargs="?",
         default=0,
         const=-1,
+        type=int,
         help="Show mitype score history",
     )
 
@@ -151,7 +151,7 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
     Defaults to random difficulty level when none is provided.
 
     Args:
-        difficulty_level (int): difficulty leven in a range of 1 - 5
+        difficulty_level (int): difficulty level in a range of 1 - 5
 
     Returns:
         (str, int): Tuple of text content followed by DB row identifier.
@@ -169,43 +169,4 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
         return text, text_id
 
     print("Select a difficulty level in range [1,5]")
-    sys.exit(2)
-
-
-def show_history(N):
-    N = int(N)
-    history_file = ".mitype_history.csv"
-    history_path = os.path.join(os.path.expanduser("~"), history_file)
-
-    if N >= -1:
-        if os.path.exists(history_path):
-            with open(history_path, "r") as file:
-                history_reader = csv.reader(file)
-                next(history_reader)
-
-                data = list(history_reader)
-                no_of_records = len(data)
-
-                k = no_of_records if N == -1 or N >= no_of_records else N
-                print("Last ", k, " records: ")
-                print("ID\tWPM\tDATE\t\tTIME")
-
-                start_count = 0 if N >= len(data) or N == -1 else no_of_records - N
-                for i in range(start_count, no_of_records):
-                    print(
-                        data[i][0]
-                        + "\t"
-                        + data[i][1]
-                        + "\t"
-                        + data[i][2]
-                        + "\t"
-                        + data[i][3]
-                    )
-                print()
-
-        else:
-            print("0 records found")
-            print("ID\tWPM\tDATE\t\tTIME")
-
-    else:
-        print("Please enter a positive integer")
+    sys.exit(1)

@@ -1,4 +1,4 @@
-name: Python package
+name: Code quality and build check
 
 on:
   push:
