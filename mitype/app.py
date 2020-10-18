@@ -261,11 +261,12 @@ class App:
         self.current_string += key
 
     def _wpm_realtime(self, win):
-        current_wpm = (
-            60
-            * len(self.current_string.split())
-            / mitype.timer.get_elapsed_minutes_since_first_keypress(self.start_time)
+        total_time = mitype.timer.get_elapsed_minutes_since_first_keypress(
+            self.start_time
         )
+        current_wpm = 0
+        if total_time != 0:
+            current_wpm = 60 * len(self.current_string.split()) / total_time
 
         win.addstr(
             0,
