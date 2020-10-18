@@ -282,7 +282,9 @@ class App:
             win (any): Curses window.
         """
         win.addstr(self.line_count, 0, " " * self.window_width)
+        win.addstr(self.line_count + 1, 0, " " * self.window_width)
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
+        win.addstr(self.line_count + 3, 0, " " * self.window_width)
         win.addstr(self.line_count + 4, 0, " " * self.window_width)
         win.addstr(self.line_count, 0, self.current_word)
 
