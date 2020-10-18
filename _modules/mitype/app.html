@@ -412,11 +412,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">+=</span> <span class="n">key</span></div>
 
     <span class="k">def</span> <span class="nf">_wpm_realtime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
-        <span class="n">current_wpm</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="mi">60</span>
-            <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
-            <span class="o">/</span> <span class="n">mitype</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="n">total_time</span> <span class="o">=</span> <span class="n">mitype</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
         <span class="p">)</span>
+        <span class="n">current_wpm</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">total_time</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">current_wpm</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="o">/</span> <span class="n">total_time</span>
 
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
             <span class="mi">0</span><span class="p">,</span>
