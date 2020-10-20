@@ -1,5 +1,6 @@
 """ Setup script for mitype """
 import io
+
 from setuptools import setup
 
 with io.open("README.md", encoding="utf-8") as f:

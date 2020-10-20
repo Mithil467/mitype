@@ -22,10 +22,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install black tox sphinx sphinx_rtd_theme --use-feature=2020-resolver
+          pip install black tox sphinx sphinx_rtd_theme isort --use-feature=2020-resolver
       - name: Check if linted with black
         run: |
           black --check .
+      - name: Check if imports are sorted
+        run: |
+          isort --profile black . --check
       - name: Test with tox
         run: |
           tox .

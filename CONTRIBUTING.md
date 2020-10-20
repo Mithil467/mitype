@@ -46,11 +46,11 @@ Read [build](BUILD.md) document if you want to understand how mitype works or wa
 
 ### Python Styleguide
 
-All python code is linted with [black](https://black.readthedocs.io/).
-
+All python code is linted with [black](https://black.readthedocs.io/) by running `black .`
 - Place imports in the following order:
   - Built-in Python Modules (such as `os`)
   - Mitype Modules (using relative paths)
+- Format imports using [isort](https://pycqa.github.io/isort/) by running `isort --profile black .`
 - Avoid platform-dependent code
 
 ## Code of Conduct
