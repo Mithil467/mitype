@@ -400,8 +400,12 @@ class App:
             + 2
             + 1
         )
+
         self.setup_print(win)
         self.update_state(win)
+
+        if self.line_count + 3 > self.window_height:
+            self.size_error()
 
     @staticmethod
     def size_error():
