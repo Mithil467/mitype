@@ -10,8 +10,8 @@ from mitype import timer
 def first_index_at_which_strings_differ(string1, string2):
     """Return index at which there is a change in strings.
 
-    This is used to determine the index upto which text must be dimmed and after which
-    must be coloured red (indicating mismatch).
+    This is used to determine the index up to which text must be dimmed and
+    after which must be coloured red (indicating mismatch).
 
     Args:
         string1 (string): The string which is a combination of
@@ -26,7 +26,6 @@ def first_index_at_which_strings_differ(string1, string2):
     for index in range(length):
         if string1[index] != string2[index]:
             return index
-    # Both strings are
     return length
 
 
@@ -39,16 +38,15 @@ def speed_in_wpm(text, start_time):
             the sample text.
 
     Returns:
-        string: Speed in WPM upto 2 decimal places.
+        string: Speed in WPM up to 2 decimal places.
     """
-    time_taken = (
-        60 * len(text) / timer.get_elapsed_minutes_since_first_keypress(start_time)
-    )
+    time_taken = timer.get_elapsed_minutes_since_first_keypress(start_time)
+    wpm = 60 * len(text) / time_taken
 
-    return "{0:.2f}".format(time_taken)
+    return "{0:.2f}".format(wpm)
 
 
-def number_of_lines_to_fit_string_in_window(string, window_width):
+def number_of_lines_to_fit_text_in_window(string, window_width):
     """Count number of lines required for displaying text.
 
     Args:
@@ -76,3 +74,29 @@ def get_space_count_after_ith_word(index, text):
         index += 1
         count += 1
     return count
+
+
+def word_wrap(text, width):
+    """Wrap text on the screen according to the window width.
+
+    Returns text with extra spaces which makes the string word wrap.
+
+    Args:
+        text (string): Text to wrap.
+        width (integer): Width to wrap around.
+
+    Returns:
+        str: Return altered text.
+    """
+    # For the end of each line, move backwards until you find a space.
+    # When you do, append those many spaces after the single space.
+    for x in range(
+        1,
+        number_of_lines_to_fit_text_in_window(text, width) + 1,
+    ):
+        if not (x * width >= len(text) or text[x * width - 1] == " "):
+            i = x * width - 1
+            while text[i] != " ":
+                i -= 1
+            text = text[:i] + " " * (x * width - i) + text[i + 1 :]
+    return text

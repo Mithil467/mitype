@@ -11,9 +11,10 @@ import sys
 
 import mitype
 import mitype.database
+from mitype.history import show_history
 
 
-def main():
+def resolve_commandline_arguments():
     """Parse CLI arguments and return practice text.
 
     Returns:
@@ -22,6 +23,10 @@ def main():
     opt = parse_arguments()
     if opt.version:
         display_version()
+        sys.exit(0)
+
+    elif opt.history:
+        show_history(opt.history)
         sys.exit(0)
 
     elif opt.file:
@@ -84,6 +89,16 @@ def parse_arguments():
         help="Choose difficulty within range 1-5",
     )
 
+    parser.add_argument(
+        "-H",
+        "--history",
+        nargs="?",
+        default=0,
+        const=-1,
+        type=int,
+        help="Show mitype score history",
+    )
+
     opt = parser.parse_args()
     return opt
 
@@ -136,7 +151,7 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
     Defaults to random difficulty level when none is provided.
 
     Args:
-        difficulty_level (int): difficulty leven in a range of 1 - 5
+        difficulty_level (int): difficulty level in a range of 1 - 5
 
     Returns:
         (str, int): Tuple of text content followed by DB row identifier.
@@ -154,4 +169,4 @@ def load_based_on_difficulty(difficulty_level=random.randrange(1, 6)):
         return text, text_id
 
     print("Select a difficulty level in range [1,5]")
-    sys.exit(2)
+    sys.exit(1)
