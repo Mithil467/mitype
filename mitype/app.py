@@ -7,12 +7,12 @@ import time
 
 import mitype.signals
 from mitype.calculations import (
+    calc_accuracy,
     first_index_at_which_strings_differ,
     get_space_count_after_ith_word,
     number_of_lines_to_fit_text_in_window,
     speed_in_wpm,
     word_wrap,
-    calc_accuracy,
 )
 from mitype.commandline import resolve_commandline_arguments
 from mitype.history import save_history
