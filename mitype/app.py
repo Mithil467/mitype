@@ -314,10 +314,11 @@ class App:
             win.addstr(" WPM ")
 
             wrongly_typed_chars = self.total_chars_typed - len(self.text_without_spaces)
-            accuracy = calc_accuracy(self.total_chars_typed, wrongly_typed_chars)
+            if self.mode == 0:
+                self.accuracy = calc_accuracy(self.total_chars_typed, wrongly_typed_chars)
 
             win.addstr(self.line_count + 2, 0, " Your typing accuracy is ")
-            win.addstr(" " + str(round(accuracy, 2)) + " ", curses.color_pair(3))
+            win.addstr(" " + str(round(self.accuracy, 2)) + " ", curses.color_pair(6))
             win.addstr(" % ")
 
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
@@ -346,7 +347,7 @@ class App:
 
             self.start_time = 0
             if not self.test_complete:
-                save_history(self.text_id, self.current_speed_wpm)
+                save_history(self.text_id, self.current_speed_wpm, self.accuracy)
                 self.test_complete = True
         win.refresh()
 
@@ -360,6 +361,8 @@ class App:
         self.start_time = 0
         self.i = 0
         self.current_speed_wpm = 0
+        self.total_chars_typed = 0
+        self.accuracy = 0
         curses.curs_set(1)
 
     def replay(self, win):
@@ -385,6 +388,13 @@ class App:
             0,
             " WPM:" + self.current_speed_wpm + " ",
             curses.color_pair(1),
+        )
+
+        win.addstr(
+            self.window_height - 1,
+            12,
+            " ACCURACY:" + str(round(self.accuracy, 2)) + " % ",
+            curses.color_pair(6),
         )
 
         self.setup_print(win)
