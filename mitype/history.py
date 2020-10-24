@@ -89,7 +89,7 @@ def save_history(text_id, current_speed_wpm, accuracy):
         str(current_speed_wpm),
         str(date.today()),
         str(current_time),
-        str(accuracy)
+        str(accuracy),
     ]
     csv_history.writerow(test_data)
 

@@ -315,7 +315,9 @@ class App:
 
             wrongly_typed_chars = self.total_chars_typed - len(self.text_without_spaces)
             if self.mode == 0:
-                self.accuracy = calc_accuracy(self.total_chars_typed, wrongly_typed_chars)
+                self.accuracy = calc_accuracy(
+                    self.total_chars_typed, wrongly_typed_chars
+                )
 
             win.addstr(self.line_count + 2, 0, " Your typing accuracy is ")
             win.addstr(" " + str(round(self.accuracy, 2)) + " ", curses.color_pair(6))
