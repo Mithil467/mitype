@@ -22,7 +22,6 @@ def first_index_at_which_strings_differ(string1, string2):
         integer: Index at which mismatch occurs for the first time.
     """
     length = min(len(string1), len(string2))
-    wrongly_typed_chars = 0
 
     for index in range(length):
         if string1[index] != string2[index]:
