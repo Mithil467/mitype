@@ -22,6 +22,7 @@ def first_index_at_which_strings_differ(string1, string2):
         integer: Index at which mismatch occurs for the first time.
     """
     length = min(len(string1), len(string2))
+    wrongly_typed_chars = 0
 
     for index in range(length):
         if string1[index] != string2[index]:
@@ -100,3 +101,8 @@ def word_wrap(text, width):
                 i -= 1
             text = text[:i] + " " * (x * width - i) + text[i + 1 :]
     return text
+
+
+def calc_accuracy(total_typed, wrong_typed):
+    acc = ((total_typed - wrong_typed) / total_typed) * 100
+    return acc
