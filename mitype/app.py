@@ -317,7 +317,7 @@ class App:
             accuracy = calc_accuracy(self.total_chars_typed, wrongly_typed_chars)
 
             win.addstr(self.line_count + 2, 0, " Your typing accuracy is ")
-            win.addstr(" " + str(round(accuracy)) + " ", curses.color_pair(3))
+            win.addstr(" " + str(round(accuracy, 2)) + " ", curses.color_pair(3))
             win.addstr(" % ")
 
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
