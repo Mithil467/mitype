@@ -251,6 +251,11 @@
                 <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
     <span class="k">return</span> <span class="n">text</span></div>
+
+
+<span class="k">def</span> <span class="nf">calc_accuracy</span><span class="p">(</span><span class="n">total_typed</span><span class="p">,</span> <span class="n">wrong_typed</span><span class="p">):</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="p">((</span><span class="n">total_typed</span> <span class="o">-</span> <span class="n">wrong_typed</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_typed</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">acc</span>
 </pre></div>
 
            </div>
