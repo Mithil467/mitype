@@ -100,3 +100,8 @@ def word_wrap(text, width):
                 i -= 1
             text = text[:i] + " " * (x * width - i) + text[i + 1 :]
     return text
+
+
+def calc_accuracy(total_typed, wrong_typed):
+    acc = ((total_typed - wrong_typed) / total_typed) * 100
+    return acc
