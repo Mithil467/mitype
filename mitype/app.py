@@ -7,6 +7,7 @@ import time
 
 import mitype.signals
 from mitype.calculations import (
+    calc_accuracy,
     first_index_at_which_strings_differ,
     get_space_count_after_ith_word,
     number_of_lines_to_fit_text_in_window,
@@ -61,6 +62,9 @@ class App:
 
         self.current_speed_wpm = 0
 
+        self.total_chars_typed = 0
+        self.text_without_spaces = self.original_text_formatted.replace(" ", "")
+
         sys.stdout = sys.__stdout__
 
         # Set ESC delay to 0 (default 1 on linux)
@@ -97,6 +101,7 @@ class App:
 
             # Again mode
             elif self.mode == 1 and is_tab(key):
+                win.clear()
                 self.setup_print(win)
                 self.update_state(win)
                 self.reset_test()
@@ -230,6 +235,7 @@ class App:
 
         elif is_valid_initial_key(key):
             self.appendkey(key)
+            self.total_chars_typed += 1
 
         # Update state of window
         self.update_state(win)
@@ -291,6 +297,7 @@ class App:
         win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
 
         index = first_index_at_which_strings_differ(self.current_string, self.text)
+
         win.addstr(
             2 + index // self.window_width,
             index % self.window_width,
@@ -299,6 +306,7 @@ class App:
         )
         if index == len(self.text):
             curses.curs_set(0)
+
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
                 self.current_speed_wpm = speed_in_wpm(self.tokens, self.start_time)
@@ -306,18 +314,36 @@ class App:
             win.addstr(" " + self.current_speed_wpm + " ", curses.color_pair(1))
             win.addstr(" WPM ")
 
+            wrongly_typed_chars = self.total_chars_typed - len(self.text_without_spaces)
+            if self.mode == 0:
+                self.accuracy = calc_accuracy(
+                    self.total_chars_typed, wrongly_typed_chars
+                )
+
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
-            win.addstr(self.line_count + 2, 0, " Press ")
 
-            win.addstr(" Enter ", curses.color_pair(6))
+            win.addstr(self.line_count + 2, 2, " Enter ", curses.color_pair(6))
 
-            win.addstr(" to see a replay! ")
+            win.addstr(" to see replay ")
 
-            win.addstr(self.line_count + 4, 0, " Press ")
+            win.addstr(self.line_count + 3, 2, " TAB ", curses.color_pair(5))
 
-            win.addstr(" TAB ", curses.color_pair(5))
+            win.addstr(" to retry ")
 
-            win.addstr(" to retry! ")
+            # Display the stats during replay at the bottom
+            win.addstr(
+                self.window_height - 1,
+                0,
+                " WPM:" + self.current_speed_wpm + " ",
+                curses.color_pair(1),
+            )
+
+            win.addstr(
+                self.window_height - 1,
+                12,
+                " ACCURACY:" + str(round(self.accuracy, 2)) + "% ",
+                curses.color_pair(6),
+            )
 
             if self.mode == 0:
                 self.mode = 1
@@ -332,7 +358,7 @@ class App:
 
             self.start_time = 0
             if not self.test_complete:
-                save_history(self.text_id, self.current_speed_wpm)
+                save_history(self.text_id, self.current_speed_wpm, self.accuracy)
                 self.test_complete = True
         win.refresh()
 
@@ -346,6 +372,8 @@ class App:
         self.start_time = 0
         self.i = 0
         self.current_speed_wpm = 0
+        self.total_chars_typed = 0
+        self.accuracy = 0
         curses.curs_set(1)
 
     def replay(self, win):
@@ -354,6 +382,7 @@ class App:
         Args:
             win (any): Curses window.
         """
+        win.clear()
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         curses.curs_set(1)
 
@@ -364,14 +393,6 @@ class App:
             curses.color_pair(1),
         )
         win.addstr(" WPM ")
-
-        # Display the stats during replay at the bottom
-        win.addstr(
-            self.window_height - 1,
-            0,
-            " WPM:" + self.current_speed_wpm + " ",
-            curses.color_pair(1),
-        )
 
         self.setup_print(win)
 

@@ -63,7 +63,7 @@ def show_history(number_of_records):
     print()
 
 
-def save_history(text_id, current_speed_wpm):
+def save_history(text_id, current_speed_wpm, accuracy):
     """Save test stats to history file.
 
     Args:
@@ -73,7 +73,7 @@ def save_history(text_id, current_speed_wpm):
     history_path = history_file_absolute_path()
 
     if not os.path.isfile(history_path):
-        row = ["ID", "WPM", "DATE", "TIME"]
+        row = ["ID", "WPM", "DATE", "TIME", "ACCURACY"]
         history = open(history_path, "a")
         csv_history = csv.writer(history)
         csv_history.writerow(row)
@@ -89,6 +89,7 @@ def save_history(text_id, current_speed_wpm):
         str(current_speed_wpm),
         str(date.today()),
         str(current_time),
+        str(accuracy),
     ]
     csv_history.writerow(test_data)
 
