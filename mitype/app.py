@@ -7,7 +7,7 @@ import time
 
 import mitype.signals
 from mitype.calculations import (
-    calc_accuracy,
+    accuracy,
     first_index_at_which_strings_differ,
     get_space_count_after_ith_word,
     number_of_lines_to_fit_text_in_window,
@@ -61,6 +61,7 @@ class App:
         self.test_complete = False
 
         self.current_speed_wpm = 0
+        self.accuracy = 0
 
         self.total_chars_typed = 0
         self.text_without_spaces = self.original_text_formatted.replace(" ", "")
@@ -134,7 +135,7 @@ class App:
 
         self.key_strokes.append([time.time(), key])
 
-        self._wpm_realtime(win)
+        self.print_realtime_wpm(win)
 
         self.key_printer(win, key)
 
@@ -266,7 +267,12 @@ class App:
         self.current_word += key
         self.current_string += key
 
-    def _wpm_realtime(self, win):
+    def print_realtime_wpm(self, win):
+        """Print realtime wpm during the test.
+
+        Args:
+            win (any): Curses window.
+        """
         total_time = mitype.timer.get_elapsed_minutes_since_first_keypress(
             self.start_time
         )
@@ -316,9 +322,7 @@ class App:
 
             wrongly_typed_chars = self.total_chars_typed - len(self.text_without_spaces)
             if self.mode == 0:
-                self.accuracy = calc_accuracy(
-                    self.total_chars_typed, wrongly_typed_chars
-                )
+                self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
 
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
 
@@ -409,6 +413,11 @@ class App:
         self.update_state(win)
 
     def print_stats(self, win):
+        """Print the bottom stats bar after each run.
+
+        Args:
+            win (any): Curses window.
+        """
         win.addstr(
             self.window_height - 1,
             0,
