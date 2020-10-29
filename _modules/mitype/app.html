@@ -158,7 +158,7 @@
 
 <span class="kn">import</span> <span class="nn">mitype.signals</span>
 <span class="kn">from</span> <span class="nn">mitype.calculations</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">calc_accuracy</span><span class="p">,</span>
+    <span class="n">accuracy</span><span class="p">,</span>
     <span class="n">first_index_at_which_strings_differ</span><span class="p">,</span>
     <span class="n">get_space_count_after_ith_word</span><span class="p">,</span>
     <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">,</span>
@@ -212,6 +212,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">test_complete</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text_without_spaces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_text_formatted</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -285,7 +286,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">key</span><span class="p">])</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_wpm_realtime</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_realtime_wpm</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span></div>
 
@@ -417,7 +418,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">+=</span> <span class="n">key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">+=</span> <span class="n">key</span></div>
 
-    <span class="k">def</span> <span class="nf">_wpm_realtime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
+<div class="viewcode-block" id="App.print_realtime_wpm"><a class="viewcode-back" href="../../api.html#mitype.app.App.print_realtime_wpm">[docs]</a>    <span class="k">def</span> <span class="nf">print_realtime_wpm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print realtime wpm during the test.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            win (any): Curses window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">total_time</span> <span class="o">=</span> <span class="n">mitype</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
         <span class="p">)</span>
@@ -431,7 +437,7 @@
             <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_wpm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
             <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="App.update_state"><a class="viewcode-back" href="../../api.html#mitype.app.App.update_state">[docs]</a>    <span class="k">def</span> <span class="nf">update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Report on typing session results.</span>
@@ -467,9 +473,7 @@
 
             <span class="n">wrongly_typed_chars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_without_spaces</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">calc_accuracy</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed_chars</span>
-                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed_chars</span><span class="p">)</span>
 
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 
@@ -559,7 +563,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">print_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
+<div class="viewcode-block" id="App.print_stats"><a class="viewcode-back" href="../../api.html#mitype.app.App.print_stats">[docs]</a>    <span class="k">def</span> <span class="nf">print_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print the bottom stats bar after each run.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            win (any): Curses window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
             <span class="mi">0</span><span class="p">,</span>
@@ -572,7 +581,7 @@
             <span class="mi">12</span><span class="p">,</span>
             <span class="s2">&quot; ACCURACY:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;% &quot;</span><span class="p">,</span>
             <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="App.get_dimensions"><a class="viewcode-back" href="../../api.html#mitype.app.App.get_dimensions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>

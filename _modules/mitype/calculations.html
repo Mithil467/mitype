@@ -253,9 +253,18 @@
     <span class="k">return</span> <span class="n">text</span></div>
 
 
-<span class="k">def</span> <span class="nf">calc_accuracy</span><span class="p">(</span><span class="n">total_typed</span><span class="p">,</span> <span class="n">wrong_typed</span><span class="p">):</span>
-    <span class="n">acc</span> <span class="o">=</span> <span class="p">((</span><span class="n">total_typed</span> <span class="o">-</span> <span class="n">wrong_typed</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_typed</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="k">return</span> <span class="n">acc</span>
+<div class="viewcode-block" id="accuracy"><a class="viewcode-back" href="../../api.html#mitype.calculations.accuracy">[docs]</a><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get accuracy for the current test.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        total_chars_typed (integer): Total characters typed.</span>
+<span class="sd">        wrongly_typed (integer): Mistyped characters.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Return accuracy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="p">((</span><span class="n">total_chars_typed</span> <span class="o">-</span> <span class="n">wrongly_typed</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_chars_typed</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">return</span> <span class="n">acc</span></div>
 </pre></div>
 
            </div>

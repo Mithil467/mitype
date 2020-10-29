@@ -258,6 +258,28 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="mitype.app.App.print_realtime_wpm">
+<code class="sig-name descname">print_realtime_wpm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">win</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.print_realtime_wpm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.print_realtime_wpm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print realtime wpm during the test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="mitype.app.App.print_stats">
+<code class="sig-name descname">print_stats</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">win</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.print_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.print_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the bottom stats bar after each run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="mitype.app.App.replay">
 <code class="sig-name descname">replay</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">win</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.replay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.replay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Play out a recording of the users last session.</p>
@@ -324,6 +346,26 @@ events.</p>
 </dd></dl>
 
 <span class="target" id="module-mitype.calculations"></span><p>Calculations.</p>
+<dl class="py function">
+<dt id="mitype.calculations.accuracy">
+<code class="sig-prename descclassname">mitype.calculations.</code><code class="sig-name descname">accuracy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">total_chars_typed</span></em>, <em class="sig-param"><span class="n">wrongly_typed</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.calculations.accuracy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get accuracy for the current test.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>total_chars_typed</strong> (<em>integer</em>) – Total characters typed.</p></li>
+<li><p><strong>wrongly_typed</strong> (<em>integer</em>) – Mistyped characters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Return accuracy.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt id="mitype.calculations.first_index_at_which_strings_differ">
 <code class="sig-prename descclassname">mitype.calculations.</code><code class="sig-name descname">first_index_at_which_strings_differ</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string1</span></em>, <em class="sig-param"><span class="n">string2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#first_index_at_which_strings_differ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.calculations.first_index_at_which_strings_differ" title="Permalink to this definition">¶</a></dt>
@@ -439,7 +481,7 @@ the sample text.</p></li>
 
 <dl class="py function">
 <dt id="mitype.commandline.load_based_on_difficulty">
-<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_based_on_difficulty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">difficulty_level</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_based_on_difficulty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">difficulty_level</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load text of given difficulty from database if parameter is passed.</p>
 <p>Defaults to random difficulty level when none is provided.</p>
 <dl class="field-list simple">
