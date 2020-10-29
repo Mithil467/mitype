@@ -330,21 +330,7 @@ class App:
 
             win.addstr(" to retry ")
 
-            # Display the stats during replay at the bottom
-            win.addstr(
-                self.window_height - 1,
-                0,
-                " WPM:" + self.current_speed_wpm + " ",
-                curses.color_pair(1),
-            )
-
-            win.addstr(
-                self.window_height - 1,
-                12,
-                " ACCURACY:" + str(round(self.accuracy, 2)) + "% ",
-                curses.color_pair(6),
-            )
-
+            self.print_stats(win)
             if self.mode == 0:
                 self.mode = 1
                 for k in range(len(self.key_strokes) - 1, 0, -1):
@@ -383,6 +369,7 @@ class App:
             win (any): Curses window.
         """
         win.clear()
+        self.print_stats(win)
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         curses.curs_set(1)
 
@@ -420,6 +407,21 @@ class App:
         )
         self.setup_print(win)
         self.update_state(win)
+
+    def print_stats(self, win):
+        win.addstr(
+            self.window_height - 1,
+            0,
+            " WPM:" + self.current_speed_wpm + " ",
+            curses.color_pair(1),
+        )
+
+        win.addstr(
+            self.window_height - 1,
+            12,
+            " ACCURACY:" + str(round(self.accuracy, 2)) + "% ",
+            curses.color_pair(6),
+        )
 
     @staticmethod
     def get_dimensions(win):
