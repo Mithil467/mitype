@@ -17,7 +17,7 @@ You can also customize each run by specifying the following options as:
   | ID can be in range [1, 6000].
 
 | Mitype keeps record of each test in `.mitype_history.csv`.
-| ``-H [N], --history N`` displays last N records.
+| ``-H N, --history N`` displays last N records.
 | N is optional, in the absence of which all records are printed.
 
 You can quit mitype anytime by pressing the `ESC` key or `CTRL-C`.
