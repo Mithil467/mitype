@@ -409,6 +409,7 @@ class App:
         self.line_count = (
             number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
         )
+        self.print_realtime_wpm(win)
         self.setup_print(win)
         self.update_state(win)
 
