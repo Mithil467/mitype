@@ -69,6 +69,7 @@ def save_history(text_id, current_speed_wpm, accuracy):
     Args:
         text_id (int): Row identifier of database text loaded.
         current_speed_wpm (float): Speed result from test.
+        accuracy (string): Accuracy result from test.
     """
     history_path = history_file_absolute_path()
 
@@ -85,11 +86,11 @@ def save_history(text_id, current_speed_wpm, accuracy):
     current_time = time.strftime("%H:%M:%S", time.localtime())
 
     test_data = [
-        str(text_id),
-        str(current_speed_wpm),
-        str(date.today()),
-        str(current_time),
-        str(accuracy),
+        text_id,
+        current_speed_wpm,
+        date.today(),
+        current_time,
+        accuracy,
     ]
     csv_history.writerow(test_data)
 

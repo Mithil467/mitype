@@ -348,7 +348,9 @@ class App:
 
             self.start_time = 0
             if not self.test_complete:
-                save_history(self.text_id, self.current_speed_wpm, self.accuracy)
+                save_history(
+                    self.text_id, self.current_speed_wpm, "{:.2f}".format(self.accuracy)
+                )
                 self.test_complete = True
         win.refresh()
 
@@ -429,7 +431,7 @@ class App:
         win.addstr(
             self.window_height - 1,
             12,
-            " ACCURACY:" + str(round(self.accuracy, 2)) + "% ",
+            " ACCURACY:" + "{:.2f}".format(self.accuracy) + "% ",
             curses.color_pair(6),
         )
 
