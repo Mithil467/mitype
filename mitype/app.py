@@ -323,7 +323,6 @@ class App:
             wrongly_typed_chars = self.total_chars_typed - len(self.text_without_spaces)
             if self.mode == 0:
                 self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
-
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
 
             win.addstr(self.line_count + 2, 2, " Enter ", curses.color_pair(6))
@@ -348,6 +347,7 @@ class App:
 
             self.start_time = 0
             if not self.test_complete:
+                win.refresh()
                 save_history(
                     self.text_id, self.current_speed_wpm, "{:.2f}".format(self.accuracy)
                 )
