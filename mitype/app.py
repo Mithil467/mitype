@@ -273,9 +273,9 @@ class App:
         if len(self.current_word) < self.current_word_limit:
             self.current_word += key
             self.current_string += key
-    
+
         # Update status of word limit
-        if len(self.current_word)>=self.current_word_limit:
+        if len(self.current_word) >= self.current_word_limit:
             self.current_word_limit_reached = True
 
     def print_realtime_wpm(self, win):
@@ -309,11 +309,9 @@ class App:
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         win.addstr(self.line_count + 4, 0, " " * self.window_width)
         if self.current_word_limit_reached:
-            win.addstr(self.line_count, 0, self.current_word,curses.color_pair(2))
+            win.addstr(self.line_count, 0, self.current_word, curses.color_pair(2))
         else:
             win.addstr(self.line_count, 0, self.current_word)
-
-
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
         win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
