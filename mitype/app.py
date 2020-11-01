@@ -58,6 +58,9 @@ class App:
         self.window_width = 0
         self.line_count = 0
 
+        self.current_word_limit = 25
+        self.current_word_limit_reached = False
+
         self.test_complete = False
 
         self.current_speed_wpm = 0
@@ -247,6 +250,8 @@ class App:
             self.current_word = self.current_word[0 : len(self.current_word) - 1]
             self.current_string = self.current_string[0 : len(self.current_string) - 1]
 
+            self.current_word_limit_reached = False
+
     def check_word(self):
         """Accept finalized word."""
         spc = get_space_count_after_ith_word(len(self.current_string), self.text)
@@ -264,8 +269,14 @@ class App:
         Args:
             key (key): character to append
         """
-        self.current_word += key
-        self.current_string += key
+
+        if len(self.current_word) < self.current_word_limit:
+            self.current_word += key
+            self.current_string += key
+    
+        # Update status of word limit
+        if len(self.current_word)>=self.current_word_limit:
+            self.current_word_limit_reached = True
 
     def print_realtime_wpm(self, win):
         """Print realtime wpm during the test.
@@ -297,7 +308,12 @@ class App:
         win.addstr(self.line_count, 0, " " * self.window_width)
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         win.addstr(self.line_count + 4, 0, " " * self.window_width)
-        win.addstr(self.line_count, 0, self.current_word)
+        if self.current_word_limit_reached:
+            win.addstr(self.line_count, 0, self.current_word,curses.color_pair(2))
+        else:
+            win.addstr(self.line_count, 0, self.current_word)
+
+
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
         win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
