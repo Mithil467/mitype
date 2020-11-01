@@ -266,7 +266,6 @@ class App:
         Args:
             key (key): character to append
         """
-
         if len(self.current_word) < self.current_word_limit:
             self.current_word += key
             self.current_string += key
