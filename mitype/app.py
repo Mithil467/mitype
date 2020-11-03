@@ -419,7 +419,7 @@ class App:
         self.line_count = (
             number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
         )
-        
+
         if (
             self.line_count + 5 >= self.window_height
             or self.line_count >= self.window_width
