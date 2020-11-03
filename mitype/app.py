@@ -7,7 +7,7 @@ import time
 
 import mitype.signals
 from mitype.calculations import (
-    calc_accuracy,
+    accuracy,
     first_index_at_which_strings_differ,
     get_space_count_after_ith_word,
     number_of_lines_to_fit_text_in_window,
@@ -58,9 +58,12 @@ class App:
         self.window_width = 0
         self.line_count = 0
 
+        self.current_word_limit = 25
+
         self.test_complete = False
 
         self.current_speed_wpm = 0
+        self.accuracy = 0
 
         self.total_chars_typed = 0
         self.text_without_spaces = self.original_text_formatted.replace(" ", "")
@@ -134,7 +137,7 @@ class App:
 
         self.key_strokes.append([time.time(), key])
 
-        self._wpm_realtime(win)
+        self.print_realtime_wpm(win)
 
         self.key_printer(win, key)
 
@@ -158,8 +161,11 @@ class App:
         )
 
         # If required number of lines are more than the window height, exit
-        # +3 for printing stats at the end of the test
-        if self.line_count + 3 > self.window_height:
+        # +5 for printing stats at the end of the test
+        if (
+            self.line_count + 5 >= self.window_height
+            or self.line_count >= self.window_width
+        ):
             curses.endwin()
             sys.stdout.write("Window too small to print given text")
             sys.exit(1)
@@ -263,10 +269,16 @@ class App:
         Args:
             key (key): character to append
         """
-        self.current_word += key
-        self.current_string += key
+        if len(self.current_word) < self.current_word_limit:
+            self.current_word += key
+            self.current_string += key
 
-    def _wpm_realtime(self, win):
+    def print_realtime_wpm(self, win):
+        """Print realtime wpm during the test.
+
+        Args:
+            win (any): Curses window.
+        """
         total_time = mitype.timer.get_elapsed_minutes_since_first_keypress(
             self.start_time
         )
@@ -291,7 +303,10 @@ class App:
         win.addstr(self.line_count, 0, " " * self.window_width)
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         win.addstr(self.line_count + 4, 0, " " * self.window_width)
-        win.addstr(self.line_count, 0, self.current_word)
+        if len(self.current_word) >= self.current_word_limit:
+            win.addstr(self.line_count, 0, self.current_word, curses.color_pair(2))
+        else:
+            win.addstr(self.line_count, 0, self.current_word)
 
         win.addstr(2, 0, self.text, curses.A_BOLD)
         win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
@@ -316,10 +331,7 @@ class App:
 
             wrongly_typed_chars = self.total_chars_typed - len(self.text_without_spaces)
             if self.mode == 0:
-                self.accuracy = calc_accuracy(
-                    self.total_chars_typed, wrongly_typed_chars
-                )
-
+                self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
 
             win.addstr(self.line_count + 2, 2, " Enter ", curses.color_pair(6))
@@ -330,21 +342,7 @@ class App:
 
             win.addstr(" to retry ")
 
-            # Display the stats during replay at the bottom
-            win.addstr(
-                self.window_height - 1,
-                0,
-                " WPM:" + self.current_speed_wpm + " ",
-                curses.color_pair(1),
-            )
-
-            win.addstr(
-                self.window_height - 1,
-                12,
-                " ACCURACY:" + str(round(self.accuracy, 2)) + "% ",
-                curses.color_pair(6),
-            )
-
+            self.print_stats(win)
             if self.mode == 0:
                 self.mode = 1
                 for k in range(len(self.key_strokes) - 1, 0, -1):
@@ -358,7 +356,10 @@ class App:
 
             self.start_time = 0
             if not self.test_complete:
-                save_history(self.text_id, self.current_speed_wpm, self.accuracy)
+                win.refresh()
+                save_history(
+                    self.text_id, self.current_speed_wpm, "{:.2f}".format(self.accuracy)
+                )
                 self.test_complete = True
         win.refresh()
 
@@ -383,6 +384,7 @@ class App:
             win (any): Curses window.
         """
         win.clear()
+        self.print_stats(win)
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         curses.curs_set(1)
 
@@ -413,17 +415,42 @@ class App:
         """
         win.clear()
         self.window_height, self.window_width = self.get_dimensions(win)
-
         self.text = word_wrap(self.original_text_formatted, self.window_width)
         self.line_count = (
             number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
         )
+        
+        if (
+            self.line_count + 5 >= self.window_height
+            or self.line_count >= self.window_width
+        ):
+            curses.endwin()
+            sys.stdout.write("Window too small to print given text")
+            sys.exit(1)
 
+        self.print_realtime_wpm(win)
         self.setup_print(win)
         self.update_state(win)
 
-        if self.line_count + 3 > self.window_height:
-            self.size_error()
+    def print_stats(self, win):
+        """Print the bottom stats bar after each run.
+
+        Args:
+            win (any): Curses window.
+        """
+        win.addstr(
+            self.window_height - 1,
+            0,
+            " WPM:" + self.current_speed_wpm + " ",
+            curses.color_pair(1),
+        )
+
+        win.addstr(
+            self.window_height - 1,
+            12,
+            " ACCURACY:" + "{:.2f}".format(self.accuracy) + "% ",
+            curses.color_pair(6),
+        )
 
     @staticmethod
     def get_dimensions(win):

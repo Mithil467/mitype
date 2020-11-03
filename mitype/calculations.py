@@ -102,6 +102,15 @@ def word_wrap(text, width):
     return text
 
 
-def calc_accuracy(total_typed, wrong_typed):
-    acc = ((total_typed - wrong_typed) / total_typed) * 100
+def accuracy(total_chars_typed, wrongly_typed):
+    """Get accuracy for the current test.
+
+    Args:
+        total_chars_typed (integer): Total characters typed.
+        wrongly_typed (integer): Mistyped characters.
+
+    Returns:
+        float: Return accuracy.
+    """
+    acc = ((total_chars_typed - wrongly_typed) / total_chars_typed) * 100
     return acc

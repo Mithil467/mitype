@@ -16,6 +16,11 @@ Once you have a local copy of mitype cloned, you can directly run mitype in Deve
 ```
 python -m mitype [OPTION]... [FILE]...
 ```
+You'll need [windows_curses](https://pypi.org/project/windows-curses/) installed for running mitype on windows.
+You can install it by running the following command.
+```
+pip install windows_curses
+```
 
 ## Installing from Source
 
