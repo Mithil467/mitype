@@ -176,6 +176,7 @@
     <span class="n">is_tab</span><span class="p">,</span>
     <span class="n">is_valid_initial_key</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">mitype.timer</span> <span class="kn">import</span> <span class="n">get_elapsed_minutes_since_first_keypress</span>
 
 
 <div class="viewcode-block" id="App"><a class="viewcode-back" href="../../api.html#mitype.app.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">:</span>
@@ -215,6 +216,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_taken</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text_without_spaces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_text_formatted</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -256,9 +258,9 @@
             <span class="c1"># Again mode</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
                 <span class="n">win</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reset_test</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">reset_test</span><span class="p">()</span>
 
             <span class="c1"># Replay mode</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
@@ -324,17 +326,12 @@
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_YELLOW</span><span class="p">)</span>
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_CYAN</span><span class="p">)</span>
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_MAGENTA</span><span class="p">)</span>
+        <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">)</span>
 
         <span class="n">win</span><span class="o">.</span><span class="n">nodelay</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
-        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
-            <span class="mi">0</span><span class="p">,</span>
-            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">-</span> <span class="mi">14</span><span class="p">,</span>
-            <span class="s2">&quot; 0.00 &quot;</span><span class="p">,</span>
-            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_realtime_wpm</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
 
@@ -346,13 +343,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Top strip</span>
         <span class="c1"># Display text ID</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; ID:</span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_id</span><span class="p">),</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; ID:</span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_id</span><span class="p">),</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 
         <span class="c1"># Display Title</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; MITYPE &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 
         <span class="c1"># Print text in BOLD from 3rd line</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">A_BOLD</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_realtime_wpm</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
         <span class="c1"># Set cursor position to beginning of text</span>
         <span class="n">win</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
@@ -438,7 +437,7 @@
             <span class="mi">0</span><span class="p">,</span>
             <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">-</span> <span class="mi">14</span><span class="p">,</span>
             <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current_wpm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
-            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span></div>
 
@@ -473,21 +472,22 @@
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; Your typing speed is &quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">=</span> <span class="n">speed_in_wpm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span><span class="p">)</span>
+                <span class="n">wrongly_typed_chars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">text_without_spaces</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed_chars</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">time_taken</span> <span class="o">=</span> <span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
+                <span class="p">)</span>
 
-            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
 
-            <span class="n">wrongly_typed_chars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_without_spaces</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed_chars</span><span class="p">)</span>
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 
-            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot; Enter &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
-
-            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; to see replay &quot;</span><span class="p">)</span>
-
-            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot; TAB &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot; Enter &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; to see replay, &quot;</span><span class="p">)</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; Tab &quot;</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; to retry &quot;</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
@@ -523,6 +523,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">total_chars_typed</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_taken</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="App.replay"><a class="viewcode-back" href="../../api.html#mitype.app.App.replay">[docs]</a>    <span class="k">def</span> <span class="nf">replay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
@@ -540,7 +541,7 @@
             <span class="mi">0</span><span class="p">,</span>
             <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">-</span> <span class="mi">14</span><span class="p">,</span>
             <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
-            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s2">&quot; WPM &quot;</span><span class="p">)</span>
 
@@ -581,15 +582,18 @@
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
             <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot; WPM:&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="s2">&quot; WPM: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
+            <span class="s2">&quot; Time: &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_taken</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;s &quot;</span><span class="p">,</span>
             <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
         <span class="p">)</span>
 
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="mi">12</span><span class="p">,</span>
-            <span class="s2">&quot; ACCURACY:&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;% &quot;</span><span class="p">,</span>
-            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
+            <span class="s2">&quot; Accuracy: &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;% &quot;</span><span class="p">,</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="App.get_dimensions"><a class="viewcode-back" href="../../api.html#mitype.app.App.get_dimensions">[docs]</a>    <span class="nd">@staticmethod</span>
