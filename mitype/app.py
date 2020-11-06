@@ -25,6 +25,7 @@ from mitype.keycheck import (
     is_tab,
     is_valid_initial_key,
 )
+from mitype.timer import get_elapsed_minutes_since_first_keypress
 
 
 class App:
@@ -64,6 +65,7 @@ class App:
 
         self.current_speed_wpm = 0
         self.accuracy = 0
+        self.time_taken = 0
 
         self.total_chars_typed = 0
         self.text_without_spaces = self.original_text_formatted.replace(" ", "")
@@ -105,9 +107,9 @@ class App:
             # Again mode
             elif self.mode == 1 and is_tab(key):
                 win.clear()
+                self.reset_test()
                 self.setup_print(win)
                 self.update_state(win)
-                self.reset_test()
 
             # Replay mode
             elif self.mode == 1 and is_enter(key):
@@ -178,17 +180,12 @@ class App:
         curses.init_pair(4, curses.COLOR_WHITE, curses.COLOR_YELLOW)
         curses.init_pair(5, curses.COLOR_WHITE, curses.COLOR_CYAN)
         curses.init_pair(6, curses.COLOR_WHITE, curses.COLOR_MAGENTA)
+        curses.init_pair(7, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
         win.nodelay(True)
         win.timeout(100)
 
-        win.addstr(
-            0,
-            int(self.window_width) - 14,
-            " 0.00 ",
-            curses.color_pair(1),
-        )
-        win.addstr(" WPM ")
+        self.print_realtime_wpm(win)
 
         self.setup_print(win)
 
@@ -200,13 +197,15 @@ class App:
         """
         # Top strip
         # Display text ID
-        win.addstr(0, 0, " ID:{} ".format(self.text_id), curses.color_pair(3))
+        win.addstr(0, 0, " ID:{} ".format(self.text_id), curses.color_pair(5))
 
         # Display Title
         win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", curses.color_pair(3))
 
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
+
+        self.print_realtime_wpm(win)
 
         # Set cursor position to beginning of text
         win.move(2, 0)
@@ -292,7 +291,7 @@ class App:
             0,
             int(self.window_width) - 14,
             " " + "{0:.2f}".format(current_wpm) + " ",
-            curses.color_pair(1),
+            curses.color_pair(5),
         )
         win.addstr(" WPM ")
 
@@ -327,21 +326,22 @@ class App:
             win.addstr(self.line_count, 0, " Your typing speed is ")
             if self.mode == 0:
                 self.current_speed_wpm = speed_in_wpm(self.tokens, self.start_time)
+                wrongly_typed_chars = self.total_chars_typed - len(
+                    self.text_without_spaces
+                )
+                self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
+                self.time_taken = get_elapsed_minutes_since_first_keypress(
+                    self.start_time
+                )
 
-            win.addstr(" " + self.current_speed_wpm + " ", curses.color_pair(1))
+            win.addstr(" " + self.current_speed_wpm + " ", curses.color_pair(6))
             win.addstr(" WPM ")
 
-            wrongly_typed_chars = self.total_chars_typed - len(self.text_without_spaces)
-            if self.mode == 0:
-                self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
 
-            win.addstr(self.line_count + 2, 2, " Enter ", curses.color_pair(6))
-
-            win.addstr(" to see replay ")
-
-            win.addstr(self.line_count + 3, 2, " TAB ", curses.color_pair(5))
-
+            win.addstr(self.line_count + 2, 1, " Enter ", curses.color_pair(7))
+            win.addstr(" to see replay, ")
+            win.addstr(" Tab ", curses.color_pair(7))
             win.addstr(" to retry ")
 
             self.print_stats(win)
@@ -377,6 +377,7 @@ class App:
         self.current_speed_wpm = 0
         self.total_chars_typed = 0
         self.accuracy = 0
+        self.time_taken = 0
         curses.curs_set(1)
 
     def replay(self, win):
@@ -394,7 +395,7 @@ class App:
             0,
             int(self.window_width) - 14,
             " " + str(self.current_speed_wpm) + " ",
-            curses.color_pair(1),
+            curses.color_pair(5),
         )
         win.addstr(" WPM ")
 
@@ -435,15 +436,18 @@ class App:
         win.addstr(
             self.window_height - 1,
             0,
-            " WPM:" + self.current_speed_wpm + " ",
+            " WPM: " + self.current_speed_wpm + " ",
+            curses.color_pair(6),
+        )
+
+        win.addstr(
+            " Time: " + "{:.2f}".format(self.time_taken) + "s ",
             curses.color_pair(1),
         )
 
         win.addstr(
-            self.window_height - 1,
-            12,
-            " ACCURACY:" + "{:.2f}".format(self.accuracy) + "% ",
-            curses.color_pair(6),
+            " Accuracy: " + "{:.2f}".format(self.accuracy) + "% ",
+            curses.color_pair(5),
         )
 
     @staticmethod
