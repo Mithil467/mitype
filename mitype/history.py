@@ -69,12 +69,12 @@ def save_history(text_id, current_speed_wpm, accuracy):
 
     if not os.path.isfile(history_path):
         row = ["ID", "WPM", "DATE", "TIME", "ACCURACY"]
-        history = open(history_path, "a", newline="")
+        history = open(history_path, "ab")
         csv_history = csv.writer(history)
         csv_history.writerow(row)
         history.close()
 
-    history = open(history_path, "a", newline="")
+    history = open(history_path, "ab")
     csv_history = csv.writer(history)
 
     current_time = time.strftime("%H:%M:%S", time.localtime())
