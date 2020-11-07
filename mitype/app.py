@@ -143,6 +143,20 @@ class App:
 
         self.key_printer(win, key)
 
+    def screen_size_check(self, window_height, window_width, text):
+        """Check if screen size is enough to print text.
+
+        Args:
+            win (any): Curses window.
+        """
+        self.line_count = (
+            number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
+        )
+        if self.line_count + 5 >= self.window_height:
+            curses.endwin()
+            sys.stdout.write("Window too small to print given text")
+            sys.exit(1)
+
     def initialize(self, win):
         """Configure the initial state of the curses interface.
 
@@ -155,19 +169,7 @@ class App:
         # Adding word wrap to text
         self.text = word_wrap(self.text, self.window_width)
 
-        # Find number of lines required to print text
-        self.line_count = (
-            number_of_lines_to_fit_text_in_window(self.text, self.window_width)
-            + 2  # Top 2 lines
-            + 1  # One empty line after text
-        )
-
-        # If required number of lines are more than the window height, exit
-        # +3 for printing stats at the end of the test
-        if self.line_count + 3 > self.window_height:
-            curses.endwin()
-            sys.stdout.write("Window too small to print given text")
-            sys.exit(1)
+        self.screen_size_check(self.window_height, self.window_width, self.text)
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
@@ -412,12 +414,12 @@ class App:
             win (any): Curses window.
         """
         win.clear()
-        self.window_height, self.window_width = self.get_dimensions(win)
 
+        self.window_height, self.window_width = self.get_dimensions(win)
         self.text = word_wrap(self.original_text_formatted, self.window_width)
-        self.line_count = (
-            number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
-        )
+
+        self.screen_size_check(self.window_height, self.window_width, self.text)
+
         self.print_realtime_wpm(win)
         self.setup_print(win)
         self.update_state(win)
