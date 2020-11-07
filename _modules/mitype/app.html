@@ -294,6 +294,20 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="App.screen_size_check"><a class="viewcode-back" href="../../api.html#mitype.app.App.screen_size_check">[docs]</a>    <span class="k">def</span> <span class="nf">screen_size_check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window_height</span><span class="p">,</span> <span class="n">window_width</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if screen size is enough to print text.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            win (any): Curses window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">:</span>
+            <span class="n">curses</span><span class="o">.</span><span class="n">endwin</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Window too small to print given text&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="App.initialize"><a class="viewcode-back" href="../../api.html#mitype.app.App.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Configure the initial state of the curses interface.</span>
 
@@ -306,19 +320,7 @@
         <span class="c1"># Adding word wrap to text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
 
-        <span class="c1"># Find number of lines required to print text</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
-            <span class="o">+</span> <span class="mi">2</span>  <span class="c1"># Top 2 lines</span>
-            <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># One empty line after text</span>
-        <span class="p">)</span>
-
-        <span class="c1"># If required number of lines are more than the window height, exit</span>
-        <span class="c1"># +3 for printing stats at the end of the test</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">:</span>
-            <span class="n">curses</span><span class="o">.</span><span class="n">endwin</span><span class="p">()</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Window too small to print given text&quot;</span><span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_size_check</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_GREEN</span><span class="p">)</span>
         <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_WHITE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_RED</span><span class="p">)</span>
@@ -563,12 +565,12 @@
 <span class="sd">            win (any): Curses window.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">win</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original_text_formatted</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">line_count</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_size_check</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">print_realtime_wpm</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
