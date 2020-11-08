@@ -2,6 +2,7 @@
 
 import csv
 import os
+import sys
 import time
 from datetime import date
 
@@ -67,15 +68,18 @@ def save_history(text_id, current_speed_wpm, accuracy):
     """
     history_path = history_file_absolute_path()
 
-    if not os.path.isfile(history_path):
-        row = ["ID", "WPM", "DATE", "TIME", "ACCURACY"]
+    file_exists = os.path.isfile(history_path)
+
+    if sys.version_info[0] < 3:
         history = open(history_path, "ab")
         csv_history = csv.writer(history)
-        csv_history.writerow(row)
-        history.close()
+    else:
+        history = open(history_path, "a", newline="")
+        csv_history = csv.writer(history)
 
-    history = open(history_path, "ab")
-    csv_history = csv.writer(history)
+    if not file_exists:
+        row = ["ID", "WPM", "DATE", "TIME", "ACCURACY"]
+        csv_history.writerow(row)
 
     current_time = time.strftime("%H:%M:%S", time.localtime())
 
