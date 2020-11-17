@@ -139,3 +139,27 @@ def is_valid_initial_key(key):
         or is_tab(key)
         or is_ignored_key(key)
     )
+
+
+def is_right_arrow_key(key):
+    """Detect right arrow key.
+
+    Args:
+        key (str): Character to check.
+
+    Returns:
+        bool: `True` if key is a valid text character or `False` otherwise.
+    """
+    return key == curses.KEY_RIGHT
+
+
+def is_left_arrow_key(key):
+    """Detect left arrow key.
+
+    Args:
+        key (str): Character to check.
+
+    Returns:
+        bool: `True` if key is a valid text character or `False` otherwise.
+    """
+    return key == curses.KEY_LEFT
