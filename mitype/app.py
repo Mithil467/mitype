@@ -14,18 +14,18 @@ from mitype.calculations import (
     speed_in_wpm,
     word_wrap,
 )
-from mitype.commandline import resolve_commandline_arguments, load_from_database
+from mitype.commandline import load_from_database, resolve_commandline_arguments
 from mitype.history import save_history
 from mitype.keycheck import (
     is_backspace,
     is_ctrl_c,
     is_enter,
     is_escape,
+    is_left_arrow_key,
     is_resize,
+    is_right_arrow_key,
     is_tab,
     is_valid_initial_key,
-    is_left_arrow_key,
-    is_right_arrow_key,
 )
 from mitype.timer import get_elapsed_minutes_since_first_keypress
 
