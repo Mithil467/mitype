@@ -14,7 +14,7 @@ from mitype.calculations import (
     speed_in_wpm,
     word_wrap,
 )
-from mitype.commandline import resolve_commandline_arguments
+from mitype.commandline import resolve_commandline_arguments, load_from_database
 from mitype.history import save_history
 from mitype.keycheck import (
     is_backspace,
@@ -24,6 +24,8 @@ from mitype.keycheck import (
     is_resize,
     is_tab,
     is_valid_initial_key,
+    is_left_arrow_key,
+    is_right_arrow_key,
 )
 from mitype.timer import get_elapsed_minutes_since_first_keypress
 
@@ -99,6 +101,14 @@ class App:
 
             if is_ctrl_c(key):
                 sys.exit(0)
+
+            if is_left_arrow_key(key) and not self.first_key_pressed:
+                win.clear()
+                self.switch_text(win, -1)
+
+            if is_right_arrow_key(key) and not self.first_key_pressed:
+                win.clear()
+                self.switch_text(win, 1)
 
             # Test mode
             if self.mode == 0:
@@ -446,6 +456,23 @@ class App:
             " Accuracy: " + "{:.2f}".format(self.accuracy) + "% ",
             curses.color_pair(5),
         )
+
+    def switch_text(self, win, value):
+        """Load next or previous text snippet from database.
+
+        Args:
+            win (any): Curses window.
+            value (int): value to increase or decrement by.
+        """
+        self.text_id += value
+        self.text = load_from_database(self.text_id)[0]
+        self.tokens = self.text.split()
+
+        self.text = " ".join(self.tokens)
+
+        self.reset_test()
+        self.setup_print(win)
+        self.update_state(win)
 
     @staticmethod
     def get_dimensions(win):
