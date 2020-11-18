@@ -463,7 +463,7 @@ class App:
             value (int): value to increase or decrement by.
         """
         if isinstance(self.text_id, str):
-            return None
+            return 
 
         win.clear()
 
