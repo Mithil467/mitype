@@ -290,6 +290,34 @@
         <span class="ow">or</span> <span class="n">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="ow">or</span> <span class="n">is_ignored_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
     <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_right_arrow_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_right_arrow_key">[docs]</a><span class="k">def</span> <span class="nf">is_right_arrow_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect right arrow key.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (str): Character to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: `True` if key is a valid text character or `False` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;KEY_RIGHT&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_RIGHT</span></div>
+
+
+<div class="viewcode-block" id="is_left_arrow_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_left_arrow_key">[docs]</a><span class="k">def</span> <span class="nf">is_left_arrow_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect left arrow key.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (str): Character to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: `True` if key is a valid text character or `False` otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;KEY_LEFT&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_LEFT</span></div>
 </pre></div>
 
            </div>

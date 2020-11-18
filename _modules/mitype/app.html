@@ -165,14 +165,16 @@
     <span class="n">speed_in_wpm</span><span class="p">,</span>
     <span class="n">word_wrap</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mitype.commandline</span> <span class="kn">import</span> <span class="n">resolve_commandline_arguments</span>
+<span class="kn">from</span> <span class="nn">mitype.commandline</span> <span class="kn">import</span> <span class="n">load_from_database</span><span class="p">,</span> <span class="n">resolve_commandline_arguments</span>
 <span class="kn">from</span> <span class="nn">mitype.history</span> <span class="kn">import</span> <span class="n">save_history</span>
 <span class="kn">from</span> <span class="nn">mitype.keycheck</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">is_backspace</span><span class="p">,</span>
     <span class="n">is_ctrl_c</span><span class="p">,</span>
     <span class="n">is_enter</span><span class="p">,</span>
     <span class="n">is_escape</span><span class="p">,</span>
+    <span class="n">is_left_arrow_key</span><span class="p">,</span>
     <span class="n">is_resize</span><span class="p">,</span>
+    <span class="n">is_right_arrow_key</span><span class="p">,</span>
     <span class="n">is_tab</span><span class="p">,</span>
     <span class="n">is_valid_initial_key</span><span class="p">,</span>
 <span class="p">)</span>
@@ -250,6 +252,12 @@
 
             <span class="k">if</span> <span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_left_arrow_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">switch_text</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_right_arrow_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">switch_text</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
             <span class="c1"># Test mode</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -597,6 +605,28 @@
             <span class="s2">&quot; Accuracy: &quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;% &quot;</span><span class="p">,</span>
             <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
         <span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.switch_text"><a class="viewcode-back" href="../../api.html#mitype.app.App.switch_text">[docs]</a>    <span class="k">def</span> <span class="nf">switch_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load next or previous text snippet from database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            win (any): Curses window.</span>
+<span class="sd">            value (int): value to increase or decrement by.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="n">win</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_id</span> <span class="o">+=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">load_from_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_test</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_print</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">(</span><span class="n">win</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="App.get_dimensions"><a class="viewcode-back" href="../../api.html#mitype.app.App.get_dimensions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>

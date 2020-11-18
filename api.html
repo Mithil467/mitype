@@ -330,6 +330,20 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="mitype.app.App.switch_text">
+<code class="sig-name descname">switch_text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">win</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.switch_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.switch_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load next or previous text snippet from database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>win</strong> (<em>any</em>) – Curses window.</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – value to increase or decrement by.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="mitype.app.App.typing_mode">
 <code class="sig-name descname">typing_mode</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">win</span></em>, <em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.typing_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.app.App.typing_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start recording typing session progress.</p>
@@ -492,7 +506,7 @@ the sample text.</p></li>
 
 <dl class="py function">
 <dt id="mitype.commandline.load_based_on_difficulty">
-<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_based_on_difficulty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">difficulty_level</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mitype.commandline.</code><code class="sig-name descname">load_based_on_difficulty</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">difficulty_level</span><span class="o">=</span><span class="default_value">4</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load text of given difficulty from database if parameter is passed.</p>
 <p>Defaults to random difficulty level when none is provided.</p>
 <dl class="field-list simple">
@@ -713,6 +727,23 @@ KEY_UP or ^G.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt id="mitype.keycheck.is_left_arrow_key">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_left_arrow_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_left_arrow_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_left_arrow_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect left arrow key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – Character to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if key is a valid text character or <cite>False</cite> otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="mitype.keycheck.is_null">
 <code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_null</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_null"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_null" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect null keys like super key.</p>
@@ -739,6 +770,23 @@ KEY_UP or ^G.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><cite>True</cite> if resize request or <cite>False</cite> otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="mitype.keycheck.is_right_arrow_key">
+<code class="sig-prename descclassname">mitype.keycheck.</code><code class="sig-name descname">is_right_arrow_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_right_arrow_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mitype.keycheck.is_right_arrow_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect right arrow key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>str</em>) – Character to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>True</cite> if key is a valid text character or <cite>False</cite> otherwise.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
