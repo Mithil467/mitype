@@ -103,11 +103,9 @@ class App:
                 sys.exit(0)
 
             if is_left_arrow_key(key) and not self.first_key_pressed:
-                win.clear()
                 self.switch_text(win, -1)
 
             if is_right_arrow_key(key) and not self.first_key_pressed:
-                win.clear()
                 self.switch_text(win, 1)
 
             # Test mode
@@ -464,6 +462,11 @@ class App:
             win (any): Curses window.
             value (int): value to increase or decrement by.
         """
+        if isinstance(self.text_id, str):
+            return None
+
+        win.clear()
+
         self.text_id += value
         self.text = load_from_database(self.text_id)[0]
         self.tokens = self.text.split()
