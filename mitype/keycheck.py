@@ -39,6 +39,20 @@ def is_ctrl_c(key):
     return key == "\x03"
 
 
+def is_ctrl_s(key):
+    """Detects Ctrl+s key combination. 
+
+    This is used to share results on twitter
+
+    Args: 
+        key (string):
+    
+    Returns: 
+        bool: Return true if Ctrl+s is pressed.
+            Return false otherwise 
+    """
+    return key == "\x13"
+
 def is_backspace(key):
     """Detect BACKSPACE key.
 
