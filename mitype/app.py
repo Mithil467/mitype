@@ -4,6 +4,7 @@ import curses
 import os
 import sys
 import time
+import webbrowser
 
 import mitype.signals
 from mitype.calculations import (
@@ -19,6 +20,7 @@ from mitype.history import save_history
 from mitype.keycheck import (
     is_backspace,
     is_ctrl_c,
+    is_ctrl_t,
     is_enter,
     is_escape,
     is_left_arrow_key,
@@ -124,8 +126,30 @@ class App:
                 # Start replay if enter key is pressed
                 self.replay(win)
 
+            # Share result on Twitter
+            elif self.mode == 1 and is_ctrl_t(key):
+                # Opens twitter with pre-typed result
+                self.share_result()
+
             # Refresh for changes to show up on window
             win.refresh()
+
+    def share_result(self):
+        """Opens a twitter on a browser"""
+
+        # Content of tweet
+        message = (
+            "My typing speed is "
+            + self.current_speed_wpm
+            + " WPM! Know yours on mitype."
+            + "\nhttps://pypi.org/project/mitype/ by @MithilPoojary"
+            + "\n#TypingTest"
+        )
+        # URL Parse
+        message = message.replace("\n", "%0D").replace("#", "%23")
+        # URL encode message and cconcatenate with base url
+        URL = "https://twitter.com/intent/tweet?text=" + message
+        webbrowser.open(URL, new=2)
 
     def typing_mode(self, win, key):
         """Start recording typing session progress.
@@ -348,6 +372,8 @@ class App:
             win.addstr(" to see replay, ")
             win.addstr(" Tab ", curses.color_pair(7))
             win.addstr(" to retry ")
+            win.addstr(" CTRL+T ", curses.color_pair(7))
+            win.addstr(" to tweet result.")
 
             self.print_stats(win)
             if self.mode == 0:
