@@ -27,7 +27,7 @@ from mitype.keycheck import (
     is_right_arrow_key,
     is_tab,
     is_valid_initial_key,
-    is_ctrl_s
+    is_ctrl_s,
 )
 from mitype.timer import get_elapsed_minutes_since_first_keypress
 
@@ -137,7 +137,7 @@ class App:
     def share_result(self):
         result = f"My%20typing%20speed%20is%20{self.current_speed_wpm}%20WPM!%20Know%20yours%20on%20mitype.%0Ahttps%3A//pypi.org/project/mitype/%20by%20%40MithilPoojary%0A%23TypingTest%20"
         URL = "https://twitter.com/intent/tweet?text=" + result
-        webbrowser.open(URL,new=2)
+        webbrowser.open(URL, new=2)
 
     def typing_mode(self, win, key):
         """Start recording typing session progress.
