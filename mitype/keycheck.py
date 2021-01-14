@@ -39,6 +39,18 @@ def is_ctrl_c(key):
     return key == "\x03"
 
 
+def is_ctrl_t(key):
+    """Detects Ctrl+t key combination.
+    This is used to share results on twitter
+    Args:
+        key (string):
+    Returns:
+        bool: Return true if Ctrl+t is pressed.
+            Return false otherwise
+    """
+    return key == "\x14"
+
+
 def is_backspace(key):
     """Detect BACKSPACE key.
 
