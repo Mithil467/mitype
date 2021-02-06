@@ -469,7 +469,7 @@ class App:
         win.addstr(
             self.window_height - 1,
             0,
-            " WPM: " + self.current_speed_wpm + " ",
+            " WPM: " + str(self.current_speed_wpm) + " ",
             curses.color_pair(6),
         )
 
