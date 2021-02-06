@@ -184,7 +184,7 @@ class App:
         self.line_count = (
             number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
         )
-        if self.line_count + 5 >= self.window_height:
+        if self.line_count + 7 >= self.window_height:
             curses.endwin()
             sys.stdout.write("Window too small to print given text")
             sys.exit(1)
@@ -371,8 +371,10 @@ class App:
             win.addstr(self.line_count + 2, 1, " Enter ", curses.color_pair(7))
             win.addstr(" to see replay, ")
             win.addstr(" Tab ", curses.color_pair(7))
-            win.addstr(" to retry ")
-            win.addstr(" CTRL+T ", curses.color_pair(7))
+            win.addstr(" to retry.")
+            win.addstr(self.line_count + 3, 1, " Arrow keys ", curses.color_pair(7))
+            win.addstr(" to change text.")
+            win.addstr(self.line_count + 4, 1, " CTRL+T ", curses.color_pair(7))
             win.addstr(" to tweet result.")
 
             self.print_stats(win)
