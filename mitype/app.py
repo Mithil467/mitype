@@ -498,6 +498,7 @@ class App:
         self.tokens = self.text.split()
 
         self.text = " ".join(self.tokens)
+        self.original_text_formatted = self.text
 
         self.reset_test()
         self.setup_print(win)
