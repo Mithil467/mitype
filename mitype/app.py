@@ -19,6 +19,7 @@ from mitype.commandline import load_from_database, resolve_commandline_arguments
 from mitype.history import save_history
 from mitype.keycheck import (
     is_backspace,
+    is_ctrl_backspace,
     is_ctrl_c,
     is_ctrl_t,
     is_enter,
@@ -264,6 +265,9 @@ class App:
         elif is_backspace(key):
             self.erase_key()
 
+        elif is_ctrl_backspace(key):
+            self.erase_word()
+
         # Ignore spaces at the start of the word (Plover support)
         elif key == " ":
             if self.current_word != "":
@@ -281,6 +285,18 @@ class App:
         if len(self.current_word) > 0:
             self.current_word = self.current_word[0 : len(self.current_word) - 1]
             self.current_string = self.current_string[0 : len(self.current_string) - 1]
+
+    def erase_word(self):
+        """Erase the last typed workd."""
+        if len(self.current_word) > 0:
+            index_word = self.current_word.rfind(" ")
+            diff = len(self.current_word) - index_word
+            if index_word == -1:
+                self.current_string = self.current_string[: -len(self.current_word)]
+                self.current_word = ""
+            else:
+                self.current_word = self.current_word[:-diff]
+                self.current_string = self.current_string[:-diff]
 
     def check_word(self):
         """Accept finalized word."""

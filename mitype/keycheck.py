@@ -51,6 +51,20 @@ def is_ctrl_t(key):
     return key == "\x14"
 
 
+def is_ctrl_backspace(key):
+    """Detects Ctrl+backspace key combination.
+    Used to delete the last typed word
+
+    Args:
+        key (string)
+
+    Returns:
+        bool: Returns true if Ctrl+backspace is pressed.
+            Returns false otherwise
+    """
+    return key == "\x17"
+
+
 def is_backspace(key):
     """Detect BACKSPACE key.
 
