@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -204,6 +207,20 @@
 <span class="sd">            Return false otherwise</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x14</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="is_ctrl_backspace"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ctrl_backspace">[docs]</a><span class="k">def</span> <span class="nf">is_ctrl_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detects Ctrl+backspace key combination.</span>
+<span class="sd">    Used to delete the last typed word</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        key (string)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: Returns true if Ctrl+backspace is pressed.</span>
+<span class="sd">            Returns false otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x17</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="is_backspace"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_backspace">[docs]</a><span class="k">def</span> <span class="nf">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>

@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -174,6 +177,7 @@
 <span class="kn">from</span> <span class="nn">mitype.history</span> <span class="kn">import</span> <span class="n">save_history</span>
 <span class="kn">from</span> <span class="nn">mitype.keycheck</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">is_backspace</span><span class="p">,</span>
+    <span class="n">is_ctrl_backspace</span><span class="p">,</span>
     <span class="n">is_ctrl_c</span><span class="p">,</span>
     <span class="n">is_ctrl_t</span><span class="p">,</span>
     <span class="n">is_enter</span><span class="p">,</span>
@@ -419,6 +423,9 @@
         <span class="k">elif</span> <span class="n">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">erase_key</span><span class="p">()</span>
 
+        <span class="k">elif</span> <span class="n">is_ctrl_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">erase_word</span><span class="p">()</span>
+
         <span class="c1"># Ignore spaces at the start of the word (Plover support)</span>
         <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -436,6 +443,18 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="App.erase_word"><a class="viewcode-back" href="../../api.html#mitype.app.App.erase_word">[docs]</a>    <span class="k">def</span> <span class="nf">erase_word</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Erase the last typed workd.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">index_word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">-</span> <span class="n">index_word</span>
+            <span class="k">if</span> <span class="n">index_word</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">[:</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">[:</span><span class="o">-</span><span class="n">diff</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">[:</span><span class="o">-</span><span class="n">diff</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="App.check_word"><a class="viewcode-back" href="../../api.html#mitype.app.App.check_word">[docs]</a>    <span class="k">def</span> <span class="nf">check_word</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Accept finalized word.&quot;&quot;&quot;</span>

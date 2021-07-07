@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -160,12 +163,12 @@
 <p>Contained within is exhaustive documentation of this application’s internal Python API.</p>
 <span class="target" id="module-mitype.app"></span><p>This is the Mitype main app script.</p>
 <dl class="py class">
-<dt id="mitype.app.App">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">mitype.app.</span></code><code class="sig-name descname"><span class="pre">App</span></code><a class="reference internal" href="_modules/mitype/app.html#App"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mitype.app.</span></span><span class="sig-name descname"><span class="pre">App</span></span><a class="reference internal" href="_modules/mitype/app.html#App"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class for enclosing all methods required to run Mitype.</p>
 <dl class="py method">
-<dt id="mitype.app.App.appendkey">
-<code class="sig-name descname"><span class="pre">appendkey</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.appendkey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.appendkey" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.appendkey">
+<span class="sig-name descname"><span class="pre">appendkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.appendkey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.appendkey" title="Permalink to this definition">¶</a></dt>
 <dd><p>Append a character to the end of the current word.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -175,20 +178,26 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.check_word">
-<code class="sig-name descname"><span class="pre">check_word</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.check_word"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.check_word" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.check_word">
+<span class="sig-name descname"><span class="pre">check_word</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.check_word"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.check_word" title="Permalink to this definition">¶</a></dt>
 <dd><p>Accept finalized word.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.erase_key">
-<code class="sig-name descname"><span class="pre">erase_key</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.erase_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.erase_key" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.erase_key">
+<span class="sig-name descname"><span class="pre">erase_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.erase_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.erase_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Erase the last typed character.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.get_dimensions">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">get_dimensions</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.get_dimensions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.get_dimensions" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.erase_word">
+<span class="sig-name descname"><span class="pre">erase_word</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.erase_word"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.erase_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Erase the last typed workd.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mitype.app.App.get_dimensions">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_dimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.get_dimensions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.get_dimensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the width of terminal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -204,8 +213,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.initialize">
-<code class="sig-name descname"><span class="pre">initialize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.initialize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configure the initial state of the curses interface.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -215,8 +224,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.key_printer">
-<code class="sig-name descname"><span class="pre">key_printer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.key_printer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.key_printer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.key_printer">
+<span class="sig-name descname"><span class="pre">key_printer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.key_printer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.key_printer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print required key to terminal.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -232,8 +241,8 @@ KEY_UP or ^G.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.keyinput">
-<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">keyinput</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.keyinput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.keyinput" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.keyinput">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">keyinput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.keyinput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.keyinput" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve next character of text input.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -249,8 +258,8 @@ KEY_UP or ^G.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.main">
-<code class="sig-name descname"><span class="pre">main</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.main" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.main">
+<span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Respond to user inputs.</p>
 <p>This is where the infinite loop is executed to continuously serve
 events.</p>
@@ -262,8 +271,8 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.print_realtime_wpm">
-<code class="sig-name descname"><span class="pre">print_realtime_wpm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.print_realtime_wpm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.print_realtime_wpm" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.print_realtime_wpm">
+<span class="sig-name descname"><span class="pre">print_realtime_wpm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.print_realtime_wpm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.print_realtime_wpm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print realtime wpm during the test.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -273,8 +282,8 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.print_stats">
-<code class="sig-name descname"><span class="pre">print_stats</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.print_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.print_stats" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.print_stats">
+<span class="sig-name descname"><span class="pre">print_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.print_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.print_stats" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print the bottom stats bar after each run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -284,8 +293,8 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.replay">
-<code class="sig-name descname"><span class="pre">replay</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.replay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.replay" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.replay">
+<span class="sig-name descname"><span class="pre">replay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.replay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.replay" title="Permalink to this definition">¶</a></dt>
 <dd><p>Play out a recording of the users last session.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -295,14 +304,14 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.reset_test">
-<code class="sig-name descname"><span class="pre">reset_test</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.reset_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.reset_test" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.reset_test">
+<span class="sig-name descname"><span class="pre">reset_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.reset_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.reset_test" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reset the current typing session.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.resize">
-<code class="sig-name descname"><span class="pre">resize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.resize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.resize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Respond to window resize events.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -312,8 +321,8 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.screen_size_check">
-<code class="sig-name descname"><span class="pre">screen_size_check</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.screen_size_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.screen_size_check" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.screen_size_check">
+<span class="sig-name descname"><span class="pre">screen_size_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.screen_size_check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.screen_size_check" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if screen size is enough to print text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -323,8 +332,8 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.setup_print">
-<code class="sig-name descname"><span class="pre">setup_print</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.setup_print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.setup_print" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.setup_print">
+<span class="sig-name descname"><span class="pre">setup_print</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.setup_print"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.setup_print" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print setup text at beginning of each typing session.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -334,14 +343,14 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.share_result">
-<code class="sig-name descname"><span class="pre">share_result</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.share_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.share_result" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.share_result">
+<span class="sig-name descname"><span class="pre">share_result</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.share_result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.share_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Opens a twitter on a browser</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.switch_text">
-<code class="sig-name descname"><span class="pre">switch_text</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.switch_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.switch_text" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.switch_text">
+<span class="sig-name descname"><span class="pre">switch_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.switch_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.switch_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load next or previous text snippet from database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -354,8 +363,8 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.typing_mode">
-<code class="sig-name descname"><span class="pre">typing_mode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.typing_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.typing_mode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.typing_mode">
+<span class="sig-name descname"><span class="pre">typing_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.typing_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.typing_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start recording typing session progress.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -368,8 +377,8 @@ events.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="mitype.app.App.update_state">
-<code class="sig-name descname"><span class="pre">update_state</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.update_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.update_state" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.app.App.update_state">
+<span class="sig-name descname"><span class="pre">update_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.update_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.update_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Report on typing session results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -382,8 +391,8 @@ events.</p>
 
 <span class="target" id="module-mitype.calculations"></span><p>Calculations.</p>
 <dl class="py function">
-<dt id="mitype.calculations.accuracy">
-<code class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></code><code class="sig-name descname"><span class="pre">accuracy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_chars_typed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrongly_typed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.accuracy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.calculations.accuracy">
+<span class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></span><span class="sig-name descname"><span class="pre">accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_chars_typed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrongly_typed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.accuracy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get accuracy for the current test.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -402,8 +411,8 @@ events.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.calculations.first_index_at_which_strings_differ">
-<code class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></code><code class="sig-name descname"><span class="pre">first_index_at_which_strings_differ</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#first_index_at_which_strings_differ"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.first_index_at_which_strings_differ" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.calculations.first_index_at_which_strings_differ">
+<span class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></span><span class="sig-name descname"><span class="pre">first_index_at_which_strings_differ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#first_index_at_which_strings_differ"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.first_index_at_which_strings_differ" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return index at which there is a change in strings.</p>
 <p>This is used to determine the index up to which text must be dimmed and
 after which must be coloured red (indicating mismatch).</p>
@@ -425,8 +434,8 @@ last typed keys in a session.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.calculations.get_space_count_after_ith_word">
-<code class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></code><code class="sig-name descname"><span class="pre">get_space_count_after_ith_word</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#get_space_count_after_ith_word"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.get_space_count_after_ith_word" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.calculations.get_space_count_after_ith_word">
+<span class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></span><span class="sig-name descname"><span class="pre">get_space_count_after_ith_word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#get_space_count_after_ith_word"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.get_space_count_after_ith_word" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return number of spaces after a given word.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -445,8 +454,8 @@ last typed keys in a session.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.calculations.number_of_lines_to_fit_text_in_window">
-<code class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></code><code class="sig-name descname"><span class="pre">number_of_lines_to_fit_text_in_window</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#number_of_lines_to_fit_text_in_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.number_of_lines_to_fit_text_in_window" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.calculations.number_of_lines_to_fit_text_in_window">
+<span class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></span><span class="sig-name descname"><span class="pre">number_of_lines_to_fit_text_in_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#number_of_lines_to_fit_text_in_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.number_of_lines_to_fit_text_in_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Count number of lines required for displaying text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -465,8 +474,8 @@ last typed keys in a session.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.calculations.speed_in_wpm">
-<code class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></code><code class="sig-name descname"><span class="pre">speed_in_wpm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#speed_in_wpm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.speed_in_wpm" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.calculations.speed_in_wpm">
+<span class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></span><span class="sig-name descname"><span class="pre">speed_in_wpm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#speed_in_wpm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.speed_in_wpm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate typing speed in WPM.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -486,8 +495,8 @@ the sample text.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.calculations.word_wrap">
-<code class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></code><code class="sig-name descname"><span class="pre">word_wrap</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#word_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.word_wrap" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.calculations.word_wrap">
+<span class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></span><span class="sig-name descname"><span class="pre">word_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#word_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.word_wrap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrap text on the screen according to the window width.</p>
 <p>Returns text with extra spaces which makes the string word wrap.</p>
 <dl class="field-list simple">
@@ -509,14 +518,14 @@ the sample text.</p></li>
 <span class="target" id="module-mitype.commandline"></span><p>Start of app.</p>
 <p>Parses command line arguments and decides and fills text accordingly.</p>
 <dl class="py function">
-<dt id="mitype.commandline.display_version">
-<code class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></code><code class="sig-name descname"><span class="pre">display_version</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#display_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.display_version" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.commandline.display_version">
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">display_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#display_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.display_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display version.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.commandline.load_based_on_difficulty">
-<code class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></code><code class="sig-name descname"><span class="pre">load_based_on_difficulty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">difficulty_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.commandline.load_based_on_difficulty">
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_based_on_difficulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">difficulty_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load text of given difficulty from database if parameter is passed.</p>
 <p>Defaults to random difficulty level when none is provided.</p>
 <dl class="field-list simple">
@@ -533,8 +542,8 @@ the sample text.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.commandline.load_from_database">
-<code class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></code><code class="sig-name descname"><span class="pre">load_from_database</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_from_database"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_from_database" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.commandline.load_from_database">
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_from_database</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_from_database"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_from_database" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load given text from database with given id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -550,8 +559,8 @@ the sample text.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.commandline.load_text_from_file">
-<code class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></code><code class="sig-name descname"><span class="pre">load_text_from_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_text_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_text_from_file" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.commandline.load_text_from_file">
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_text_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_text_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_text_from_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load file contents.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -567,8 +576,8 @@ the sample text.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.commandline.parse_arguments">
-<code class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></code><code class="sig-name descname"><span class="pre">parse_arguments</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#parse_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.parse_arguments" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.commandline.parse_arguments">
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">parse_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#parse_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.parse_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse command line arguments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -581,8 +590,8 @@ the sample text.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.commandline.resolve_commandline_arguments">
-<code class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></code><code class="sig-name descname"><span class="pre">resolve_commandline_arguments</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#resolve_commandline_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.resolve_commandline_arguments" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.commandline.resolve_commandline_arguments">
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">resolve_commandline_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#resolve_commandline_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.resolve_commandline_arguments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse CLI arguments and return practice text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -596,8 +605,8 @@ the sample text.</p></li>
 
 <span class="target" id="module-mitype.database"></span><p>Deals with fetching texts from database.</p>
 <dl class="py function">
-<dt id="mitype.database.database_file_absolute_path">
-<code class="sig-prename descclassname"><span class="pre">mitype.database.</span></code><code class="sig-name descname"><span class="pre">database_file_absolute_path</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/database.html#database_file_absolute_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.database.database_file_absolute_path" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.database.database_file_absolute_path">
+<span class="sig-prename descclassname"><span class="pre">mitype.database.</span></span><span class="sig-name descname"><span class="pre">database_file_absolute_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/database.html#database_file_absolute_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.database.database_file_absolute_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get full path of directory where source files are stored.</p>
 <p>This is required for later fetching entry from data.db which is
 stored in same directory as app.</p>
@@ -612,8 +621,8 @@ stored in same directory as app.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.database.fetch_text_from_id">
-<code class="sig-prename descclassname"><span class="pre">mitype.database.</span></code><code class="sig-name descname"><span class="pre">fetch_text_from_id</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serial_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/database.html#fetch_text_from_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.database.fetch_text_from_id" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.database.fetch_text_from_id">
+<span class="sig-prename descclassname"><span class="pre">mitype.database.</span></span><span class="sig-name descname"><span class="pre">fetch_text_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serial_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/database.html#fetch_text_from_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.database.fetch_text_from_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fetch row from data.db database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -630,8 +639,8 @@ stored in same directory as app.</p>
 
 <span class="target" id="module-mitype.keycheck"></span><p>Keypress.</p>
 <dl class="py function">
-<dt id="mitype.keycheck.is_backspace">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_backspace</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_backspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_backspace" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_backspace">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_backspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_backspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_backspace" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect BACKSPACE key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -651,8 +660,30 @@ stored in same directory as app.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_ctrl_c">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_ctrl_c</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_ctrl_c"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_ctrl_c" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_ctrl_backspace">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_ctrl_backspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_ctrl_backspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_ctrl_backspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detects Ctrl+backspace key combination.
+Used to delete the last typed word</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>string</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Returns true if Ctrl+backspace is pressed.</dt><dd><p>Returns false otherwise</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mitype.keycheck.is_ctrl_c">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_ctrl_c</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_ctrl_c"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_ctrl_c" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detects Ctrl+c key combination.</p>
 <p>This is used to exit the application.</p>
 <dl class="field-list simple">
@@ -673,8 +704,8 @@ stored in same directory as app.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_ctrl_t">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_ctrl_t</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_ctrl_t"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_ctrl_t" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_ctrl_t">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_ctrl_t</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_ctrl_t"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_ctrl_t" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detects Ctrl+t key combination.
 This is used to share results on twitter
 :param key:
@@ -694,8 +725,8 @@ This is used to share results on twitter
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_enter">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_enter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_enter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_enter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_enter">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_enter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_enter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_enter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect enter key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -711,8 +742,8 @@ This is used to share results on twitter
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_escape">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_escape</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_escape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_escape" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_escape">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_escape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_escape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_escape" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect ESC key.</p>
 <p>This is used to exit the application.</p>
 <dl class="field-list simple">
@@ -736,8 +767,8 @@ KEY_UP or ^G.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_ignored_key">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_ignored_key</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_ignored_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_ignored_key" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_ignored_key">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_ignored_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_ignored_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_ignored_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect if key press should be ignored.</p>
 <p>Special function keys, page navigation keys must be ignored.</p>
 <dl class="field-list simple">
@@ -758,8 +789,8 @@ KEY_UP or ^G.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_left_arrow_key">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_left_arrow_key</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_left_arrow_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_left_arrow_key" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_left_arrow_key">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_left_arrow_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_left_arrow_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_left_arrow_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect left arrow key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -775,8 +806,8 @@ KEY_UP or ^G.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_null">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_null</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_null"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_null" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_null">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_null</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_null"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_null" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect null keys like super key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -792,8 +823,8 @@ KEY_UP or ^G.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_resize">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_resize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_resize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_resize">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_resize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect if terminal was resized.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -809,8 +840,8 @@ KEY_UP or ^G.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_right_arrow_key">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_right_arrow_key</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_right_arrow_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_right_arrow_key" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_right_arrow_key">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_right_arrow_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_right_arrow_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_right_arrow_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect right arrow key.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -826,8 +857,8 @@ KEY_UP or ^G.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_tab">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_tab</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_tab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_tab" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_tab">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_tab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_tab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_tab" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect tab key to start mitype again.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -843,8 +874,8 @@ KEY_UP or ^G.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitype.keycheck.is_valid_initial_key">
-<code class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></code><code class="sig-name descname"><span class="pre">is_valid_initial_key</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_valid_initial_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_valid_initial_key" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.keycheck.is_valid_initial_key">
+<span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_valid_initial_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_valid_initial_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_valid_initial_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Detect if the pressed key is a valid key to start timer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -861,8 +892,8 @@ KEY_UP or ^G.</p>
 
 <span class="target" id="module-mitype.timer"></span><p>Timer.</p>
 <dl class="py function">
-<dt id="mitype.timer.get_elapsed_minutes_since_first_keypress">
-<code class="sig-prename descclassname"><span class="pre">mitype.timer.</span></code><code class="sig-name descname"><span class="pre">get_elapsed_minutes_since_first_keypress</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/timer.html#get_elapsed_minutes_since_first_keypress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.timer.get_elapsed_minutes_since_first_keypress" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mitype.timer.get_elapsed_minutes_since_first_keypress">
+<span class="sig-prename descclassname"><span class="pre">mitype.timer.</span></span><span class="sig-name descname"><span class="pre">get_elapsed_minutes_since_first_keypress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/timer.html#get_elapsed_minutes_since_first_keypress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.timer.get_elapsed_minutes_since_first_keypress" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get time elapsed since initial keypress.</p>
 <p>This is required to calculate speed.</p>
 <dl class="field-list simple">
