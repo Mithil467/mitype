@@ -371,7 +371,7 @@ class App:
         )
         if index == len(self.text):
             # Highlight mistyped characters
-            for i in set(self.mistyped_keys):
+            for i in self.mistyped_keys:
                 win.addstr(
                     2 + i // self.window_width,
                     i % self.window_width,
