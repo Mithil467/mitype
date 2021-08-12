@@ -53,6 +53,7 @@ class App:
         self.key = ""
         self.first_key_pressed = False
         self.key_strokes = []
+        self.mistyped_keys = []
 
         self.start_time = 0
         self.end_time = 0
@@ -358,6 +359,9 @@ class App:
         win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
 
         index = first_index_at_which_strings_differ(self.current_string, self.text)
+        # Check if difference was found
+        if index < len(self.current_string):
+            self.mistyped_keys.append(len(self.current_string) - 1)
 
         win.addstr(
             2 + index // self.window_width,
@@ -366,6 +370,15 @@ class App:
             curses.color_pair(2),
         )
         if index == len(self.text):
+            # Highlight mistyped characters
+            for i in self.mistyped_keys:
+                win.addstr(
+                    2 + i // self.window_width,
+                    i % self.window_width,
+                    self.text[i],
+                    curses.color_pair(2),
+                )
+
             curses.curs_set(0)
 
             win.addstr(self.line_count, 0, " Your typing speed is ")
@@ -421,6 +434,7 @@ class App:
         self.current_string = ""
         self.first_key_pressed = False
         self.key_strokes = []
+        self.mistyped_keys = []
         self.start_time = 0
         self.i = 0
         self.current_speed_wpm = 0
