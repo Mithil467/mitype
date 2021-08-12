@@ -85,7 +85,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
@@ -211,6 +211,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mistyped_keys</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="mi">0</span>
@@ -516,6 +517,9 @@
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">)],</span> <span class="n">curses</span><span class="o">.</span><span class="n">A_DIM</span><span class="p">)</span>
 
         <span class="n">index</span> <span class="o">=</span> <span class="n">first_index_at_which_strings_differ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="c1"># Check if difference was found</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mistyped_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
             <span class="mi">2</span> <span class="o">+</span> <span class="n">index</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">,</span>
@@ -524,6 +528,15 @@
             <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">):</span>
+            <span class="c1"># Highlight mistyped characters</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mistyped_keys</span><span class="p">:</span>
+                <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span>
+                    <span class="mi">2</span> <span class="o">+</span> <span class="n">i</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">,</span>
+                    <span class="n">i</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                <span class="p">)</span>
+
             <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
             <span class="n">win</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_count</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot; Your typing speed is &quot;</span><span class="p">)</span>
@@ -579,6 +592,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mistyped_keys</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span> <span class="o">=</span> <span class="mi">0</span>
