@@ -53,7 +53,7 @@ class App:
         self.key = ""
         self.first_key_pressed = False
         self.key_strokes = []
-        self.mistyped = []
+        self.mistyped_keys = []
 
         self.start_time = 0
         self.end_time = 0
@@ -360,8 +360,8 @@ class App:
 
         index = first_index_at_which_strings_differ(self.current_string, self.text)
         # Check if difference was found
-        if (index + 1) <= len(self.current_string):
-            self.mistyped.append(index)
+        if index < len(self.current_string):
+            self.mistyped_keys.append(len(self.current_string) - 1)
 
         win.addstr(
             2 + index // self.window_width,
@@ -371,7 +371,7 @@ class App:
         )
         if index == len(self.text):
             # Highlight mistyped characters
-            for i in set(self.mistyped):
+            for i in set(self.mistyped_keys):
                 win.addstr(
                     2 + i // self.window_width,
                     i % self.window_width,
@@ -434,7 +434,7 @@ class App:
         self.current_string = ""
         self.first_key_pressed = False
         self.key_strokes = []
-        self.mistyped = []
+        self.mistyped_keys = []
         self.start_time = 0
         self.i = 0
         self.current_speed_wpm = 0
