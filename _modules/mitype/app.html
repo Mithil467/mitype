@@ -696,13 +696,13 @@
 
 <div class="viewcode-block" id="App.get_dimensions"><a class="viewcode-back" href="../../api.html#mitype.app.App.get_dimensions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the width of terminal.</span>
+        <span class="sd">&quot;&quot;&quot;Get the height and width of terminal.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            win (any): Curses window object.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            int: Return width of terminal window.</span>
+<span class="sd">            (int, int): Tuple of height and width of terminal window.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dimension_tuple</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">getmaxyx</span><span class="p">()</span>
 
