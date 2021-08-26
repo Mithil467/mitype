@@ -538,13 +538,13 @@ class App:
 
     @staticmethod
     def get_dimensions(win):
-        """Get the width of terminal.
+        """Get the height and width of terminal.
 
         Args:
             win (any): Curses window object.
 
         Returns:
-            int: Return width of terminal window.
+            (int, int): Tuple of height and width of terminal window.
         """
         dimension_tuple = win.getmaxyx()
 
