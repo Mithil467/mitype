@@ -198,7 +198,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        string: Speed in WPM up to 2 decimal places.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">time_taken</span> <span class="o">=</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+    <span class="n">time_taken</span> <span class="o">=</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_seconds_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
     <span class="n">wpm</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">/</span> <span class="n">time_taken</span>
 
     <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wpm</span><span class="p">)</span></div>
