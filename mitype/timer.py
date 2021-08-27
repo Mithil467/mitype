@@ -3,7 +3,7 @@
 import time
 
 
-def get_elapsed_minutes_since_first_keypress(start_time):
+def get_elapsed_seconds_since_first_keypress(start_time):
     """Get time elapsed since initial keypress.
 
     This is required to calculate speed.

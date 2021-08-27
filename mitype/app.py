@@ -30,7 +30,7 @@ from mitype.keycheck import (
     is_tab,
     is_valid_initial_key,
 )
-from mitype.timer import get_elapsed_minutes_since_first_keypress
+from mitype.timer import get_elapsed_seconds_since_first_keypress
 
 
 class App:
@@ -137,9 +137,7 @@ class App:
             win.refresh()
 
     def share_result(self):
-        """Opens a twitter on a browser"""
-
-        # Content of tweet
+        """Open a twitter intent on a browser"""
         message = (
             "My typing speed is "
             + self.current_speed_wpm
@@ -147,11 +145,11 @@ class App:
             + "\nhttps://pypi.org/project/mitype/ by @MithilPoojary"
             + "\n#TypingTest"
         )
-        # URL Parse
+
+        # URL encode message
         message = message.replace("\n", "%0D").replace("#", "%23")
-        # URL encode message and cconcatenate with base url
-        URL = "https://twitter.com/intent/tweet?text=" + message
-        webbrowser.open(URL, new=2)
+        url = "https://twitter.com/intent/tweet?text=" + message
+        webbrowser.open(url, new=2)
 
     def typing_mode(self, win, key):
         """Start recording typing session progress.
@@ -177,12 +175,8 @@ class App:
 
         self.key_printer(win, key)
 
-    def screen_size_check(self, window_height, window_width, text):
-        """Check if screen size is enough to print text.
-
-        Args:
-            win (any): Curses window.
-        """
+    def screen_size_check(self):
+        """Check if screen size is enough to print text."""
         self.line_count = (
             number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
         )
@@ -203,7 +197,7 @@ class App:
         # Adding word wrap to text
         self.text = word_wrap(self.text, self.window_width)
 
-        self.screen_size_check(self.window_height, self.window_width, self.text)
+        self.screen_size_check()
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
         curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)
@@ -288,7 +282,7 @@ class App:
             self.current_string = self.current_string[0 : len(self.current_string) - 1]
 
     def erase_word(self):
-        """Erase the last typed workd."""
+        """Erase the last typed wor d."""
         if len(self.current_word) > 0:
             index_word = self.current_word.rfind(" ")
             diff = len(self.current_word) - index_word
@@ -326,7 +320,7 @@ class App:
         Args:
             win (any): Curses window.
         """
-        total_time = mitype.timer.get_elapsed_minutes_since_first_keypress(
+        total_time = mitype.timer.get_elapsed_seconds_since_first_keypress(
             self.start_time
         )
         current_wpm = 0
@@ -388,7 +382,7 @@ class App:
                     self.text_without_spaces
                 )
                 self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
-                self.time_taken = get_elapsed_minutes_since_first_keypress(
+                self.time_taken = get_elapsed_seconds_since_first_keypress(
                     self.start_time
                 )
 
@@ -444,7 +438,7 @@ class App:
         curses.curs_set(1)
 
     def replay(self, win):
-        """Play out a recording of the users last session.
+        """Play out a recording of the user's last session.
 
         Args:
             win (any): Curses window.
@@ -484,7 +478,7 @@ class App:
         self.window_height, self.window_width = self.get_dimensions(win)
         self.text = word_wrap(self.original_text_formatted, self.window_width)
 
-        self.screen_size_check(self.window_height, self.window_width, self.text)
+        self.screen_size_check()
 
         self.print_realtime_wpm(win)
         self.setup_print(win)
