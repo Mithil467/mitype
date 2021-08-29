@@ -1,4 +1,4 @@
-""" Setup script for mitype """
+"""Setup script for mitype."""
 import io
 
 from setuptools import setup

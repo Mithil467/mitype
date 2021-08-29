@@ -10,14 +10,14 @@ def is_escape(key):
     This is used to exit the application.
 
     Args:
-        key (string): Individual characters are returned as 1-character
+        key (str): Individual characters are returned as 1-character
             strings, and special keys such as function keys
             return longer strings containing a key name such as
             KEY_UP or ^G.
 
     Returns:
-        bool: Returns true if pressed key is ESC key.
-            Returns false otherwise.
+        bool: Returns `True` if pressed key is ESC key.
+            Returns `False` otherwise.
     """
     if isinstance(key, str) and len(key) == 1:
         return ord(key) == curses.ascii.ESC
@@ -25,42 +25,45 @@ def is_escape(key):
 
 
 def is_ctrl_c(key):
-    """Detects Ctrl+c key combination.
+    """Detect Ctrl+c key combination.
 
     This is used to exit the application.
 
     Args:
-        key (string):
+        key (str): Character to check.
 
     Returns:
-        bool: Returns true if Ctrl+c is pressed.
-            Returns false otherwise.
+        bool: Returns `True` if Ctrl+c is pressed.
+            Returns `False` otherwise.
     """
     return key == "\x03"
 
 
 def is_ctrl_t(key):
-    """Detects Ctrl+t key combination.
+    """Detect Ctrl+t key combination.
+
     This is used to share results on twitter
+
     Args:
-        key (string):
+        key (str): Character to check.
     Returns:
-        bool: Return true if Ctrl+t is pressed.
-            Return false otherwise
+        bool: Return `True` if Ctrl+t is pressed.
+            Return `False` otherwise.
     """
     return key == "\x14"
 
 
 def is_ctrl_backspace(key):
-    """Detects Ctrl+backspace key combination.
+    """Detect Ctrl+backspace key combination.
+
     Used to delete the last typed word
 
     Args:
-        key (string)
+        key (str): Character to check.
 
     Returns:
-        bool: Returns true if Ctrl+backspace is pressed.
-            Returns false otherwise
+        bool: Returns `True` if Ctrl+backspace is pressed.
+            Returns `False` otherwise.
     """
     return key == "\x17"
 
@@ -69,11 +72,11 @@ def is_backspace(key):
     """Detect BACKSPACE key.
 
     Args:
-        key (string): Character to check.
+        key (str): Character to check.
 
     Returns:
-        bool: Returns true if pressed key is BACKSPACE key.
-            Returns false otherwise.
+        bool: Returns `True` if pressed key is BACKSPACE key.
+            Returns `False` otherwise.
     """
     if key in ("KEY_BACKSPACE", "\b", "\x7f"):
         return True
@@ -136,7 +139,7 @@ def is_ignored_key(key):
     Special function keys, page navigation keys must be ignored.
 
     Args:
-        key (string):
+        key (str): Character to check.
 
     Returns:
         bool: Returns `True` if pressed key must be ignored or `False`

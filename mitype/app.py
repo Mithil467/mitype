@@ -137,7 +137,7 @@ class App:
             win.refresh()
 
     def share_result(self):
-        """Open a twitter intent on a browser"""
+        """Open a twitter intent on a browser."""
         message = (
             "My typing speed is "
             + self.current_speed_wpm
@@ -156,7 +156,7 @@ class App:
 
         Args:
             win (any): Curses window.
-            key (string): First typed character of the session.
+            key (str): First typed character of the session.
         """
         # Note start time when first valid key is pressed
         if not self.first_key_pressed and is_valid_initial_key(key):
@@ -194,7 +194,7 @@ class App:
         # Find window dimensions
         self.window_height, self.window_width = self.get_dimensions(win)
 
-        # Adding word wrap to text
+        # Add word wrap to text
         self.text = word_wrap(self.text, self.window_width)
 
         self.screen_size_check()
@@ -240,7 +240,7 @@ class App:
 
         Args:
             win (any): Curses window object.
-            key (string): Individual characters are returned as 1-character
+            key (str): Individual characters are returned as 1-character
                 strings, and special keys such as function keys
                 return longer strings containing a key name such as
                 KEY_UP or ^G.
@@ -282,7 +282,7 @@ class App:
             self.current_string = self.current_string[0 : len(self.current_string) - 1]
 
     def erase_word(self):
-        """Erase the last typed wor d."""
+        """Erase the last typed word."""
         if len(self.current_word) > 0:
             index_word = self.current_word.rfind(" ")
             diff = len(self.current_word) - index_word
@@ -308,7 +308,7 @@ class App:
         """Append a character to the end of the current word.
 
         Args:
-            key (key): character to append
+            key (key): Character to append.
         """
         if len(self.current_word) < self.current_word_limit:
             self.current_word += key
@@ -512,7 +512,7 @@ class App:
 
         Args:
             win (any): Curses window.
-            value (int): value to increase or decrement by.
+            value (int): value to increase or decrement the text ID by.
         """
         if isinstance(self.text_id, str):
             return

@@ -112,7 +112,7 @@ def load_text_from_file(file_path):
     """Load file contents.
 
     Args:
-        file_path (string): Full path to text to load.
+        file_path (str): Full path to text to load.
 
     Returns:
         (str, str): Tuple of text content followed by file path.

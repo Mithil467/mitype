@@ -14,12 +14,12 @@ def first_index_at_which_strings_differ(string1, string2):
     after which must be coloured red (indicating mismatch).
 
     Args:
-        string1 (string): The string which is a combination of
+        string1 (str): The string which is a combination of
             last typed keys in a session.
-        string2 (string): The string corresponding to sample text.
+        string2 (str): The string corresponding to sample text.
 
     Returns:
-        integer: Index at which mismatch occurs for the first time.
+        int: Index at which mismatch occurs for the first time.
     """
     length = min(len(string1), len(string2))
 
@@ -38,7 +38,7 @@ def speed_in_wpm(text, start_time):
             the sample text.
 
     Returns:
-        string: Speed in WPM up to 2 decimal places.
+        str: Speed in WPM up to 2 decimal places.
     """
     time_taken = timer.get_elapsed_seconds_since_first_keypress(start_time)
     wpm = 60 * len(text) / time_taken
@@ -50,11 +50,11 @@ def number_of_lines_to_fit_text_in_window(string, window_width):
     """Count number of lines required for displaying text.
 
     Args:
-        string (string): String containing sample text.
+        string (str): String containing sample text.
         window_width (int): Width of terminal.
 
     Returns:
-        integer: The number of lines required to display sample text
+        int: The number of lines required to display sample text
     """
     return int(math.ceil(len(string) / window_width))
 
@@ -64,10 +64,10 @@ def get_space_count_after_ith_word(index, text):
 
     Args:
         index (int): Index of word in text list
-        text(string): Text without appending extra spaces
+        text(str): Text without appending extra spaces
 
     Returns:
-        integer: The number of spaces required after ith word
+        int: The number of spaces required after ith word
     """
     count = 0
     while index < len(text) and text[index] == " ":
@@ -82,8 +82,8 @@ def word_wrap(text, width):
     Returns text with extra spaces which makes the string word wrap.
 
     Args:
-        text (string): Text to wrap.
-        width (integer): Width to wrap around.
+        text (str): Text to wrap.
+        width (int): Width to wrap around.
 
     Returns:
         str: Return altered text.
@@ -106,8 +106,8 @@ def accuracy(total_chars_typed, wrongly_typed):
     """Get accuracy for the current test.
 
     Args:
-        total_chars_typed (integer): Total characters typed.
-        wrongly_typed (integer): Mistyped characters.
+        total_chars_typed (int): Total characters typed.
+        wrongly_typed (int): Mistyped characters.
 
     Returns:
         float: Return accuracy.

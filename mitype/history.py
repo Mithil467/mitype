@@ -22,7 +22,7 @@ def history_file_absolute_path():
 
 
 def show_history(number_of_records):
-    """Print records from history
+    """Print records from history.
 
     Defaults to -1 if argument value not provided on command line.
 
@@ -64,7 +64,7 @@ def save_history(text_id, current_speed_wpm, accuracy):
     Args:
         text_id (int): Row identifier of database text loaded.
         current_speed_wpm (float): Speed result from test.
-        accuracy (string): Accuracy result from test.
+        accuracy (str): Accuracy result from test.
     """
     history_path = history_file_absolute_path()
 
