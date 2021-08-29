@@ -172,12 +172,12 @@
 <span class="sd">    after which must be coloured red (indicating mismatch).</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        string1 (string): The string which is a combination of</span>
+<span class="sd">        string1 (str): The string which is a combination of</span>
 <span class="sd">            last typed keys in a session.</span>
-<span class="sd">        string2 (string): The string corresponding to sample text.</span>
+<span class="sd">        string2 (str): The string corresponding to sample text.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        integer: Index at which mismatch occurs for the first time.</span>
+<span class="sd">        int: Index at which mismatch occurs for the first time.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">string2</span><span class="p">))</span>
 
@@ -196,7 +196,7 @@
 <span class="sd">            the sample text.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        string: Speed in WPM up to 2 decimal places.</span>
+<span class="sd">        str: Speed in WPM up to 2 decimal places.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">time_taken</span> <span class="o">=</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_seconds_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
     <span class="n">wpm</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">/</span> <span class="n">time_taken</span>
@@ -208,11 +208,11 @@
     <span class="sd">&quot;&quot;&quot;Count number of lines required for displaying text.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        string (string): String containing sample text.</span>
+<span class="sd">        string (str): String containing sample text.</span>
 <span class="sd">        window_width (int): Width of terminal.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        integer: The number of lines required to display sample text</span>
+<span class="sd">        int: The number of lines required to display sample text</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">/</span> <span class="n">window_width</span><span class="p">))</span></div>
 
@@ -222,10 +222,10 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        index (int): Index of word in text list</span>
-<span class="sd">        text(string): Text without appending extra spaces</span>
+<span class="sd">        text(str): Text without appending extra spaces</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        integer: The number of spaces required after ith word</span>
+<span class="sd">        int: The number of spaces required after ith word</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
@@ -240,8 +240,8 @@
 <span class="sd">    Returns text with extra spaces which makes the string word wrap.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        text (string): Text to wrap.</span>
-<span class="sd">        width (integer): Width to wrap around.</span>
+<span class="sd">        text (str): Text to wrap.</span>
+<span class="sd">        width (int): Width to wrap around.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        str: Return altered text.</span>
@@ -264,8 +264,8 @@
     <span class="sd">&quot;&quot;&quot;Get accuracy for the current test.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        total_chars_typed (integer): Total characters typed.</span>
-<span class="sd">        wrongly_typed (integer): Mistyped characters.</span>
+<span class="sd">        total_chars_typed (int): Total characters typed.</span>
+<span class="sd">        wrongly_typed (int): Mistyped characters.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        float: Return accuracy.</span>

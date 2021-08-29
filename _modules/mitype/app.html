@@ -295,7 +295,7 @@
             <span class="n">win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="App.share_result"><a class="viewcode-back" href="../../api.html#mitype.app.App.share_result">[docs]</a>    <span class="k">def</span> <span class="nf">share_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Open a twitter intent on a browser&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Open a twitter intent on a browser.&quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;My typing speed is &quot;</span>
             <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_speed_wpm</span>
@@ -314,7 +314,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            win (any): Curses window.</span>
-<span class="sd">            key (string): First typed character of the session.</span>
+<span class="sd">            key (str): First typed character of the session.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Note start time when first valid key is pressed</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_key_pressed</span> <span class="ow">and</span> <span class="n">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
@@ -352,7 +352,7 @@
         <span class="c1"># Find window dimensions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimensions</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-        <span class="c1"># Adding word wrap to text</span>
+        <span class="c1"># Add word wrap to text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">word_wrap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_width</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">screen_size_check</span><span class="p">()</span>
@@ -398,7 +398,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            win (any): Curses window object.</span>
-<span class="sd">            key (string): Individual characters are returned as 1-character</span>
+<span class="sd">            key (str): Individual characters are returned as 1-character</span>
 <span class="sd">                strings, and special keys such as function keys</span>
 <span class="sd">                return longer strings containing a key name such as</span>
 <span class="sd">                KEY_UP or ^G.</span>
@@ -440,7 +440,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_string</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="App.erase_word"><a class="viewcode-back" href="../../api.html#mitype.app.App.erase_word">[docs]</a>    <span class="k">def</span> <span class="nf">erase_word</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Erase the last typed wor d.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Erase the last typed word.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">index_word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
             <span class="n">diff</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">-</span> <span class="n">index_word</span>
@@ -466,7 +466,7 @@
         <span class="sd">&quot;&quot;&quot;Append a character to the end of the current word.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            key (key): character to append</span>
+<span class="sd">            key (key): Character to append.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word_limit</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">+=</span> <span class="n">key</span>
@@ -670,7 +670,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            win (any): Curses window.</span>
-<span class="sd">            value (int): value to increase or decrement by.</span>
+<span class="sd">            value (int): value to increase or decrement the text ID by.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">return</span>
