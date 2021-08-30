@@ -520,7 +520,7 @@ the sample text.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mitype.commandline.load_based_on_difficulty">
-<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_based_on_difficulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">difficulty_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_based_on_difficulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">difficulty_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load text of given difficulty from database if parameter is passed.</p>
 <p>Defaults to random difficulty level when none is provided.</p>
 <dl class="field-list simple">
@@ -628,6 +628,49 @@ stored in same directory as app.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-mitype.history"></span><p>Handle with user history.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mitype.history.history_file_absolute_path">
+<span class="sig-prename descclassname"><span class="pre">mitype.history.</span></span><span class="sig-name descname"><span class="pre">history_file_absolute_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/history.html#history_file_absolute_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.history.history_file_absolute_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get full path of history file.</p>
+<p>This is required for later reading or modifying records from history file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The path of history file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mitype.history.save_history">
+<span class="sig-prename descclassname"><span class="pre">mitype.history.</span></span><span class="sig-name descname"><span class="pre">save_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_speed_wpm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/history.html#save_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.history.save_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save test stats to history file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text_id</strong> (<em>int</em>) – Row identifier of database text loaded.</p></li>
+<li><p><strong>current_speed_wpm</strong> (<em>float</em>) – Speed result from test.</p></li>
+<li><p><strong>accuracy</strong> (<em>str</em>) – Accuracy result from test.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mitype.history.show_history">
+<span class="sig-prename descclassname"><span class="pre">mitype.history.</span></span><span class="sig-name descname"><span class="pre">show_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number_of_records</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/history.html#show_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.history.show_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print records from history.</p>
+<p>Defaults to -1 if argument value not provided on command line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>number_of_records</strong> (<em>int</em>) – Number of last records to print.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -884,6 +927,13 @@ KEY_UP or ^G.</p>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
+</dd></dl>
+
+<span class="target" id="module-mitype.signals"></span><p>Custom handlers for received signals.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mitype.signals.exit_on_signal">
+<span class="sig-prename descclassname"><span class="pre">mitype.signals.</span></span><span class="sig-name descname"><span class="pre">exit_on_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/signals.html#exit_on_signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.signals.exit_on_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exit when SIGINT signal is received.</p>
 </dd></dl>
 
 <span class="target" id="module-mitype.timer"></span><p>Timer.</p>
