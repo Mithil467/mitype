@@ -15,7 +15,13 @@ Contained within is exhaustive documentation of this application's internal Pyth
 .. automodule:: mitype.database
     :members:
 
+.. automodule:: mitype.history
+    :members:
+
 .. automodule:: mitype.keycheck
+    :members:
+
+.. automodule:: mitype.signals
     :members:
 
 .. automodule:: mitype.timer
