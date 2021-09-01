@@ -16,9 +16,8 @@ def is_escape(key):
             KEY_UP or ^G.
 
     Returns:
-        bool:
-            Returns `True` if pressed key is ESC key.
-            Returns `False` otherwise.
+        bool: Returns `True` if pressed key is ESC key.
+        Returns `False` otherwise.
     """
     if isinstance(key, str) and len(key) == 1:
         return ord(key) == curses.ascii.ESC
@@ -34,9 +33,8 @@ def is_ctrl_c(key):
         key (str): Character to check.
 
     Returns:
-        bool: 
-            Returns `True` if Ctrl+c is pressed.
-            Returns `False` otherwise.
+        bool: Returns `True` if Ctrl+c is pressed.
+        Returns `False` otherwise.
     """
     return key == "\x03"
 
@@ -49,9 +47,8 @@ def is_ctrl_t(key):
     Args:
         key (str): Character to check.
     Returns:
-        bool: 
-            Return `True` if Ctrl+t is pressed.
-            Return `False` otherwise.
+        bool: Return `True` if Ctrl+t is pressed.
+        Return `False` otherwise.
     """
     return key == "\x14"
 
@@ -65,9 +62,8 @@ def is_ctrl_backspace(key):
         key (str): Character to check.
 
     Returns:
-        bool: 
-            Returns `True` if Ctrl+backspace is pressed.
-            Returns `False` otherwise.
+        bool: Returns `True` if Ctrl+backspace is pressed.
+        Returns `False` otherwise.
     """
     return key == "\x17"
 
@@ -79,9 +75,8 @@ def is_backspace(key):
         key (str): Character to check.
 
     Returns:
-        bool: 
-            Returns `True` if pressed key is BACKSPACE key.
-            Returns `False` otherwise.
+        bool: Returns `True` if pressed key is BACKSPACE key.
+        Returns `False` otherwise.
     """
     if key in ("KEY_BACKSPACE", "\b", "\x7f"):
         return True
@@ -147,9 +142,8 @@ def is_ignored_key(key):
         key (str): Character to check.
 
     Returns:
-        bool: 
-            Returns `True` if pressed key must be ignored or `False`
-            otherwise.
+        bool: Returns `True` if pressed key must be ignored or `False`
+        otherwise.
     """
     if sys.version_info[0] < 3:
         return key.startswith("KEY") or (len(key) > 1 and key.startswith("k"))

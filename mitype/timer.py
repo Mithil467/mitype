@@ -13,8 +13,7 @@ def get_elapsed_seconds_since_first_keypress(start_time):
             the sample text.
 
     Returns:
-        float: 
-            Time elapsed since start of typing session till calling
-            this function.
+        float: Time elapsed since start of typing session till calling
+        this function.
     """
     return time.time() - start_time
