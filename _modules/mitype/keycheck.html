@@ -175,7 +175,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: Returns `True` if pressed key is ESC key.</span>
-<span class="sd">            Returns `False` otherwise.</span>
+<span class="sd">        Returns `False` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">ascii</span><span class="o">.</span><span class="n">ESC</span>
@@ -192,7 +192,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: Returns `True` if Ctrl+c is pressed.</span>
-<span class="sd">            Returns `False` otherwise.</span>
+<span class="sd">        Returns `False` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x03</span><span class="s2">&quot;</span></div>
 
@@ -206,7 +206,7 @@
 <span class="sd">        key (str): Character to check.</span>
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: Return `True` if Ctrl+t is pressed.</span>
-<span class="sd">            Return `False` otherwise.</span>
+<span class="sd">        Return `False` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x14</span><span class="s2">&quot;</span></div>
 
@@ -221,7 +221,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: Returns `True` if Ctrl+backspace is pressed.</span>
-<span class="sd">            Returns `False` otherwise.</span>
+<span class="sd">        Returns `False` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x17</span><span class="s2">&quot;</span></div>
 
@@ -234,7 +234,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: Returns `True` if pressed key is BACKSPACE key.</span>
-<span class="sd">            Returns `False` otherwise.</span>
+<span class="sd">        Returns `False` otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;KEY_BACKSPACE&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\b</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\x7f</span><span class="s2">&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
@@ -301,7 +301,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        bool: Returns `True` if pressed key must be ignored or `False`</span>
-<span class="sd">            otherwise.</span>
+<span class="sd">        otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;KEY&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">))</span>
