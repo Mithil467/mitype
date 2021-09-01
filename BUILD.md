@@ -28,3 +28,15 @@ You can install the module directly from sources by running the following comman
 ```
 python setup.py install
 ```
+
+## Building documentation
+
+Install [Sphinx](https://github.com/sphinx-doc/sphinx) and [Read the Docs Sphinx Theme](https://github.com/readthedocs/sphinx_rtd_theme) by running the following command.
+```
+pip install sphinx sphinx_rtd_theme
+```
+To build the docs locally, run -
+```
+python setup.py build_sphinx
+```
+The HTML pages are built in `build\sphinx\html`.
