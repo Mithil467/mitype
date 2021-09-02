@@ -3,13 +3,16 @@ import io
 
 from setuptools import setup
 
+import versioneer
+
 with io.open("README.md", encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
 
 setup(
     name="mitype",
     packages=["mitype"],
-    version="0.2.2",
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     license="GPL",
     description="A command line tool to improve typing speed",
     author="MITHIL POOJARY",

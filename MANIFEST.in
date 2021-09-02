@@ -1,1 +1,3 @@
 include mitype/data.db
+include versioneer.py
+include mitype/_version.py
