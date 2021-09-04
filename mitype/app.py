@@ -264,7 +264,7 @@ class App:
             self.erase_word()
 
         # Ignore spaces at the start of the word (Plover support)
-        elif key == " ":
+        elif key == " " and len(self.current_word) < self.current_word_limit:
             if self.current_word != "":
                 self.check_word()
 
