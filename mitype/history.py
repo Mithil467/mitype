@@ -70,8 +70,12 @@ def save_history(text_id, current_speed_wpm, accuracy):
 
     file_exists = os.path.isfile(history_path)
 
-    history = open(history_path, "a", newline="")
-    csv_history = csv.writer(history)
+    if sys.version_info[0] < 3:
+        history = open(history_path, "ab")
+        csv_history = csv.writer(history)
+    else:
+        history = open(history_path, "a", newline="")
+        csv_history = csv.writer(history)
 
     if not file_exists:
         row = ["ID", "WPM", "DATE", "TIME", "ACCURACY"]

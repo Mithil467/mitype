@@ -556,6 +556,10 @@ class App:
         """
         key = ""
         try:
+            if sys.version_info[0] < 3:
+                key = win.getkey()
+                return key
+
             key = win.get_wch()
             if isinstance(key, int):
                 if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
