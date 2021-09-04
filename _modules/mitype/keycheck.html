@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mitype.keycheck &mdash; Mitype 0+untagged.1.g36bc4fd documentation</title>
+  <title>mitype.keycheck &mdash; Mitype 0+untagged.1.gb22f070 documentation</title>
   
 
   
@@ -159,7 +159,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;Keypress.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">curses.ascii</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 
 
 <div class="viewcode-block" id="is_escape"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_escape">[docs]</a><span class="k">def</span> <span class="nf">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
@@ -303,8 +302,6 @@
 <span class="sd">        bool: Returns `True` if pressed key must be ignored or `False`</span>
 <span class="sd">        otherwise.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;KEY&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;k&quot;</span><span class="p">))</span>
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span></div>
 
 
