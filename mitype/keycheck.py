@@ -1,7 +1,6 @@
 """Keypress."""
 
 import curses.ascii
-import sys
 
 
 def is_escape(key):
