@@ -1,7 +1,6 @@
 """Keypress."""
 
 import curses.ascii
-import sys
 
 
 def is_escape(key):
@@ -145,8 +144,6 @@ def is_ignored_key(key):
         bool: Returns `True` if pressed key must be ignored or `False`
         otherwise.
     """
-    if sys.version_info[0] < 3:
-        return key.startswith("KEY") or (len(key) > 1 and key.startswith("k"))
     return isinstance(key, int)
 
 
