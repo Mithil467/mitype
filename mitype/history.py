@@ -46,13 +46,13 @@ def show_history(number_of_records):
 
         print("Last", number_of_records, "records:")
 
-        print("ID\tWPM\tDATE\t\tTIME\t\tACCURACY")
+        print("ID\tWPM\tDATE\t\tTIME")
 
         start_count = 0
         if number_of_records < total_records and number_of_records != -1:
             start_count = total_records - number_of_records
         for i in range(start_count, total_records):
-            formatted_row_data = "\t".join(str for str in data[i]) + "%"
+            formatted_row_data = "\t".join(str for str in data[i])
             print(formatted_row_data)
 
 
