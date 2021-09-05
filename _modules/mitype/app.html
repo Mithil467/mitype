@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mitype.app &mdash; Mitype 0+untagged.1.g15a3c96 documentation</title>
+  <title>mitype.app &mdash; Mitype 0+untagged.1.gb99cce0 documentation</title>
   
 
   
@@ -422,7 +422,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">erase_word</span><span class="p">()</span>
 
         <span class="c1"># Ignore spaces at the start of the word (Plover support)</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word_limit</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">check_word</span><span class="p">()</span>
 
