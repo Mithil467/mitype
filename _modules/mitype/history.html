@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mitype.history &mdash; Mitype 0+untagged.1.gb99cce0 documentation</title>
+  <title>mitype.history &mdash; Mitype 0+untagged.1.g855d52f documentation</title>
   
 
   
@@ -204,13 +204,13 @@
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Last&quot;</span><span class="p">,</span> <span class="n">number_of_records</span><span class="p">,</span> <span class="s2">&quot;records:&quot;</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ID</span><span class="se">\t</span><span class="s2">WPM</span><span class="se">\t</span><span class="s2">DATE</span><span class="se">\t\t</span><span class="s2">TIME&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ID</span><span class="se">\t</span><span class="s2">WPM</span><span class="se">\t</span><span class="s2">DATE</span><span class="se">\t\t</span><span class="s2">TIME</span><span class="se">\t\t</span><span class="s2">ACCURACY&quot;</span><span class="p">)</span>
 
         <span class="n">start_count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">number_of_records</span> <span class="o">&lt;</span> <span class="n">total_records</span> <span class="ow">and</span> <span class="n">number_of_records</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">start_count</span> <span class="o">=</span> <span class="n">total_records</span> <span class="o">-</span> <span class="n">number_of_records</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_count</span><span class="p">,</span> <span class="n">total_records</span><span class="p">):</span>
-            <span class="n">formatted_row_data</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span> <span class="k">for</span> <span class="nb">str</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">formatted_row_data</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span> <span class="k">for</span> <span class="nb">str</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">formatted_row_data</span><span class="p">)</span></div>
 
 
