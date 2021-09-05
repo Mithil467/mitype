@@ -34,27 +34,26 @@ def show_history(number_of_records):
         print("0 records found")
         return
 
-    file = open(history_file_path)
+    with open(history_file_path) as file:
+        history_reader = csv.reader(file)
+        next(history_reader)
 
-    history_reader = csv.reader(file)
-    next(history_reader)
+        data = list(history_reader)
+        total_records = len(data)
 
-    data = list(history_reader)
-    total_records = len(data)
+        if number_of_records <= -1 or number_of_records >= total_records:
+            number_of_records = total_records
 
-    if number_of_records <= -1 or number_of_records >= total_records:
-        number_of_records = total_records
+        print("Last", number_of_records, "records:")
 
-    print("Last", number_of_records, "records:")
+        print("ID\tWPM\tDATE\t\tTIME")
 
-    print("ID\tWPM\tDATE\t\tTIME")
-
-    start_count = 0
-    if number_of_records < total_records and number_of_records != -1:
-        start_count = total_records - number_of_records
-    for i in range(start_count, total_records):
-        formatted_row_data = "\t".join(str for str in data[i])
-        print(formatted_row_data)
+        start_count = 0
+        if number_of_records < total_records and number_of_records != -1:
+            start_count = total_records - number_of_records
+        for i in range(start_count, total_records):
+            formatted_row_data = "\t".join(str for str in data[i])
+            print(formatted_row_data)
 
 
 def save_history(text_id, current_speed_wpm, accuracy):
@@ -69,22 +68,20 @@ def save_history(text_id, current_speed_wpm, accuracy):
 
     file_exists = os.path.isfile(history_path)
 
-    history = open(history_path, "a", newline="")
-    csv_history = csv.writer(history)
+    with open(history_path, "a", newline="") as history:
+        csv_history = csv.writer(history)
 
-    if not file_exists:
-        row = ["ID", "WPM", "DATE", "TIME", "ACCURACY"]
-        csv_history.writerow(row)
+        if not file_exists:
+            row = ["ID", "WPM", "DATE", "TIME", "ACCURACY"]
+            csv_history.writerow(row)
 
-    current_time = time.strftime("%H:%M:%S", time.localtime())
+        current_time = time.strftime("%H:%M:%S", time.localtime())
 
-    test_data = [
-        text_id,
-        current_speed_wpm,
-        date.today(),
-        current_time,
-        accuracy,
-    ]
-    csv_history.writerow(test_data)
-
-    history.close()
+        test_data = [
+            text_id,
+            current_speed_wpm,
+            date.today(),
+            current_time,
+            accuracy,
+        ]
+        csv_history.writerow(test_data)
