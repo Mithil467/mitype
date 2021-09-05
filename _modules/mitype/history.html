@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>mitype.history &mdash; Mitype 0+untagged.1.gb22f070 documentation</title>
+  <title>mitype.history &mdash; Mitype 0+untagged.1.g15a3c96 documentation</title>
   
 
   
@@ -192,27 +192,26 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0 records found&quot;</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_file_path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">history_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="nb">next</span><span class="p">(</span><span class="n">history_reader</span><span class="p">)</span>
 
-    <span class="n">history_reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-    <span class="nb">next</span><span class="p">(</span><span class="n">history_reader</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">history_reader</span><span class="p">)</span>
+        <span class="n">total_records</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-    <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">history_reader</span><span class="p">)</span>
-    <span class="n">total_records</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">number_of_records</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">number_of_records</span> <span class="o">&gt;=</span> <span class="n">total_records</span><span class="p">:</span>
+            <span class="n">number_of_records</span> <span class="o">=</span> <span class="n">total_records</span>
 
-    <span class="k">if</span> <span class="n">number_of_records</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">number_of_records</span> <span class="o">&gt;=</span> <span class="n">total_records</span><span class="p">:</span>
-        <span class="n">number_of_records</span> <span class="o">=</span> <span class="n">total_records</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Last&quot;</span><span class="p">,</span> <span class="n">number_of_records</span><span class="p">,</span> <span class="s2">&quot;records:&quot;</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Last&quot;</span><span class="p">,</span> <span class="n">number_of_records</span><span class="p">,</span> <span class="s2">&quot;records:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ID</span><span class="se">\t</span><span class="s2">WPM</span><span class="se">\t</span><span class="s2">DATE</span><span class="se">\t\t</span><span class="s2">TIME&quot;</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ID</span><span class="se">\t</span><span class="s2">WPM</span><span class="se">\t</span><span class="s2">DATE</span><span class="se">\t\t</span><span class="s2">TIME&quot;</span><span class="p">)</span>
-
-    <span class="n">start_count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">if</span> <span class="n">number_of_records</span> <span class="o">&lt;</span> <span class="n">total_records</span> <span class="ow">and</span> <span class="n">number_of_records</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-        <span class="n">start_count</span> <span class="o">=</span> <span class="n">total_records</span> <span class="o">-</span> <span class="n">number_of_records</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_count</span><span class="p">,</span> <span class="n">total_records</span><span class="p">):</span>
-        <span class="n">formatted_row_data</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span> <span class="k">for</span> <span class="nb">str</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">formatted_row_data</span><span class="p">)</span></div>
+        <span class="n">start_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">number_of_records</span> <span class="o">&lt;</span> <span class="n">total_records</span> <span class="ow">and</span> <span class="n">number_of_records</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">start_count</span> <span class="o">=</span> <span class="n">total_records</span> <span class="o">-</span> <span class="n">number_of_records</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_count</span><span class="p">,</span> <span class="n">total_records</span><span class="p">):</span>
+            <span class="n">formatted_row_data</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span> <span class="k">for</span> <span class="nb">str</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">formatted_row_data</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="save_history"><a class="viewcode-back" href="../../api.html#mitype.history.save_history">[docs]</a><span class="k">def</span> <span class="nf">save_history</span><span class="p">(</span><span class="n">text_id</span><span class="p">,</span> <span class="n">current_speed_wpm</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">):</span>
@@ -227,25 +226,23 @@
 
     <span class="n">file_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">history_path</span><span class="p">)</span>
 
-    <span class="n">history</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">csv_history</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">history_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">history</span><span class="p">:</span>
+        <span class="n">csv_history</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">file_exists</span><span class="p">:</span>
-        <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;WPM&quot;</span><span class="p">,</span> <span class="s2">&quot;DATE&quot;</span><span class="p">,</span> <span class="s2">&quot;TIME&quot;</span><span class="p">,</span> <span class="s2">&quot;ACCURACY&quot;</span><span class="p">]</span>
-        <span class="n">csv_history</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_exists</span><span class="p">:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;WPM&quot;</span><span class="p">,</span> <span class="s2">&quot;DATE&quot;</span><span class="p">,</span> <span class="s2">&quot;TIME&quot;</span><span class="p">,</span> <span class="s2">&quot;ACCURACY&quot;</span><span class="p">]</span>
+            <span class="n">csv_history</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
 
-    <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span>
+        <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span>
 
-    <span class="n">test_data</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">text_id</span><span class="p">,</span>
-        <span class="n">current_speed_wpm</span><span class="p">,</span>
-        <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">(),</span>
-        <span class="n">current_time</span><span class="p">,</span>
-        <span class="n">accuracy</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="n">csv_history</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
-
-    <span class="n">history</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="n">test_data</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">text_id</span><span class="p">,</span>
+            <span class="n">current_speed_wpm</span><span class="p">,</span>
+            <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">(),</span>
+            <span class="n">current_time</span><span class="p">,</span>
+            <span class="n">accuracy</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="n">csv_history</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
