@@ -19,7 +19,6 @@ Written completely in python with no external dependencies!
 
 - 🖥️ Cross-platform
 - 🎦 See your replay
-- 🐍 Supports Python 2 and 3
 - 📝 Choose custom text input
 - 🅰️ 6000 text samples
 - 🌈 Colored texts
