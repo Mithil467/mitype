@@ -18,7 +18,8 @@ setup(
     author="MITHIL POOJARY",
     author_email="mithil467@gmail.com",
     url="https://github.com/mithil467/mitype",
-    download_url="https://github.com/mithil467/mitype/archive/v0.2.2.tar.gz",
+    download_url="https://github.com/mithil467/mitype/archive/v%s.tar.gz"
+    % versioneer.get_version(),
     keywords=["MITYPE", "TERMINAL", "WPM", "SPEED", "TYPE"],
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
