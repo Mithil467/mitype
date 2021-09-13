@@ -1,1 +1,2 @@
 "* text=auto"
+mitype/_version.py export-subst
