@@ -4,14 +4,14 @@
 # Comment to be posted to on first time issues
 newIssueWelcomeComment: >
   Thank you for opening your first issue in this project!
-  
+
   A contributor should be by to give feedback soon. In the meantime, please check out the [contributing guidelines](https://github.com/mithil467/mitype/blob/master/CONTRIBUTING.md).
 
 # Configuration for first-pr-merge - https://github.com/behaviorbot/first-pr-merge
 # Comment to be posted to on pull requests merged by a first time user
 firstPRMergeComment: >
   Congrats on your first merged pull request in mitype! :tada:
-  
+
   Thank you for contributing! :heart:
 
 # Configuration for request-info - https://github.com/behaviorbot/request-info
