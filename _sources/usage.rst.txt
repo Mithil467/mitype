@@ -9,7 +9,7 @@ Once installed, you can run it simply as:
 
 You can also customize each run by specifying the following options as:
 
-* | ``-f FILENAME, --file FILENAME`` 
+* | ``-f FILENAME, --file FILENAME``
   | Uses contents of file as sample text.
 * | ``-d N, --difficulty N``
   | N can be in range [1, 5] with 1 being the easiest. This decides the length of the text.
