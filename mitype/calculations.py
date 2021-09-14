@@ -41,7 +41,7 @@ def speed_in_wpm(text, start_time):
     time_taken = timer.get_elapsed_seconds_since_first_keypress(start_time)
     wpm = 60 * len(text) / time_taken
 
-    return "{0:.2f}".format(wpm)
+    return "{:.2f}".format(wpm)
 
 
 def number_of_lines_to_fit_text_in_window(string, window_width):

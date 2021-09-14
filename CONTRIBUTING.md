@@ -53,6 +53,21 @@ All python code is linted with [black](https://black.readthedocs.io/) by running
 - Format imports using [isort](https://pycqa.github.io/isort/) by running `isort --profile black .`
 - Avoid platform-dependent code
 
+### Pre-commit
+
+You can run the above styling checks manually, however we encourage you to use [pre-commit hooks](https://pre-commit.com/) instead.
+Install pre-commit and set up the hooks by running the following commands.
+```
+pip install pre-commit
+pre-commit install
+```
+Now during a commit, all the checks will run on the modified files.
+
+You can run pre-commit against all the files without committing by running -
+```
+pre-commit run --all-files
+```
+
 ## Code of Conduct
 
-While contributing to the project, it is very important to maintain a healthy environment! Hence I request you to follow the [Code of Conduct](CODE_OF_CONDUCT).
+While contributing to the project, it is very important to maintain a healthy environment! Hence we request you to follow the [Code of Conduct](CODE_OF_CONDUCT).

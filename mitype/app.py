@@ -330,7 +330,7 @@ class App:
         win.addstr(
             0,
             int(self.window_width) - 14,
-            " " + "{0:.2f}".format(current_wpm) + " ",
+            " " + "{:.2f}".format(current_wpm) + " ",
             curses.color_pair(5),
         )
         win.addstr(" WPM ")
