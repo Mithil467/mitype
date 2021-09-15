@@ -1,6 +1,4 @@
 """Setup script for mitype."""
-import io
-
 from setuptools import setup
 
 import versioneer
@@ -28,7 +26,7 @@ setup(
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Intended Audience :: End Users/Desktop",
-        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Environment :: Console",
         "Natural Language :: English",
         "Topic :: Terminals",
