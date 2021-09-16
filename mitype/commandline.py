@@ -15,10 +15,10 @@ from mitype.history import show_history
 
 
 def resolve_commandline_arguments():
-    """Parse CLI arguments and return practice text.
+    """Parse CLI arguments and return practice text details.
 
     Returns:
-        str: Text content to have user attempt to type.
+        (str, Union[str, int]): Tuple of text content and text ID.
     """
     opt = parse_arguments()
     if opt.version:
@@ -30,18 +30,18 @@ def resolve_commandline_arguments():
         sys.exit(0)
 
     elif opt.file:
-        text = load_text_from_file(opt.file)
+        text, text_id = load_text_from_file(opt.file)
 
     elif opt.id:
-        text = load_from_database(opt.id)
+        text, text_id = load_from_database(opt.id)
 
     elif opt.difficulty:
-        text = load_based_on_difficulty(opt.difficulty)
+        text, text_id = load_based_on_difficulty(opt.difficulty)
 
     else:
-        text = load_based_on_difficulty()
+        text, text_id = load_based_on_difficulty()
 
-    return text
+    return text, text_id
 
 
 def parse_arguments():

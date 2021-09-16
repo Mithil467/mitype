@@ -39,13 +39,12 @@ class App:
     def __init__(self):
         """Initialize the application class."""
         # Start the parser
-        self.text = resolve_commandline_arguments()[0]
-        self.text_id = resolve_commandline_arguments()[1]
+        self.text, self.text_id = resolve_commandline_arguments()
         self.tokens = self.text.split()
 
-        # Convert multiple spaces, tabs, newlines to single space
+        # Squash multiple spaces, tabs, newlines to single space
         self.text = " ".join(self.tokens)
-        self.original_text_formatted = self.text
+        self.text_backup = self.text
 
         self.current_word = ""
         self.current_string = ""
@@ -74,7 +73,7 @@ class App:
         self.time_taken = 0
 
         self.total_chars_typed = 0
-        self.text_without_spaces = self.original_text_formatted.replace(" ", "")
+        self.text_without_spaces = self.text_backup.replace(" ", "")
 
         sys.stdout = sys.__stdout__
 
@@ -87,8 +86,7 @@ class App:
     def main(self, win):
         """Respond to user inputs.
 
-        This is where the infinite loop is executed to continuously serve
-        events.
+        This is where the infinite loop is executed to continuously serve events.
 
         Args:
             win (any): Curses window object.
@@ -100,90 +98,36 @@ class App:
             # Typing mode
             key = self.keyinput(win)
 
-            if is_escape(key) and not self.first_key_pressed:
-                sys.exit(0)
+            if not self.first_key_pressed:
+                if is_escape(key) or is_ctrl_c(key):
+                    sys.exit(0)
 
-            if is_ctrl_c(key):
-                sys.exit(0)
+                if is_left_arrow_key(key):
+                    self.switch_text(win, -1)
 
-            if is_left_arrow_key(key) and not self.first_key_pressed:
-                self.switch_text(win, -1)
-
-            if is_right_arrow_key(key) and not self.first_key_pressed:
-                self.switch_text(win, 1)
+                if is_right_arrow_key(key):
+                    self.switch_text(win, 1)
 
             # Test mode
             if self.mode == 0:
                 self.typing_mode(win, key)
 
             # Again mode
-            elif self.mode == 1 and is_tab(key):
-                win.clear()
-                self.reset_test()
-                self.setup_print(win)
-                self.update_state(win)
+            else:
+                if is_tab(key):
+                    win.clear()
+                    self.reset_test()
+                    self.setup_print(win)
+                    self.update_state(win)
 
-            # Replay mode
-            elif self.mode == 1 and is_enter(key):
-                # Start replay if enter key is pressed
-                self.replay(win)
+                if is_enter(key):
+                    self.replay(win)
 
-            # Share result on Twitter
-            elif self.mode == 1 and is_ctrl_t(key):
-                # Opens twitter with pre-typed result
-                self.share_result()
+                if is_ctrl_t(key):
+                    self.share_result()
 
             # Refresh for changes to show up on window
             win.refresh()
-
-    def share_result(self):
-        """Open a twitter intent on a browser."""
-        message = (
-            "My typing speed is "
-            + self.current_speed_wpm
-            + " WPM! Know yours on mitype."
-            + "\nhttps://pypi.org/project/mitype/ by @MithilPoojary"
-            + "\n#TypingTest"
-        )
-
-        # URL encode message
-        message = message.replace("\n", "%0D").replace("#", "%23")
-        url = "https://twitter.com/intent/tweet?text=" + message
-        webbrowser.open(url, new=2)
-
-    def typing_mode(self, win, key):
-        """Start recording typing session progress.
-
-        Args:
-            win (any): Curses window.
-            key (str): First typed character of the session.
-        """
-        # Note start time when first valid key is pressed
-        if not self.first_key_pressed and is_valid_initial_key(key):
-            self.start_time = time.time()
-            self.first_key_pressed = True
-
-        if is_resize(key):
-            self.resize(win)
-
-        if not self.first_key_pressed:
-            return
-
-        self.key_strokes.append([time.time(), key])
-
-        self.print_realtime_wpm(win)
-
-        self.key_printer(win, key)
-
-    def screen_size_check(self):
-        """Check if screen size is enough to print text."""
-        self.line_count = (
-            number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
-        )
-        if self.line_count + 7 >= self.window_height:
-            curses.endwin()
-            sys.stdout.write("Window too small to print given text")
-            sys.exit(1)
 
     def initialize(self, win):
         """Configure the initial state of the curses interface.
@@ -191,7 +135,6 @@ class App:
         Args:
             win (any): Curses window.
         """
-        # Find window dimensions
         self.window_height, self.window_width = self.get_dimensions(win)
 
         # Add word wrap to text
@@ -234,106 +177,6 @@ class App:
 
         # Set cursor position to beginning of text
         win.move(2, 0)
-
-    def key_printer(self, win, key):
-        """Print required key to terminal.
-
-        Args:
-            win (any): Curses window object.
-            key (str): Individual characters are returned as 1-character
-                strings, and special keys such as function keys
-                return longer strings containing a key name such as
-                KEY_UP or ^G.
-        """
-        # Reset test
-        if is_escape(key):
-            self.reset_test()
-
-        elif is_ctrl_c(key):
-            sys.exit(0)
-
-        # Handle resizing
-        elif is_resize(key):
-            self.resize(win)
-
-        # Check for backspace
-        elif is_backspace(key):
-            self.erase_key()
-
-        elif is_ctrl_backspace(key):
-            self.erase_word()
-
-        # Ignore spaces at the start of the word (Plover support)
-        elif key == " " and len(self.current_word) < self.current_word_limit:
-            if self.current_word != "":
-                self.check_word()
-
-        elif is_valid_initial_key(key):
-            self.appendkey(key)
-            self.total_chars_typed += 1
-
-        # Update state of window
-        self.update_state(win)
-
-    def erase_key(self):
-        """Erase the last typed character."""
-        if len(self.current_word) > 0:
-            self.current_word = self.current_word[0 : len(self.current_word) - 1]
-            self.current_string = self.current_string[0 : len(self.current_string) - 1]
-
-    def erase_word(self):
-        """Erase the last typed word."""
-        if len(self.current_word) > 0:
-            index_word = self.current_word.rfind(" ")
-            diff = len(self.current_word) - index_word
-            if index_word == -1:
-                self.current_string = self.current_string[: -len(self.current_word)]
-                self.current_word = ""
-            else:
-                self.current_word = self.current_word[:-diff]
-                self.current_string = self.current_string[:-diff]
-
-    def check_word(self):
-        """Accept finalized word."""
-        spc = get_space_count_after_ith_word(len(self.current_string), self.text)
-        if self.current_word == self.tokens[self.i]:
-            self.i += 1
-            self.current_word = ""
-            self.current_string += spc * " "
-        else:
-            self.current_word += " "
-            self.current_string += " "
-
-    def appendkey(self, key):
-        """Append a character to the end of the current word.
-
-        Args:
-            key (key): Character to append.
-        """
-        if len(self.current_word) < self.current_word_limit:
-            self.current_word += key
-            self.current_string += key
-
-    def print_realtime_wpm(self, win):
-        """Print realtime wpm during the test.
-
-        Args:
-            win (any): Curses window.
-        """
-        total_time = mitype.timer.get_elapsed_seconds_since_first_keypress(
-            self.start_time
-        )
-        current_wpm = 0
-        if total_time != 0:
-            current_wpm = 60 * len(self.current_string.split()) / total_time
-
-        win.addstr(
-            0,
-            int(self.window_width) - 14,
-            " " + "{:.2f}".format(current_wpm) + " ",
-            curses.color_pair(5),
-        )
-        win.addstr(" WPM ")
 
     def update_state(self, win):
         """Report on typing session results.
@@ -421,21 +264,152 @@ class App:
                 self.test_complete = True
         win.refresh()
 
-    def reset_test(self):
-        """Reset the current typing session."""
-        self.mode = 0
-        self.current_word = ""
-        self.current_string = ""
-        self.first_key_pressed = False
-        self.key_strokes = []
-        self.mistyped_keys = []
-        self.start_time = 0
-        self.i = 0
-        self.current_speed_wpm = 0
-        self.total_chars_typed = 0
-        self.accuracy = 0
-        self.time_taken = 0
-        curses.curs_set(1)
+    def typing_mode(self, win, key):
+        """Start recording typing session progress.
+
+        Args:
+            win (any): Curses window.
+            key (str): First typed character of the session.
+        """
+        # Note start time when first valid key is pressed
+        if not self.first_key_pressed and is_valid_initial_key(key):
+            self.start_time = time.time()
+            self.first_key_pressed = True
+
+        if is_resize(key):
+            self.resize(win)
+
+        if not self.first_key_pressed:
+            return
+
+        self.key_strokes.append([time.time(), key])
+
+        self.print_realtime_wpm(win)
+
+        self.key_printer(win, key)
+
+    @staticmethod
+    def keyinput(win):
+        """Retrieve next character of text input.
+
+        Args:
+            win (any): Curses window.
+
+        Returns:
+            str: Value of typed key.
+        """
+        key = ""
+        try:
+            key = win.get_wch()
+            if isinstance(key, int):
+                if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
+                    return "KEY_BACKSPACE"
+                if key == curses.KEY_RESIZE:
+                    return "KEY_RESIZE"
+            return key
+        except curses.error:
+            return ""
+
+    def key_printer(self, win, key):
+        """Print required key to terminal.
+
+        Args:
+            win (any): Curses window object.
+            key (str): Individual characters are returned as 1-character
+                strings, and special keys such as function keys
+                return longer strings containing a key name such as
+                KEY_UP or ^G.
+        """
+        # Reset test
+        if is_escape(key):
+            self.reset_test()
+
+        elif is_ctrl_c(key):
+            sys.exit(0)
+
+        # Handle resizing
+        elif is_resize(key):
+            self.resize(win)
+
+        # Check for backspace
+        elif is_backspace(key):
+            self.erase_key()
+
+        elif is_ctrl_backspace(key):
+            self.erase_word()
+
+        # Ignore spaces at the start of the word (Plover support)
+        elif key == " " and len(self.current_word) < self.current_word_limit:
+            if self.current_word != "":
+                self.check_word()
+
+        elif is_valid_initial_key(key):
+            self.appendkey(key)
+            self.total_chars_typed += 1
+
+        # Update state of window
+        self.update_state(win)
+
+    def resize(self, win):
+        """Respond to window resize events.
+
+        Args:
+            win (any): Curses window.
+        """
+        win.clear()
+
+        self.window_height, self.window_width = self.get_dimensions(win)
+        self.text = word_wrap(self.text_backup, self.window_width)
+
+        self.screen_size_check()
+
+        self.print_realtime_wpm(win)
+        self.setup_print(win)
+        self.update_state(win)
+
+    def print_stats(self, win):
+        """Print the bottom stats bar after each run.
+
+        Args:
+            win (any): Curses window.
+        """
+        win.addstr(
+            self.window_height - 1,
+            0,
+            " WPM: " + str(self.current_speed_wpm) + " ",
+            curses.color_pair(6),
+        )
+
+        win.addstr(
+            " Time: " + "{:.2f}".format(self.time_taken) + "s ",
+            curses.color_pair(1),
+        )
+
+        win.addstr(
+            " Accuracy: " + "{:.2f}".format(self.accuracy) + "% ",
+            curses.color_pair(5),
+        )
+
+    def print_realtime_wpm(self, win):
+        """Print realtime wpm during the test.
+
+        Args:
+            win (any): Curses window.
+        """
+        total_time = mitype.timer.get_elapsed_seconds_since_first_keypress(
+            self.start_time
+        )
+        current_wpm = 0
+        if total_time != 0:
+            current_wpm = 60 * len(self.current_string.split()) / total_time
+
+        win.addstr(
+            0,
+            int(self.window_width) - 14,
+            " " + "{:.2f}".format(current_wpm) + " ",
+            curses.color_pair(5),
+        )
+        win.addstr(" WPM ")
 
     def replay(self, win):
         """Play out a recording of the user's last session.
@@ -467,45 +441,36 @@ class App:
             self.key_printer(win, j[1])
         win.timeout(100)
 
-    def resize(self, win):
-        """Respond to window resize events.
-
-        Args:
-            win (any): Curses window.
-        """
-        win.clear()
-
-        self.window_height, self.window_width = self.get_dimensions(win)
-        self.text = word_wrap(self.original_text_formatted, self.window_width)
-
-        self.screen_size_check()
-
-        self.print_realtime_wpm(win)
-        self.setup_print(win)
-        self.update_state(win)
-
-    def print_stats(self, win):
-        """Print the bottom stats bar after each run.
-
-        Args:
-            win (any): Curses window.
-        """
-        win.addstr(
-            self.window_height - 1,
-            0,
-            " WPM: " + str(self.current_speed_wpm) + " ",
-            curses.color_pair(6),
+    def share_result(self):
+        """Open a twitter intent on a browser."""
+        message = (
+            "My typing speed is "
+            + self.current_speed_wpm
+            + " WPM! Know yours on mitype."
+            + "\nhttps://pypi.org/project/mitype/ by @MithilPoojary"
+            + "\n#TypingTest"
         )
 
-        win.addstr(
-            " Time: " + "{:.2f}".format(self.time_taken) + "s ",
-            curses.color_pair(1),
-        )
+        # URL encode message
+        message = message.replace("\n", "%0D").replace("#", "%23")
+        url = "https://twitter.com/intent/tweet?text=" + message
+        webbrowser.open(url, new=2)
 
-        win.addstr(
-            " Accuracy: " + "{:.2f}".format(self.accuracy) + "% ",
-            curses.color_pair(5),
-        )
+    def reset_test(self):
+        """Reset the data for current typing session."""
+        self.mode = 0
+        self.current_word = ""
+        self.current_string = ""
+        self.first_key_pressed = False
+        self.key_strokes = []
+        self.mistyped_keys = []
+        self.start_time = 0
+        self.i = 0
+        self.current_speed_wpm = 0
+        self.total_chars_typed = 0
+        self.accuracy = 0
+        self.time_taken = 0
+        curses.curs_set(1)
 
     def switch_text(self, win, value):
         """Load next or previous text snippet from database.
@@ -524,7 +489,7 @@ class App:
         self.tokens = self.text.split()
 
         self.text = " ".join(self.tokens)
-        self.original_text_formatted = self.text
+        self.text_backup = self.text
 
         self.reset_test()
         self.setup_print(win)
@@ -544,24 +509,51 @@ class App:
 
         return dimension_tuple
 
-    @staticmethod
-    def keyinput(win):
-        """Retrieve next character of text input.
+    def screen_size_check(self):
+        """Check if screen size is enough to print text."""
+        self.line_count = (
+            number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
+        )
+        if self.line_count + 7 >= self.window_height:
+            curses.endwin()
+            sys.stdout.write("Window too small to print given text")
+            sys.exit(1)
+
+    def appendkey(self, key):
+        """Append a character to the end of the current word.
 
         Args:
-            win (any): Curses window.
-
-        Returns:
-            str: Value of typed key.
+            key (key): Character to append.
         """
-        key = ""
-        try:
-            key = win.get_wch()
-            if isinstance(key, int):
-                if key in (curses.KEY_BACKSPACE, curses.KEY_DC):
-                    return "KEY_BACKSPACE"
-                if key == curses.KEY_RESIZE:
-                    return "KEY_RESIZE"
-            return key
-        except curses.error:
-            return ""
+        if len(self.current_word) < self.current_word_limit:
+            self.current_word += key
+            self.current_string += key
+
+    def erase_key(self):
+        """Erase the last typed character."""
+        if len(self.current_word) > 0:
+            self.current_word = self.current_word[0 : len(self.current_word) - 1]
+            self.current_string = self.current_string[0 : len(self.current_string) - 1]
+
+    def erase_word(self):
+        """Erase the last typed word."""
+        if len(self.current_word) > 0:
+            index_word = self.current_word.rfind(" ")
+            diff = len(self.current_word) - index_word
+            if index_word == -1:
+                self.current_string = self.current_string[: -len(self.current_word)]
+                self.current_word = ""
+            else:
+                self.current_word = self.current_word[:-diff]
+                self.current_string = self.current_string[:-diff]
+
+    def check_word(self):
+        """Accept finalized word."""
+        spc = get_space_count_after_ith_word(len(self.current_string), self.text)
+        if self.current_word == self.tokens[self.i]:
+            self.i += 1
+            self.current_word = ""
+            self.current_string += spc * " "
+        else:
+            self.current_word += " "
+            self.current_string += " "
