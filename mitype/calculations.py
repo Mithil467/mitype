@@ -27,23 +27,6 @@ def first_index_at_which_strings_differ(string1, string2):
     return length
 
 
-def speed_in_wpm(text, start_time):
-    """Calculate typing speed in WPM.
-
-    Args:
-        text (list): List of words from sample text.
-        start_time (float): The time when user starts typing
-            the sample text.
-
-    Returns:
-        str: Speed in WPM up to 2 decimal places.
-    """
-    time_taken = timer.get_elapsed_seconds_since_first_keypress(start_time)
-    wpm = 60 * len(text) / time_taken
-
-    return "{:.2f}".format(wpm)
-
-
 def number_of_lines_to_fit_text_in_window(string, window_width):
     """Count number of lines required for displaying text.
 
@@ -98,6 +81,23 @@ def word_wrap(text, width):
                 i -= 1
             text = text[:i] + " " * (x * width - i) + text[i + 1 :]
     return text
+
+
+def speed_in_wpm(text, start_time):
+    """Calculate typing speed in WPM.
+
+    Args:
+        text (list): List of words from sample text.
+        start_time (float): The time when user starts typing
+            the sample text.
+
+    Returns:
+        str: Speed in WPM up to 2 decimal places.
+    """
+    time_taken = timer.get_elapsed_seconds_since_first_keypress(start_time)
+    wpm = 60 * len(text) / time_taken
+
+    return "{:.2f}".format(wpm)
 
 
 def accuracy(total_chars_typed, wrongly_typed):
