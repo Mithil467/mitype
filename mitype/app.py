@@ -150,6 +150,17 @@ class App:
         curses.init_pair(6, curses.COLOR_WHITE, curses.COLOR_MAGENTA)
         curses.init_pair(7, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
+        class Color:
+            GREEN = curses.color_pair(1)
+            RED = curses.color_pair(2)
+            BLUE = curses.color_pair(3)
+            YELLOW = curses.color_pair(4)
+            CYAN = curses.color_pair(5)
+            MAGENTA = curses.color_pair(6)
+            BLACK = curses.color_pair(7)
+
+        self.Color = Color
+
         win.nodelay(True)
         win.timeout(100)
 
@@ -165,10 +176,10 @@ class App:
         """
         # Top strip
         # Display text ID
-        win.addstr(0, 0, " ID:{} ".format(self.text_id), curses.color_pair(5))
+        win.addstr(0, 0, " ID:{} ".format(self.text_id), self.Color.CYAN)
 
         # Display Title
-        win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", curses.color_pair(3))
+        win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", self.Color.CYAN)
 
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -188,7 +199,7 @@ class App:
         win.addstr(self.line_count + 2, 0, " " * self.window_width)
         win.addstr(self.line_count + 4, 0, " " * self.window_width)
         if len(self.current_word) >= self.current_word_limit:
-            win.addstr(self.line_count, 0, self.current_word, curses.color_pair(2))
+            win.addstr(self.line_count, 0, self.current_word, self.Color.RED)
         else:
             win.addstr(self.line_count, 0, self.current_word)
 
@@ -204,7 +215,7 @@ class App:
             2 + index // self.window_width,
             index % self.window_width,
             self.text[index : len(self.current_string)],
-            curses.color_pair(2),
+            self.Color.RED,
         )
         if index == len(self.text):
             # Highlight mistyped characters
@@ -213,7 +224,7 @@ class App:
                     2 + i // self.window_width,
                     i % self.window_width,
                     self.text[i],
-                    curses.color_pair(2),
+                    self.Color.RED,
                 )
 
             curses.curs_set(0)
@@ -229,18 +240,18 @@ class App:
                     self.start_time
                 )
 
-            win.addstr(" " + self.current_speed_wpm + " ", curses.color_pair(6))
+            win.addstr(" " + self.current_speed_wpm + " ", self.Color.MAGENTA)
             win.addstr(" WPM ")
 
             win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
 
-            win.addstr(self.line_count + 2, 1, " Enter ", curses.color_pair(7))
+            win.addstr(self.line_count + 2, 1, " Enter ", self.Color.BLACK)
             win.addstr(" to see replay, ")
-            win.addstr(" Tab ", curses.color_pair(7))
+            win.addstr(" Tab ", self.Color.BLACK)
             win.addstr(" to retry.")
-            win.addstr(self.line_count + 3, 1, " Arrow keys ", curses.color_pair(7))
+            win.addstr(self.line_count + 3, 1, " Arrow keys ", self.Color.BLACK)
             win.addstr(" to change text.")
-            win.addstr(self.line_count + 4, 1, " CTRL+T ", curses.color_pair(7))
+            win.addstr(self.line_count + 4, 1, " CTRL+T ", self.Color.BLACK)
             win.addstr(" to tweet result.")
 
             self.print_stats(win)
@@ -377,17 +388,17 @@ class App:
             self.window_height - 1,
             0,
             " WPM: " + str(self.current_speed_wpm) + " ",
-            curses.color_pair(6),
+            self.Color.MAGENTA,
         )
 
         win.addstr(
             " Time: " + "{:.2f}".format(self.time_taken) + "s ",
-            curses.color_pair(1),
+            self.Color.GREEN,
         )
 
         win.addstr(
             " Accuracy: " + "{:.2f}".format(self.accuracy) + "% ",
-            curses.color_pair(5),
+            self.Color.CYAN,
         )
 
     def print_realtime_wpm(self, win):
@@ -407,7 +418,7 @@ class App:
             0,
             int(self.window_width) - 14,
             " " + "{:.2f}".format(current_wpm) + " ",
-            curses.color_pair(5),
+            self.Color.CYAN,
         )
         win.addstr(" WPM ")
 
@@ -426,7 +437,7 @@ class App:
             0,
             int(self.window_width) - 14,
             " " + str(self.current_speed_wpm) + " ",
-            curses.color_pair(5),
+            self.Color.CYAN,
         )
         win.addstr(" WPM ")
 
