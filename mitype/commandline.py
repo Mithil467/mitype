@@ -118,7 +118,7 @@ def load_text_from_file(file_path):
         (str, str): Tuple of text content followed by file path.
     """
     if os.path.isfile(file_path):
-        with open(file_path) as file:
+        with open(file_path, encoding="utf-8") as file:
             text = file.read()
             filename = os.path.basename(file_path)
         return text, filename

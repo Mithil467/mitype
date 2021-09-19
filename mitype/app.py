@@ -114,15 +114,18 @@ class App:
 
             # Again mode
             else:
+                # Tab to retry last test
                 if is_tab(key):
                     win.clear()
                     self.reset_test()
                     self.setup_print(win)
                     self.update_state(win)
 
+                # Replay
                 if is_enter(key):
                     self.replay(win)
 
+                # Tweet result
                 if is_ctrl_t(key):
                     self.share_result()
 
@@ -137,9 +140,10 @@ class App:
         """
         self.window_height, self.window_width = self.get_dimensions(win)
 
-        # Add word wrap to text
+        # This works by adding extra spaces to the text where needed
         self.text = word_wrap(self.text, self.window_width)
 
+        # Check if we can fit text in current window after adding word wrap
         self.screen_size_check()
 
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_GREEN)
@@ -161,10 +165,10 @@ class App:
 
         self.Color = Color
 
+        # This sets input to be a non-blocking call and will block for 100ms
+        # Returns -1 if no input found at the end of time
         win.nodelay(True)
         win.timeout(100)
-
-        self.print_realtime_wpm(win)
 
         self.setup_print(win)
 
@@ -174,14 +178,11 @@ class App:
         Args:
             win (any): Curses window object.
         """
-        # Top strip
-        # Display text ID
         win.addstr(0, 0, " ID:{} ".format(self.text_id), self.Color.CYAN)
-
-        # Display Title
         win.addstr(0, self.window_width // 2 - 4, " MITYPE ", self.Color.CYAN)
 
-        # Print text in BOLD from 3rd line
+        # Text is printed BOLD initially
+        # It is dimmed as user types on top of it
         win.addstr(2, 0, self.text, curses.A_BOLD)
 
         self.print_realtime_wpm(win)
@@ -196,10 +197,10 @@ class App:
             win (any): Curses window.
             line (int): Line number.
         """
-        if line == self.window_height - 1:
-            win.addstr(line, 0, " " * (self.window_width - 1))
-        else:
-            win.addstr(line, 0, " " * self.window_width)
+        # Cursor advances to next cell after the character is printed
+        # This causes scroll with addstr on the last line which is disabled
+        # Hence using insstr instead
+        win.insstr(line, 0, " " * self.window_width)
 
     def update_state(self, win):
         """Report on typing session results.
@@ -211,11 +212,14 @@ class App:
         self.clear_line(win, self.line_count + 2)
         self.clear_line(win, self.line_count + 4)
 
+        # Highlight in RED if word reaches the word limit length
         if len(self.current_word) >= self.current_word_limit:
             win.addstr(self.line_count, 0, self.current_word, self.Color.RED)
         else:
             win.addstr(self.line_count, 0, self.current_word)
 
+        # Text is printed BOLD initially
+        # It is dimmed as user types on top of it
         win.addstr(2, 0, self.text, curses.A_BOLD)
         win.addstr(2, 0, self.text[0 : len(self.current_string)], curses.A_DIM)
 
@@ -230,63 +234,72 @@ class App:
             self.text[index : len(self.current_string)],
             self.Color.RED,
         )
+
+        # End of test, all characters are typed out
         if index == len(self.text):
-            # Highlight mistyped characters
-            for i in self.mistyped_keys:
-                win.addstr(
-                    2 + i // self.window_width,
-                    i % self.window_width,
-                    self.text[i],
-                    self.Color.RED,
-                )
+            self.test_end(win)
 
-            curses.curs_set(0)
-
-            win.addstr(self.line_count, 0, " Your typing speed is ")
-            if self.mode == 0:
-                self.current_speed_wpm = speed_in_wpm(self.tokens, self.start_time)
-                wrongly_typed_chars = self.total_chars_typed - len(
-                    self.text_without_spaces
-                )
-                self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
-                self.time_taken = get_elapsed_seconds_since_first_keypress(
-                    self.start_time
-                )
-
-            win.addstr(" " + self.current_speed_wpm + " ", self.Color.MAGENTA)
-            win.addstr(" WPM ")
-
-            self.clear_line(win, self.window_height - 1)
-
-            win.addstr(self.line_count + 2, 1, " Enter ", self.Color.BLACK)
-            win.addstr(" to see replay, ")
-            win.addstr(" Tab ", self.Color.BLACK)
-            win.addstr(" to retry.")
-            win.addstr(self.line_count + 3, 1, " Arrow keys ", self.Color.BLACK)
-            win.addstr(" to change text.")
-            win.addstr(self.line_count + 4, 1, " CTRL+T ", self.Color.BLACK)
-            win.addstr(" to tweet result.")
-
-            self.print_stats(win)
-            if self.mode == 0:
-                self.mode = 1
-                for k in range(len(self.key_strokes) - 1, 0, -1):
-                    self.key_strokes[k][0] -= self.key_strokes[k - 1][0]
-            self.key_strokes[0][0] = 0
-            self.first_key_pressed = False
-            self.end_time = time.time()
-            self.current_string = ""
-            self.current_word = ""
-            self.i = 0
-
-            self.start_time = 0
-            if not self.test_complete:
-                win.refresh()
-                save_history(
-                    self.text_id, self.current_speed_wpm, "{:.2f}".format(self.accuracy)
-                )
-                self.test_complete = True
         win.refresh()
+
+    def test_end(self, win):
+        # Highlight mistyped characters
+        for i in self.mistyped_keys:
+            win.addstr(
+                2 + i // self.window_width,
+                i % self.window_width,
+                self.text[i],
+                self.Color.RED,
+            )
+
+        curses.curs_set(0)
+
+        # Calculate stats at the end of the test
+        if self.mode == 0:
+            self.current_speed_wpm = speed_in_wpm(self.tokens, self.start_time)
+            total_chars_in_text = len(self.text_without_spaces)
+            wrongly_typed_chars = self.total_chars_typed - total_chars_in_text
+            self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
+            self.time_taken = get_elapsed_seconds_since_first_keypress(self.start_time)
+
+            self.mode = 1
+            # Find time difference between the key strokes
+            # The key_strokes list is storing the time at which the key is pressed
+            for k in range(len(self.key_strokes) - 1, 0, -1):
+                self.key_strokes[k][0] -= self.key_strokes[k - 1][0]
+
+            self.key_strokes[0][0] = 0
+
+        win.addstr(self.line_count, 0, " Your typing speed is ")
+        win.addstr(" " + self.current_speed_wpm + " ", self.Color.MAGENTA)
+        win.addstr(" WPM ")
+
+        win.addstr(self.line_count + 2, 1, " Enter ", self.Color.BLACK)
+        win.addstr(" to see replay, ")
+
+        win.addstr(" Tab ", self.Color.BLACK)
+        win.addstr(" to retry.")
+
+        win.addstr(self.line_count + 3, 1, " Arrow keys ", self.Color.BLACK)
+        win.addstr(" to change text.")
+
+        win.addstr(self.line_count + 4, 1, " CTRL+T ", self.Color.BLACK)
+        win.addstr(" to tweet result.")
+
+        self.print_stats(win)
+
+        self.first_key_pressed = False
+        self.end_time = time.time()
+        self.current_string = ""
+        self.current_word = ""
+        self.i = 0
+
+        self.start_time = 0
+        if not self.test_complete:
+            win.refresh()
+            save_history(
+                self.text_id, self.current_speed_wpm, "{:.2f}".format(self.accuracy)
+            )
+            self.test_complete = True
 
     def typing_mode(self, win, key):
         """Start recording typing session progress.
@@ -420,16 +433,16 @@ class App:
         Args:
             win (any): Curses window.
         """
+        current_wpm = 0
         total_time = mitype.timer.get_elapsed_seconds_since_first_keypress(
             self.start_time
         )
-        current_wpm = 0
         if total_time != 0:
             current_wpm = 60 * len(self.current_string.split()) / total_time
 
         win.addstr(
             0,
-            int(self.window_width) - 14,
+            self.window_width - 14,
             " " + "{:.2f}".format(current_wpm) + " ",
             self.Color.CYAN,
         )
@@ -448,7 +461,7 @@ class App:
 
         win.addstr(
             0,
-            int(self.window_width) - 14,
+            self.window_width - 14,
             " " + str(self.current_speed_wpm) + " ",
             self.Color.CYAN,
         )

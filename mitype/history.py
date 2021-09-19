@@ -34,7 +34,7 @@ def show_history(number_of_records):
         print("0 records found")
         return
 
-    with open(history_file_path) as file:
+    with open(history_file_path, encoding="utf-8") as file:
         history_reader = csv.reader(file)
         next(history_reader)
 
@@ -68,7 +68,7 @@ def save_history(text_id, current_speed_wpm, accuracy):
 
     file_exists = os.path.isfile(history_path)
 
-    with open(history_path, "a", newline="") as history:
+    with open(history_path, mode="a", newline="", encoding="utf-8") as history:
         csv_history = csv.writer(history)
 
         if not file_exists:
