@@ -179,7 +179,7 @@ class App:
         win.addstr(0, 0, " ID:{} ".format(self.text_id), self.Color.CYAN)
 
         # Display Title
-        win.addstr(0, int(self.window_width / 2) - 4, " MITYPE ", self.Color.CYAN)
+        win.addstr(0, self.window_width // 2 - 4, " MITYPE ", self.Color.CYAN)
 
         # Print text in BOLD from 3rd line
         win.addstr(2, 0, self.text, curses.A_BOLD)
@@ -189,15 +189,28 @@ class App:
         # Set cursor position to beginning of text
         win.move(2, 0)
 
+    def clear_line(self, win, line):
+        """Clear a line on the window.
+
+        Args:
+            win (any): Curses window.
+            line (int): Line number.
+        """
+        if line == self.window_height - 1:
+            win.addstr(line, 0, " " * (self.window_width - 1))
+        else:
+            win.addstr(line, 0, " " * self.window_width)
+
     def update_state(self, win):
         """Report on typing session results.
 
         Args:
             win (any): Curses window.
         """
-        win.addstr(self.line_count, 0, " " * self.window_width)
-        win.addstr(self.line_count + 2, 0, " " * self.window_width)
-        win.addstr(self.line_count + 4, 0, " " * self.window_width)
+        self.clear_line(win, self.line_count)
+        self.clear_line(win, self.line_count + 2)
+        self.clear_line(win, self.line_count + 4)
+
         if len(self.current_word) >= self.current_word_limit:
             win.addstr(self.line_count, 0, self.current_word, self.Color.RED)
         else:
@@ -243,7 +256,7 @@ class App:
             win.addstr(" " + self.current_speed_wpm + " ", self.Color.MAGENTA)
             win.addstr(" WPM ")
 
-            win.addstr(self.window_height - 1, 0, " " * (self.window_width - 1))
+            self.clear_line(win, self.window_height - 1)
 
             win.addstr(self.line_count + 2, 1, " Enter ", self.Color.BLACK)
             win.addstr(" to see replay, ")
