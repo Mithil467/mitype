@@ -64,7 +64,7 @@ class App:
         self.end_time = 0
 
         # Keep track of the token index in text
-        self.i = 0
+        self.token_index = 0
         # mode = 0 when in test
         # mode = 1 when in replay
         self.mode = 0
@@ -306,7 +306,7 @@ class App:
         self.end_time = time.time()
         self.current_string = ""
         self.current_word = ""
-        self.i = 0
+        self.token_index = 0
 
         self.start_time = 0
         if not self.test_complete:
@@ -517,7 +517,7 @@ class App:
         self.key_strokes = []
         self.mistyped_keys = []
         self.start_time = 0
-        self.i = 0
+        self.token_index = 0
         self.current_speed_wpm = 0
         self.total_chars_typed = 0
         self.accuracy = 0
@@ -602,8 +602,8 @@ class App:
     def check_word(self):
         """Accept finalized word."""
         spc = get_space_count_after_ith_word(len(self.current_string), self.text)
-        if self.current_word == self.tokens[self.i]:
-            self.i += 1
+        if self.current_word == self.tokens[self.token_index]:
+            self.token_index += 1
             self.current_word = ""
             self.current_string += spc * " "
         else:
