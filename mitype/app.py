@@ -72,8 +72,7 @@ class App:
         self.window_height = 0
         self.window_width = 0
 
-        # TODO
-        self.line_count = 0
+        self.number_of_lines_to_print_text = 0
 
         # Restrict current word length to a limit
         # Used to highlight once the limit is reached
@@ -223,15 +222,17 @@ class App:
         Args:
             win (any): Curses window.
         """
-        self.clear_line(win, self.line_count)
-        self.clear_line(win, self.line_count + 2)
-        self.clear_line(win, self.line_count + 4)
+        self.clear_line(win, self.number_of_lines_to_print_text)
+        self.clear_line(win, self.number_of_lines_to_print_text + 2)
+        self.clear_line(win, self.number_of_lines_to_print_text + 4)
 
         # Highlight in RED if word reaches the word limit length
         if len(self.current_word) >= self.current_word_limit:
-            win.addstr(self.line_count, 0, self.current_word, self.Color.RED)
+            win.addstr(
+                self.number_of_lines_to_print_text, 0, self.current_word, self.Color.RED
+            )
         else:
-            win.addstr(self.line_count, 0, self.current_word)
+            win.addstr(self.number_of_lines_to_print_text, 0, self.current_word)
 
         # Text is printed BOLD initially
         # It is dimmed as user types on top of it
@@ -284,20 +285,26 @@ class App:
 
             self.key_strokes[0][0] = 0
 
-        win.addstr(self.line_count, 0, " Your typing speed is ")
+        win.addstr(self.number_of_lines_to_print_text, 0, " Your typing speed is ")
         win.addstr(" " + self.current_speed_wpm + " ", self.Color.MAGENTA)
         win.addstr(" WPM ")
 
-        win.addstr(self.line_count + 2, 1, " Enter ", self.Color.BLACK)
+        win.addstr(
+            self.number_of_lines_to_print_text + 2, 1, " Enter ", self.Color.BLACK
+        )
         win.addstr(" to see replay, ")
 
         win.addstr(" Tab ", self.Color.BLACK)
         win.addstr(" to retry.")
 
-        win.addstr(self.line_count + 3, 1, " Arrow keys ", self.Color.BLACK)
+        win.addstr(
+            self.number_of_lines_to_print_text + 3, 1, " Arrow keys ", self.Color.BLACK
+        )
         win.addstr(" to change text.")
 
-        win.addstr(self.line_count + 4, 1, " CTRL+T ", self.Color.BLACK)
+        win.addstr(
+            self.number_of_lines_to_print_text + 4, 1, " CTRL+T ", self.Color.BLACK
+        )
         win.addstr(" to tweet result.")
 
         self.print_stats(win)
@@ -471,7 +478,7 @@ class App:
         """
         win.clear()
         self.print_stats(win)
-        win.addstr(self.line_count + 2, 0, " " * self.window_width)
+        win.addstr(self.number_of_lines_to_print_text + 2, 0, " " * self.window_width)
         curses.curs_set(1)
 
         win.addstr(
@@ -563,10 +570,10 @@ class App:
 
     def screen_size_check(self):
         """Check if screen size is enough to print text."""
-        self.line_count = (
+        self.number_of_lines_to_print_text = (
             number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
         )
-        if self.line_count + 7 >= self.window_height:
+        if self.number_of_lines_to_print_text + 7 >= self.window_height:
             curses.endwin()
             sys.stdout.write("Window too small to print given text")
             sys.exit(1)
