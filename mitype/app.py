@@ -46,28 +46,43 @@ class App:
         self.text = " ".join(self.tokens)
         self.text_backup = self.text
 
+        # Current typed word and entire string
         self.current_word = ""
         self.current_string = ""
 
         self.key = ""
+        # First valid key press
         self.first_key_pressed = False
+        # Stores keypress, time tuple
         self.key_strokes = []
+
         self.mistyped_keys = []
 
+        # Time at which test started
         self.start_time = 0
+        # Time at which test ended
         self.end_time = 0
 
+        # Keep track of the token index in text
         self.i = 0
+        # mode = 0 when in test
+        # mode = 1 when in replay
         self.mode = 0
 
         self.window_height = 0
         self.window_width = 0
+
+        # TODO
         self.line_count = 0
 
+        # Restrict current word length to a limit
+        # Used to highlight once the limit is reached
         self.current_word_limit = 25
 
         self.test_complete = False
 
+        # Real-time speed, the value at the end of the test is the result
+        # And a few other stats
         self.current_speed_wpm = 0
         self.accuracy = 0
         self.time_taken = 0
