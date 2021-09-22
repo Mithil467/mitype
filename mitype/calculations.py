@@ -71,15 +71,15 @@ def word_wrap(text, width):
     """
     # For the end of each line, move backwards until you find a space.
     # When you do, append those many spaces after the single space.
-    for x in range(
+    for line in range(
         1,
         number_of_lines_to_fit_text_in_window(text, width) + 1,
     ):
-        if not (x * width >= len(text) or text[x * width - 1] == " "):
-            i = x * width - 1
+        if not (line * width >= len(text) or text[line * width - 1] == " "):
+            i = line * width - 1
             while text[i] != " ":
                 i -= 1
-            text = text[:i] + " " * (x * width - i) + text[i + 1 :]
+            text = text[:i] + " " * (line * width - i) + text[i + 1 :]
     return text
 
 
@@ -97,7 +97,7 @@ def speed_in_wpm(text, start_time):
     time_taken = timer.get_elapsed_seconds_since_first_keypress(start_time)
     wpm = 60 * len(text) / time_taken
 
-    return "{:.2f}".format(wpm)
+    return f"{wpm:.2f}"
 
 
 def accuracy(total_chars_typed, wrongly_typed):

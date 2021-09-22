@@ -169,6 +169,8 @@ class App:
         curses.init_pair(7, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
         class Color:
+            """Color mapping."""
+
             GREEN = curses.color_pair(1)
             RED = curses.color_pair(2)
             BLUE = curses.color_pair(3)

@@ -105,7 +105,7 @@ def parse_arguments():
 
 def display_version():
     """Display version."""
-    print("Mitype version %s" % mitype.__version__)
+    print(f"Mitype version {mitype.__version__}")
 
 
 def load_text_from_file(file_path):
