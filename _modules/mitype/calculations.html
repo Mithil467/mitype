@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mitype.calculations &mdash; Mitype 0+untagged.1.g7ae2a07 documentation</title>
+  <title>mitype.calculations &mdash; Mitype 0+untagged.1.g15ea6a9 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -95,23 +95,6 @@
     <span class="k">return</span> <span class="n">length</span></div>
 
 
-<div class="viewcode-block" id="speed_in_wpm"><a class="viewcode-back" href="../../api.html#mitype.calculations.speed_in_wpm">[docs]</a><span class="k">def</span> <span class="nf">speed_in_wpm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate typing speed in WPM.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        text (list): List of words from sample text.</span>
-<span class="sd">        start_time (float): The time when user starts typing</span>
-<span class="sd">            the sample text.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        str: Speed in WPM up to 2 decimal places.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">time_taken</span> <span class="o">=</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_seconds_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
-    <span class="n">wpm</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">/</span> <span class="n">time_taken</span>
-
-    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wpm</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="number_of_lines_to_fit_text_in_window"><a class="viewcode-back" href="../../api.html#mitype.calculations.number_of_lines_to_fit_text_in_window">[docs]</a><span class="k">def</span> <span class="nf">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">window_width</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Count number of lines required for displaying text.</span>
 
@@ -156,16 +139,46 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># For the end of each line, move backwards until you find a space.</span>
     <span class="c1"># When you do, append those many spaces after the single space.</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
         <span class="mi">1</span><span class="p">,</span>
         <span class="n">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="ow">or</span> <span class="n">text</span><span class="p">[</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">):</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span>
-            <span class="k">while</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
-                <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
+        <span class="c1"># Current line fits in the window</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">*</span> <span class="n">width</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Last cell of that line</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">line</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># Continue if already a space</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Find last occurrence of space on that line</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="n">space_count</span> <span class="o">=</span> <span class="n">line</span> <span class="o">*</span> <span class="n">width</span> <span class="o">-</span> <span class="n">index</span>
+        <span class="n">space_string</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">space_count</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[:</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">space_string</span> <span class="o">+</span> <span class="n">text</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:]</span>
     <span class="k">return</span> <span class="n">text</span></div>
+
+
+<div class="viewcode-block" id="speed_in_wpm"><a class="viewcode-back" href="../../api.html#mitype.calculations.speed_in_wpm">[docs]</a><span class="k">def</span> <span class="nf">speed_in_wpm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate typing speed in WPM.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text (list): List of words from sample text.</span>
+<span class="sd">        start_time (float): The time when user starts typing</span>
+<span class="sd">            the sample text.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Speed in WPM up to 2 decimal places.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">time_taken</span> <span class="o">=</span> <span class="n">timer</span><span class="o">.</span><span class="n">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+    <span class="n">wpm</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">/</span> <span class="n">time_taken</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wpm</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="accuracy"><a class="viewcode-back" href="../../api.html#mitype.calculations.accuracy">[docs]</a><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed</span><span class="p">):</span>
@@ -178,8 +191,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        float: Return accuracy.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">acc</span> <span class="o">=</span> <span class="p">((</span><span class="n">total_chars_typed</span> <span class="o">-</span> <span class="n">wrongly_typed</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_chars_typed</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="k">return</span> <span class="n">acc</span></div>
+    <span class="k">return</span> <span class="p">((</span><span class="n">total_chars_typed</span> <span class="o">-</span> <span class="n">wrongly_typed</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_chars_typed</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span></div>
 </pre></div>
 
            </div>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API &mdash; Mitype 0+untagged.1.g7ae2a07 documentation</title>
+  <title>API &mdash; Mitype 0+untagged.1.g15ea6a9 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -93,6 +93,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="mitype.app.App.clear_line">
+<span class="sig-name descname"><span class="pre">clear_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.clear_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.clear_line" title="Permalink to this definition"></a></dt>
+<dd><p>Clear a line on the window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>win</strong> (<em>any</em>) – Curses window.</p></li>
+<li><p><strong>line</strong> (<em>int</em>) – Line number.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="mitype.app.App.erase_key">
 <span class="sig-name descname"><span class="pre">erase_key</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.erase_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.erase_key" title="Permalink to this definition"></a></dt>
 <dd><p>Erase the last typed character.</p>
@@ -170,8 +184,7 @@ KEY_UP or ^G.</p></li>
 <dt class="sig sig-object py" id="mitype.app.App.main">
 <span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.main" title="Permalink to this definition"></a></dt>
 <dd><p>Respond to user inputs.</p>
-<p>This is where the infinite loop is executed to continuously serve
-events.</p>
+<p>This is where the infinite loop is executed to continuously serve events.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window object.</p>
@@ -215,7 +228,7 @@ events.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mitype.app.App.reset_test">
 <span class="sig-name descname"><span class="pre">reset_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.reset_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.reset_test" title="Permalink to this definition"></a></dt>
-<dd><p>Reset the current typing session.</p>
+<dd><p>Reset the data for current typing session.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -262,6 +275,19 @@ events.</p>
 <li><p><strong>win</strong> (<em>any</em>) – Curses window.</p></li>
 <li><p><strong>value</strong> (<em>int</em>) – value to increase or decrement the text ID by.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mitype.app.App.test_end">
+<span class="sig-name descname"><span class="pre">test_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/app.html#App.test_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App.test_end" title="Permalink to this definition"></a></dt>
+<dd><p>Trigger at the end of the test.</p>
+<p>Display options for the user to choose at the end of the test.
+Display stats.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>any</em>) – Curses window.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -429,7 +455,7 @@ the sample text.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mitype.commandline.load_based_on_difficulty">
-<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_based_on_difficulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">difficulty_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_based_on_difficulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">difficulty_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition"></a></dt>
 <dd><p>Load text of given difficulty from database if parameter is passed.</p>
 <p>Defaults to random difficulty level when none is provided.</p>
 <dl class="field-list simple">
@@ -496,13 +522,13 @@ the sample text.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="mitype.commandline.resolve_commandline_arguments">
 <span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">resolve_commandline_arguments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#resolve_commandline_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.resolve_commandline_arguments" title="Permalink to this definition"></a></dt>
-<dd><p>Parse CLI arguments and return practice text.</p>
+<dd><p>Parse CLI arguments and return practice text details.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Text content to have user attempt to type.</p>
+<dd class="field-odd"><p>Tuple of text content and text ID.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>str</p>
+<dd class="field-even"><p>(str, Union[str, int])</p>
 </dd>
 </dl>
 </dd></dl>
@@ -829,8 +855,8 @@ otherwise.</p>
 
 <span class="target" id="module-mitype.timer"></span><p>Timer.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="mitype.timer.get_elapsed_seconds_since_first_keypress">
-<span class="sig-prename descclassname"><span class="pre">mitype.timer.</span></span><span class="sig-name descname"><span class="pre">get_elapsed_seconds_since_first_keypress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/timer.html#get_elapsed_seconds_since_first_keypress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.timer.get_elapsed_seconds_since_first_keypress" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="mitype.timer.get_elapsed_minutes_since_first_keypress">
+<span class="sig-prename descclassname"><span class="pre">mitype.timer.</span></span><span class="sig-name descname"><span class="pre">get_elapsed_minutes_since_first_keypress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/timer.html#get_elapsed_minutes_since_first_keypress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.timer.get_elapsed_minutes_since_first_keypress" title="Permalink to this definition"></a></dt>
 <dd><p>Get time elapsed since initial keypress.</p>
 <p>This is required to calculate speed.</p>
 <dl class="field-list simple">

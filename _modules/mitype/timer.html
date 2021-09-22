@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mitype.timer &mdash; Mitype 0+untagged.1.g7ae2a07 documentation</title>
+  <title>mitype.timer &mdash; Mitype 0+untagged.1.g15ea6a9 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -71,7 +71,7 @@
 <span class="kn">import</span> <span class="nn">time</span>
 
 
-<div class="viewcode-block" id="get_elapsed_seconds_since_first_keypress"><a class="viewcode-back" href="../../api.html#mitype.timer.get_elapsed_seconds_since_first_keypress">[docs]</a><span class="k">def</span> <span class="nf">get_elapsed_seconds_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">):</span>
+<div class="viewcode-block" id="get_elapsed_minutes_since_first_keypress"><a class="viewcode-back" href="../../api.html#mitype.timer.get_elapsed_minutes_since_first_keypress">[docs]</a><span class="k">def</span> <span class="nf">get_elapsed_minutes_since_first_keypress</span><span class="p">(</span><span class="n">start_time</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get time elapsed since initial keypress.</span>
 
 <span class="sd">    This is required to calculate speed.</span>
@@ -84,7 +84,7 @@
 <span class="sd">        float: Time elapsed since start of typing session till calling</span>
 <span class="sd">        this function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="mi">60</span></div>
 </pre></div>
 
            </div>
