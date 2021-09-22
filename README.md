@@ -27,13 +27,17 @@ Written completely in python with no external dependencies!
 
 Mitype can be easily installed by:
 
-```pip install mitype```
+```bash
+pip install mitype
+```
 
 ## 📈 Usage
 
 Once installed, you can run it simply as:
 
-```mitype```
+```
+mitype
+```
 
 You can also customize each run by specifying the following options as:
 
