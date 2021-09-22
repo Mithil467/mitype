@@ -5,7 +5,6 @@ import sys
 
 def exit_on_signal(signum, frame):
     """Exit when SIGINT signal is received."""
-    # pylint: disable=W0613
     sys.exit(0)
 
 

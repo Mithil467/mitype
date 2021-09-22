@@ -27,23 +27,6 @@ def first_index_at_which_strings_differ(string1, string2):
     return length
 
 
-def speed_in_wpm(text, start_time):
-    """Calculate typing speed in WPM.
-
-    Args:
-        text (list): List of words from sample text.
-        start_time (float): The time when user starts typing
-            the sample text.
-
-    Returns:
-        str: Speed in WPM up to 2 decimal places.
-    """
-    time_taken = timer.get_elapsed_seconds_since_first_keypress(start_time)
-    wpm = 60 * len(text) / time_taken
-
-    return "{:.2f}".format(wpm)
-
-
 def number_of_lines_to_fit_text_in_window(string, window_width):
     """Count number of lines required for displaying text.
 
@@ -88,16 +71,46 @@ def word_wrap(text, width):
     """
     # For the end of each line, move backwards until you find a space.
     # When you do, append those many spaces after the single space.
-    for x in range(
+    for line in range(
         1,
         number_of_lines_to_fit_text_in_window(text, width) + 1,
     ):
-        if not (x * width >= len(text) or text[x * width - 1] == " "):
-            i = x * width - 1
-            while text[i] != " ":
-                i -= 1
-            text = text[:i] + " " * (x * width - i) + text[i + 1 :]
+        # Current line fits in the window
+        if line * width >= len(text):
+            continue
+
+        # Last cell of that line
+        index = line * width - 1
+
+        # Continue if already a space
+        if text[index] == " ":
+            continue
+
+        # Find last occurrence of space on that line
+        index = text[:index].rfind(" ")
+
+        space_count = line * width - index
+        space_string = " " * space_count
+
+        text = text[:index] + space_string + text[index + 1 :]
     return text
+
+
+def speed_in_wpm(text, start_time):
+    """Calculate typing speed in WPM.
+
+    Args:
+        text (list): List of words from sample text.
+        start_time (float): The time when user starts typing
+            the sample text.
+
+    Returns:
+        str: Speed in WPM up to 2 decimal places.
+    """
+    time_taken = timer.get_elapsed_minutes_since_first_keypress(start_time)
+    wpm = len(text) / time_taken
+
+    return f"{wpm:.2f}"
 
 
 def accuracy(total_chars_typed, wrongly_typed):
@@ -110,5 +123,4 @@ def accuracy(total_chars_typed, wrongly_typed):
     Returns:
         float: Return accuracy.
     """
-    acc = ((total_chars_typed - wrongly_typed) / total_chars_typed) * 100
-    return acc
+    return ((total_chars_typed - wrongly_typed) / total_chars_typed) * 100

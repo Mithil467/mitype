@@ -15,10 +15,10 @@ def database_file_absolute_path():
     """
     database_filename = "data.db"
     database_directory_absolute_path = os.path.dirname(os.path.abspath(__file__))
-    database_file_path = os.path.join(
-        database_directory_absolute_path, database_filename
+    return os.path.join(
+        database_directory_absolute_path,
+        database_filename,
     )
-    return database_file_path
 
 
 def fetch_text_from_id(serial_id):

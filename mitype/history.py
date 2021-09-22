@@ -15,9 +15,8 @@ def history_file_absolute_path():
         str: The path of history file.
     """
     history_filename = ".mitype_history.csv"
-    history_path = os.path.join(os.path.expanduser("~"), history_filename)
 
-    return history_path
+    return os.path.join(os.path.expanduser("~"), history_filename)
 
 
 def show_history(number_of_records):
@@ -34,7 +33,7 @@ def show_history(number_of_records):
         print("0 records found")
         return
 
-    with open(history_file_path) as file:
+    with open(history_file_path, encoding="utf-8") as file:
         history_reader = csv.reader(file)
         next(history_reader)
 
@@ -52,8 +51,8 @@ def show_history(number_of_records):
         if number_of_records < total_records and number_of_records != -1:
             start_count = total_records - number_of_records
         for i in range(start_count, total_records):
-            formatted_row_data = "\t".join(str for str in data[i]) + "%"
-            print(formatted_row_data)
+            formatted_row_data = "\t".join(data[i])
+            print(formatted_row_data + "%")
 
 
 def save_history(text_id, current_speed_wpm, accuracy):
@@ -68,7 +67,7 @@ def save_history(text_id, current_speed_wpm, accuracy):
 
     file_exists = os.path.isfile(history_path)
 
-    with open(history_path, "a", newline="") as history:
+    with open(history_path, mode="a", newline="", encoding="utf-8") as history:
         csv_history = csv.writer(history)
 
         if not file_exists:

@@ -15,10 +15,10 @@ from mitype.history import show_history
 
 
 def resolve_commandline_arguments():
-    """Parse CLI arguments and return practice text.
+    """Parse CLI arguments and return practice text details.
 
     Returns:
-        str: Text content to have user attempt to type.
+        (str, Union[str, int]): Tuple of text content and text ID.
     """
     opt = parse_arguments()
     if opt.version:
@@ -30,18 +30,18 @@ def resolve_commandline_arguments():
         sys.exit(0)
 
     elif opt.file:
-        text = load_text_from_file(opt.file)
+        text, text_id = load_text_from_file(opt.file)
 
     elif opt.id:
-        text = load_from_database(opt.id)
+        text, text_id = load_from_database(opt.id)
 
     elif opt.difficulty:
-        text = load_based_on_difficulty(opt.difficulty)
+        text, text_id = load_based_on_difficulty(opt.difficulty)
 
     else:
-        text = load_based_on_difficulty()
+        text, text_id = load_based_on_difficulty()
 
-    return text
+    return text, text_id
 
 
 def parse_arguments():
@@ -51,7 +51,7 @@ def parse_arguments():
         str: Parsed command line arguments.
     """
     parser = argparse.ArgumentParser(
-        description="Process mitype command line arguments"
+        description="Process mitype command line arguments",
     )
 
     parser.add_argument(
@@ -99,13 +99,12 @@ def parse_arguments():
         help="Show mitype score history",
     )
 
-    opt = parser.parse_args()
-    return opt
+    return parser.parse_args()
 
 
 def display_version():
     """Display version."""
-    print("Mitype version %s" % mitype.__version__)
+    print(f"Mitype version {mitype.__version__}")
 
 
 def load_text_from_file(file_path):
@@ -118,7 +117,7 @@ def load_text_from_file(file_path):
         (str, str): Tuple of text content followed by file path.
     """
     if os.path.isfile(file_path):
-        with open(file_path) as file:
+        with open(file_path, encoding="utf-8") as file:
             text = file.read()
             filename = os.path.basename(file_path)
         return text, filename
