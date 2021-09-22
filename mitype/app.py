@@ -30,7 +30,7 @@ from mitype.keycheck import (
     is_tab,
     is_valid_initial_key,
 )
-from mitype.timer import get_elapsed_seconds_since_first_keypress
+from mitype.timer import get_elapsed_minutes_since_first_keypress
 
 
 class App:
@@ -88,6 +88,9 @@ class App:
 
         self.total_chars_typed = 0
         self.text_without_spaces = self.text_backup.replace(" ", "")
+
+        # Color mapping
+        self.Color = None
 
         sys.stdout = sys.__stdout__
 
@@ -194,8 +197,8 @@ class App:
         Args:
             win (any): Curses window object.
         """
-        win.addstr(0, 0, " ID:{} ".format(self.text_id), self.Color.CYAN)
-        win.addstr(0, self.window_width // 2 - 4, " MITYPE ", self.Color.CYAN)
+        win.addstr(0, 0, f" ID:{self.text_id} ", self.Color.CYAN)
+        win.addstr(0, self.window_width // 2 - 4, " MITYPE ", self.Color.BLUE)
 
         # Text is printed BOLD initially
         # It is dimmed as user types on top of it
@@ -260,6 +263,14 @@ class App:
         win.refresh()
 
     def test_end(self, win):
+        """Trigger at the end of the test.
+
+        Display options for the user to choose at the end of the test.
+        Display stats.
+
+        Args:
+            win (any): Curses window.
+        """
         # Highlight mistyped characters
         for i in self.mistyped_keys:
             win.addstr(
@@ -277,7 +288,7 @@ class App:
             total_chars_in_text = len(self.text_without_spaces)
             wrongly_typed_chars = self.total_chars_typed - total_chars_in_text
             self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
-            self.time_taken = get_elapsed_seconds_since_first_keypress(self.start_time)
+            self.time_taken = get_elapsed_minutes_since_first_keypress(self.start_time)
 
             self.mode = 1
             # Find time difference between the key strokes
@@ -320,9 +331,7 @@ class App:
         self.start_time = 0
         if not self.test_complete:
             win.refresh()
-            save_history(
-                self.text_id, self.current_speed_wpm, "{:.2f}".format(self.accuracy)
-            )
+            save_history(self.text_id, self.current_speed_wpm, f"{self.accuracy:.2f}")
             self.test_complete = True
 
     def typing_mode(self, win, key):
@@ -437,17 +446,17 @@ class App:
         win.addstr(
             self.window_height - 1,
             0,
-            " WPM: " + str(self.current_speed_wpm) + " ",
+            f" WPM: {self.current_speed_wpm} ",
             self.Color.MAGENTA,
         )
 
         win.addstr(
-            " Time: " + "{:.2f}".format(self.time_taken) + "s ",
+            f" Time: {self.time_taken:.2f}s ",
             self.Color.GREEN,
         )
 
         win.addstr(
-            " Accuracy: " + "{:.2f}".format(self.accuracy) + "% ",
+            f" Accuracy: {self.accuracy:.2f}% ",
             self.Color.CYAN,
         )
 
@@ -458,16 +467,18 @@ class App:
             win (any): Curses window.
         """
         current_wpm = 0
-        total_time = mitype.timer.get_elapsed_seconds_since_first_keypress(
+        total_time = mitype.timer.get_elapsed_minutes_since_first_keypress(
             self.start_time
         )
         if total_time != 0:
-            current_wpm = 60 * len(self.current_string.split()) / total_time
+            words = self.current_string.split()
+            word_count = len(words)
+            current_wpm = word_count / total_time
 
         win.addstr(
             0,
             self.window_width - 14,
-            " " + "{:.2f}".format(current_wpm) + " ",
+            f" {current_wpm:.2f} ",
             self.Color.CYAN,
         )
         win.addstr(" WPM ")
@@ -505,11 +516,10 @@ class App:
     def share_result(self):
         """Open a twitter intent on a browser."""
         message = (
-            "My typing speed is "
-            + self.current_speed_wpm
-            + " WPM! Know yours on mitype."
-            + "\nhttps://pypi.org/project/mitype/ by @MithilPoojary"
-            + "\n#TypingTest"
+            f"My typing speed is {self.current_speed_wpm} WPM!"
+            "Know yours on mitype.\n"
+            "https://pypi.org/project/mitype/ by @MithilPoojary\n"
+            "#TypingTest"
         )
 
         # URL encode message
@@ -573,7 +583,7 @@ class App:
     def screen_size_check(self):
         """Check if screen size is enough to print text."""
         self.number_of_lines_to_print_text = (
-            number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 2 + 1
+            number_of_lines_to_fit_text_in_window(self.text, self.window_width) + 3
         )
         if self.number_of_lines_to_print_text + 7 >= self.window_height:
             curses.endwin()
@@ -593,18 +603,20 @@ class App:
     def erase_key(self):
         """Erase the last typed character."""
         if len(self.current_word) > 0:
-            self.current_word = self.current_word[0 : len(self.current_word) - 1]
-            self.current_string = self.current_string[0 : len(self.current_string) - 1]
+            self.current_word = self.current_word[:-1]
+            self.current_string = self.current_string[:-1]
 
     def erase_word(self):
         """Erase the last typed word."""
         if len(self.current_word) > 0:
             index_word = self.current_word.rfind(" ")
-            diff = len(self.current_word) - index_word
             if index_word == -1:
-                self.current_string = self.current_string[: -len(self.current_word)]
+                # Single word.
+                word_length = len(self.current_speed_wpm)
+                self.current_string = self.current_string[:-word_length]
                 self.current_word = ""
             else:
+                diff = len(self.current_word) - index_word
                 self.current_word = self.current_word[:-diff]
                 self.current_string = self.current_string[:-diff]
 

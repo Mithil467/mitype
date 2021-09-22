@@ -75,11 +75,24 @@ def word_wrap(text, width):
         1,
         number_of_lines_to_fit_text_in_window(text, width) + 1,
     ):
-        if not (line * width >= len(text) or text[line * width - 1] == " "):
-            i = line * width - 1
-            while text[i] != " ":
-                i -= 1
-            text = text[:i] + " " * (line * width - i) + text[i + 1 :]
+        # Current line fits in the window
+        if line * width >= len(text):
+            continue
+
+        # Last cell of that line
+        index = line * width - 1
+
+        # Continue if already a space
+        if text[index] == " ":
+            continue
+
+        # Find last occurence of space on that line
+        index = text[:index].rfind(" ")
+
+        space_count = line * width - index
+        space_string = " " * space_count
+
+        text = text[:index] + space_string + text[index + 1 :]
     return text
 
 
@@ -94,8 +107,8 @@ def speed_in_wpm(text, start_time):
     Returns:
         str: Speed in WPM up to 2 decimal places.
     """
-    time_taken = timer.get_elapsed_seconds_since_first_keypress(start_time)
-    wpm = 60 * len(text) / time_taken
+    time_taken = timer.get_elapsed_minutes_since_first_keypress(start_time)
+    wpm = len(text) / time_taken
 
     return f"{wpm:.2f}"
 
