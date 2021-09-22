@@ -51,7 +51,7 @@ def parse_arguments():
         str: Parsed command line arguments.
     """
     parser = argparse.ArgumentParser(
-        description="Process mitype command line arguments"
+        description="Process mitype command line arguments",
     )
 
     parser.add_argument(
@@ -99,8 +99,7 @@ def parse_arguments():
         help="Show mitype score history",
     )
 
-    opt = parser.parse_args()
-    return opt
+    return parser.parse_args()
 
 
 def display_version():

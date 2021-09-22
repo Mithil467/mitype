@@ -234,7 +234,10 @@ class App:
         # Highlight in RED if word reaches the word limit length
         if len(self.current_word) >= self.current_word_limit:
             win.addstr(
-                self.number_of_lines_to_print_text, 0, self.current_word, self.Color.RED
+                self.number_of_lines_to_print_text,
+                0,
+                self.current_word,
+                self.Color.RED,
             )
         else:
             win.addstr(self.number_of_lines_to_print_text, 0, self.current_word)
@@ -293,8 +296,8 @@ class App:
             self.mode = 1
             # Find time difference between the key strokes
             # The key_strokes list is storing the time at which the key is pressed
-            for k in range(len(self.key_strokes) - 1, 0, -1):
-                self.key_strokes[k][0] -= self.key_strokes[k - 1][0]
+            for index in range(len(self.key_strokes) - 1, 0, -1):
+                self.key_strokes[index][0] -= self.key_strokes[index - 1][0]
 
             self.key_strokes[0][0] = 0
 
@@ -303,7 +306,10 @@ class App:
         win.addstr(" WPM ")
 
         win.addstr(
-            self.number_of_lines_to_print_text + 2, 1, " Enter ", self.Color.BLACK
+            self.number_of_lines_to_print_text + 2,
+            1,
+            " Enter ",
+            self.Color.BLACK,
         )
         win.addstr(" to see replay, ")
 
@@ -311,12 +317,18 @@ class App:
         win.addstr(" to retry.")
 
         win.addstr(
-            self.number_of_lines_to_print_text + 3, 1, " Arrow keys ", self.Color.BLACK
+            self.number_of_lines_to_print_text + 3,
+            1,
+            " Arrow keys ",
+            self.Color.BLACK,
         )
         win.addstr(" to change text.")
 
         win.addstr(
-            self.number_of_lines_to_print_text + 4, 1, " CTRL+T ", self.Color.BLACK
+            self.number_of_lines_to_print_text + 4,
+            1,
+            " CTRL+T ",
+            self.Color.BLACK,
         )
         win.addstr(" to tweet result.")
 
@@ -468,7 +480,7 @@ class App:
         """
         current_wpm = 0
         total_time = mitype.timer.get_elapsed_minutes_since_first_keypress(
-            self.start_time
+            self.start_time,
         )
         if total_time != 0:
             words = self.current_string.split()
@@ -505,12 +517,12 @@ class App:
         self.setup_print(win)
 
         win.timeout(10)
-        for j in self.key_strokes:
-            time.sleep(j[0])
+        for key in self.key_strokes:
+            time.sleep(key[0])
             key = self.keyinput(win)
             if is_escape(key) or is_ctrl_c(key):
                 sys.exit(0)
-            self.key_printer(win, j[1])
+            self.key_printer(win, key[1])
         win.timeout(100)
 
     def share_result(self):
@@ -576,9 +588,7 @@ class App:
         Returns:
             (int, int): Tuple of height and width of terminal window.
         """
-        dimension_tuple = win.getmaxyx()
-
-        return dimension_tuple
+        return win.getmaxyx()
 
     def screen_size_check(self):
         """Check if screen size is enough to print text."""

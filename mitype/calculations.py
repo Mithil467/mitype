@@ -86,7 +86,7 @@ def word_wrap(text, width):
         if text[index] == " ":
             continue
 
-        # Find last occurence of space on that line
+        # Find last occurrence of space on that line
         index = text[:index].rfind(" ")
 
         space_count = line * width - index
@@ -123,5 +123,4 @@ def accuracy(total_chars_typed, wrongly_typed):
     Returns:
         float: Return accuracy.
     """
-    acc = ((total_chars_typed - wrongly_typed) / total_chars_typed) * 100
-    return acc
+    return ((total_chars_typed - wrongly_typed) / total_chars_typed) * 100
