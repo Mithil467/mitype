@@ -463,7 +463,7 @@ class App:
         )
 
         win.addstr(
-            f" Time: {self.time_taken:.2f}s ",
+            f" Time: {self.time_taken*60:.2f}s ",
             self.Color.GREEN,
         )
 
