@@ -519,8 +519,8 @@ class App:
         win.timeout(10)
         for key in self.key_strokes:
             time.sleep(key[0])
-            key = self.keyinput(win)
-            if is_escape(key) or is_ctrl_c(key):
+            _key = self.keyinput(win)
+            if is_escape(_key) or is_ctrl_c(_key):
                 sys.exit(0)
             self.key_printer(win, key[1])
         win.timeout(100)
