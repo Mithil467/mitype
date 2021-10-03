@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mitype.app &mdash; Mitype 0+untagged.1.g15ea6a9 documentation</title>
+  <title>mitype.app &mdash; Mitype 0+untagged.1.g63bc6d3 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -587,8 +587,8 @@
         <span class="n">win</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_strokes</span><span class="p">:</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyinput</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyinput</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_escape</span><span class="p">(</span><span class="n">_key</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_ctrl_c</span><span class="p">(</span><span class="n">_key</span><span class="p">):</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">key_printer</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">win</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span></div>
