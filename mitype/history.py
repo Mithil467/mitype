@@ -35,7 +35,14 @@ def show_history(number_of_records):
 
     with open(history_file_path, encoding="utf-8") as file:
         history_reader = csv.reader(file)
-        next(history_reader)
+
+        try:
+            # Skip csv header
+            next(history_reader)
+        except StopIteration:
+            # No header found on the file, meaning the file is empty
+            print("0 records found")
+            return
 
         data = list(history_reader)
         total_records = len(data)
