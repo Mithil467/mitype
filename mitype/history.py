@@ -19,19 +19,20 @@ def history_file_absolute_path():
     return os.path.join(os.path.expanduser("~"), history_filename)
 
 
-def show_history(number_of_records):
-    """Print records from history.
+def get_history_records(number_of_records):
+    """Get records from history.
 
     Defaults to -1 if argument value not provided on command line.
 
     Args:
         number_of_records (int): Number of last records to print.
+    Returns:
+        list: A list of records. The len of this list is `number_of_records` or all records
     """
     history_file_path = history_file_absolute_path()
 
     if not os.path.exists(history_file_path):
-        print("0 records found")
-        return
+        return []
 
     with open(history_file_path, encoding="utf-8") as file:
         history_reader = csv.reader(file)
@@ -41,8 +42,7 @@ def show_history(number_of_records):
             next(history_reader)
         except StopIteration:
             # No header found on the file, meaning the file is empty
-            print("0 records found")
-            return
+            return []
 
         data = list(history_reader)
         total_records = len(data)
@@ -50,16 +50,30 @@ def show_history(number_of_records):
         if number_of_records <= -1 or number_of_records >= total_records:
             number_of_records = total_records
 
-        print("Last", number_of_records, "records:")
-
-        print("ID\tWPM\tDATE\t\tTIME\t\tACCURACY")
-
         start_count = 0
         if number_of_records < total_records and number_of_records != -1:
             start_count = total_records - number_of_records
-        for i in range(start_count, total_records):
-            formatted_row_data = "\t".join(data[i])
-            print(formatted_row_data + "%")
+        return data[start_count:total_records]
+
+
+def show_history(number_of_records):
+    """Show records from history.
+
+    Defaults to -1 if argument value not provided on command line.
+
+    Args:
+        number_of_records (int): Number of last records to print.
+    """
+    records = get_history_records(number_of_records)
+
+    if len(records) == 0:
+        print("0 records found")
+
+    print("Last {} records:".format(len(records)))
+    print("ID\tWPM\tDATE\t\tTIME\t\tACCURACY")
+    for record in records:
+        formatted_row_data = "\t".join(record)
+        print(formatted_row_data + "%")
 
 
 def save_history(text_id, current_speed_wpm, accuracy):
