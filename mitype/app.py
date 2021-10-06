@@ -249,7 +249,7 @@ class App:
 
         index = first_index_at_which_strings_differ(self.current_string, self.text)
         # Check if difference was found
-        if index < len(self.current_string):
+        if index < len(self.current_string) and len(self.current_string) <= len(self.text):
             self.mistyped_keys.append(len(self.current_string) - 1)
 
         win.addstr(
