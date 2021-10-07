@@ -70,4 +70,4 @@ pre-commit run --all-files
 
 ## Code of Conduct
 
-While contributing to the project, it is very important to maintain a healthy environment! Hence we request you to follow the [Code of Conduct](CODE_OF_CONDUCT).
+While contributing to the project, it is very important to maintain a healthy environment! Hence we request you to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
