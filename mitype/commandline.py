@@ -25,7 +25,7 @@ def resolve_commandline_arguments():
         display_version()
         sys.exit(0)
 
-    elif opt.history:
+    elif opt.history is not None:
         show_history(opt.history)
         sys.exit(0)
 
@@ -93,7 +93,7 @@ def parse_arguments():
         "-H",
         "--history",
         nargs="?",
-        default=0,
+        default=None,
         const=-1,
         type=int,
         help="Show mitype score history",
