@@ -1,0 +1,7 @@
+[build-system]
+requires = [
+    "setuptools >= 51.0.0",
+    "wheel",
+    "windows-curses; platform_system=='Windows'"
+]
+build-backend = "setuptools.build_meta"
