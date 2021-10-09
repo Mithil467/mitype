@@ -2,7 +2,6 @@
 keywords=["MITYPE", "TERMINAL", "WPM", "SPEED", "TYPE"]
 long_description="README.md"
 long_description_content_type="text/markdown"
-install_requires=["windows-curses; platform_system=='Windows'"]
 extras_require={"dev"= ["pytest"]}
 classifiers=[
     "Development Status :: 5 - Production/Stable",
@@ -31,8 +30,9 @@ zip_safe="False"
 
 [build-system]
 requires = [
-    "setuptools >= 51.0.0",
+    "setuptools",
     "wheel",
-    "windows-curses; platform_system=='Windows'"
+    "windows-curses; platform_system=='Windows'",
+    "versioneer-518"
 ]
 build-backend = "setuptools.build_meta"
