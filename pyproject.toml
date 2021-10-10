@@ -2,7 +2,6 @@
 requires = [
     "setuptools",
     "wheel",
-    "windows-curses; platform_system=='Windows'",
     "versioneer-518"
 ]
 build-backend = "setuptools.build_meta"
