@@ -553,6 +553,7 @@ class App:
         self.total_chars_typed = 0
         self.accuracy = 0
         self.time_taken = 0
+        self.test_complete = False
         curses.curs_set(1)
 
     def switch_text(self, win, value):
