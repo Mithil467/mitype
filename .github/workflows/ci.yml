@@ -2,7 +2,9 @@ name: Code quality and build check
 
 on:
   push:
+    branches: [master]
   pull_request:
+    branches: [master]
 
 jobs:
   black:
