@@ -7,12 +7,37 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install black dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black
+      - name: Check if linted with black
+        run: |
+          black --check .
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install isort
+      - name: Check if imports are sorted
+        run: |
+          isort --profile black . --check
+
+
+  tests:
+    needs: [black, lint]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
-
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
@@ -22,16 +47,20 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install black tox sphinx sphinx_rtd_theme isort --use-feature=2020-resolver
-      - name: Check if linted with black
-        run: |
-          black --check .
-      - name: Check if imports are sorted
-        run: |
-          isort --profile black . --check
+          pip install tox --use-feature=2020-resolver
       - name: Test with tox
         run: |
           tox .
+
+  doc:
+    needs: [tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install sphinx sphinx_rtd_theme --use-feature=2020-resolver
       - name: Build docs
         run: |
           python setup.py build_sphinx
