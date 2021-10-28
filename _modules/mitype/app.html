@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mitype.app &mdash; Mitype 0+untagged.1.g25500c4 documentation</title>
+  <title>mitype.app &mdash; Mitype 0+untagged.1.gbecf3b0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -144,7 +144,8 @@
 
         <span class="c1"># Restrict current word length to a limit</span>
         <span class="c1"># Used to highlight once the limit is reached</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_word_limit</span> <span class="o">=</span> <span class="mi">25</span>
+        <span class="c1"># limit is set to the length of largest word in string + 5 for buffer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_word_limit</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span> <span class="o">+</span> <span class="mi">5</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">test_complete</span> <span class="o">=</span> <span class="kc">False</span>
 
