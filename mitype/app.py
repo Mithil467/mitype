@@ -76,7 +76,8 @@ class App:
 
         # Restrict current word length to a limit
         # Used to highlight once the limit is reached
-        self.current_word_limit = 25
+        # limit is set to the length of largest word in string + 5 for buffer
+        self.current_word_limit = len(max(self.tokens, key=len)) + 5
 
         self.test_complete = False
 
