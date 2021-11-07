@@ -13,11 +13,11 @@ def test_perfect_accuracy(mocked_app):
 def test_error_during_typing(mocked_app):
     win = MagicMock()
 
-    text = ["z", "KEY_BACKSPACE"] + list(copy(mocked_app.text))
-
+    text = 2 * ["z", "KEY_BACKSPACE"] + list(copy(mocked_app.text))
+    print("list is ", mocked_app.text)
     for character in copy(text):
         mocked_app.typing_mode(win, character)
-    assert mocked_app.accuracy == 99.2
+    assert mocked_app.accuracy == 98.75
 
 
 def test_same_character_after_typing(mocked_app):
