@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API &mdash; Mitype 0+untagged.1.g83739fe documentation</title>
+  <title>API &mdash; Mitype 0+untagged.1.g8eb0827 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -41,7 +42,67 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.appendkey"><code class="docutils literal notranslate"><span class="pre">App.appendkey()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.check_word"><code class="docutils literal notranslate"><span class="pre">App.check_word()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.clear_line"><code class="docutils literal notranslate"><span class="pre">App.clear_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.erase_key"><code class="docutils literal notranslate"><span class="pre">App.erase_key()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.erase_word"><code class="docutils literal notranslate"><span class="pre">App.erase_word()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.get_dimensions"><code class="docutils literal notranslate"><span class="pre">App.get_dimensions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.initialize"><code class="docutils literal notranslate"><span class="pre">App.initialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.key_printer"><code class="docutils literal notranslate"><span class="pre">App.key_printer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.keyinput"><code class="docutils literal notranslate"><span class="pre">App.keyinput()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.main"><code class="docutils literal notranslate"><span class="pre">App.main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.print_realtime_wpm"><code class="docutils literal notranslate"><span class="pre">App.print_realtime_wpm()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.print_stats"><code class="docutils literal notranslate"><span class="pre">App.print_stats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.replay"><code class="docutils literal notranslate"><span class="pre">App.replay()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.reset_test"><code class="docutils literal notranslate"><span class="pre">App.reset_test()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.resize"><code class="docutils literal notranslate"><span class="pre">App.resize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.screen_size_check"><code class="docutils literal notranslate"><span class="pre">App.screen_size_check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.setup_print"><code class="docutils literal notranslate"><span class="pre">App.setup_print()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.share_result"><code class="docutils literal notranslate"><span class="pre">App.share_result()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.switch_text"><code class="docutils literal notranslate"><span class="pre">App.switch_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.test_end"><code class="docutils literal notranslate"><span class="pre">App.test_end()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.typing_mode"><code class="docutils literal notranslate"><span class="pre">App.typing_mode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mitype.app.App.update_state"><code class="docutils literal notranslate"><span class="pre">App.update_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.calculations.accuracy"><code class="docutils literal notranslate"><span class="pre">accuracy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.calculations.first_index_at_which_strings_differ"><code class="docutils literal notranslate"><span class="pre">first_index_at_which_strings_differ()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.calculations.get_space_count_after_ith_word"><code class="docutils literal notranslate"><span class="pre">get_space_count_after_ith_word()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.calculations.number_of_lines_to_fit_text_in_window"><code class="docutils literal notranslate"><span class="pre">number_of_lines_to_fit_text_in_window()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.calculations.speed_in_wpm"><code class="docutils literal notranslate"><span class="pre">speed_in_wpm()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.calculations.word_wrap"><code class="docutils literal notranslate"><span class="pre">word_wrap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.commandline.display_version"><code class="docutils literal notranslate"><span class="pre">display_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.commandline.load_based_on_difficulty"><code class="docutils literal notranslate"><span class="pre">load_based_on_difficulty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.commandline.load_from_database"><code class="docutils literal notranslate"><span class="pre">load_from_database()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.commandline.load_text_from_file"><code class="docutils literal notranslate"><span class="pre">load_text_from_file()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.commandline.parse_arguments"><code class="docutils literal notranslate"><span class="pre">parse_arguments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.commandline.resolve_commandline_arguments"><code class="docutils literal notranslate"><span class="pre">resolve_commandline_arguments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.database.database_file_absolute_path"><code class="docutils literal notranslate"><span class="pre">database_file_absolute_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.database.fetch_text_from_id"><code class="docutils literal notranslate"><span class="pre">fetch_text_from_id()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.history.get_history_records"><code class="docutils literal notranslate"><span class="pre">get_history_records()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.history.history_file_absolute_path"><code class="docutils literal notranslate"><span class="pre">history_file_absolute_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.history.save_history"><code class="docutils literal notranslate"><span class="pre">save_history()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.history.show_history"><code class="docutils literal notranslate"><span class="pre">show_history()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_backspace"><code class="docutils literal notranslate"><span class="pre">is_backspace()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_ctrl_backspace"><code class="docutils literal notranslate"><span class="pre">is_ctrl_backspace()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_ctrl_c"><code class="docutils literal notranslate"><span class="pre">is_ctrl_c()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_ctrl_t"><code class="docutils literal notranslate"><span class="pre">is_ctrl_t()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_enter"><code class="docutils literal notranslate"><span class="pre">is_enter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_escape"><code class="docutils literal notranslate"><span class="pre">is_escape()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_ignored_key"><code class="docutils literal notranslate"><span class="pre">is_ignored_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_left_arrow_key"><code class="docutils literal notranslate"><span class="pre">is_left_arrow_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_null"><code class="docutils literal notranslate"><span class="pre">is_null()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_resize"><code class="docutils literal notranslate"><span class="pre">is_resize()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_right_arrow_key"><code class="docutils literal notranslate"><span class="pre">is_right_arrow_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_tab"><code class="docutils literal notranslate"><span class="pre">is_tab()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.keycheck.is_valid_initial_key"><code class="docutils literal notranslate"><span class="pre">is_valid_initial_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.signals.exit_on_signal"><code class="docutils literal notranslate"><span class="pre">exit_on_signal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mitype.timer.get_elapsed_minutes_since_first_keypress"><code class="docutils literal notranslate"><span class="pre">get_elapsed_minutes_since_first_keypress()</span></code></a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -71,8 +132,8 @@
   <section id="api">
 <h1>API<a class="headerlink" href="#api" title="Permalink to this heading"></a></h1>
 <p>Contained within is exhaustive documentation of this application’s internal Python API.</p>
-<span class="target" id="module-mitype.app"></span><p>This is the Mitype main app script.</p>
-<dl class="py class">
+<p>This is the Mitype main app script.</p>
+<span class="target" id="module-mitype.app"></span><dl class="py class">
 <dt class="sig sig-object py" id="mitype.app.App">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mitype.app.</span></span><span class="sig-name descname"><span class="pre">App</span></span><a class="reference internal" href="_modules/mitype/app.html#App"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.app.App" title="Permalink to this definition"></a></dt>
 <dd><p>Class for enclosing all methods required to run Mitype.</p>
@@ -320,8 +381,8 @@ Display stats.</p>
 
 </dd></dl>
 
-<span class="target" id="module-mitype.calculations"></span><p>Calculations.</p>
-<dl class="py function">
+<p>Calculations.</p>
+<span class="target" id="module-mitype.calculations"></span><dl class="py function">
 <dt class="sig sig-object py" id="mitype.calculations.accuracy">
 <span class="sig-prename descclassname"><span class="pre">mitype.calculations.</span></span><span class="sig-name descname"><span class="pre">accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_chars_typed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrongly_typed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/calculations.html#accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.calculations.accuracy" title="Permalink to this definition"></a></dt>
 <dd><p>Get accuracy for the current test.</p>
@@ -446,9 +507,9 @@ the sample text.</p></li>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-mitype.commandline"></span><p>Start of app.</p>
+<p>Start of app.</p>
 <p>Parses command line arguments and decides and fills text accordingly.</p>
-<dl class="py function">
+<span class="target" id="module-mitype.commandline"></span><dl class="py function">
 <dt class="sig sig-object py" id="mitype.commandline.display_version">
 <span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">display_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#display_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.display_version" title="Permalink to this definition"></a></dt>
 <dd><p>Display version.</p>
@@ -456,7 +517,7 @@ the sample text.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mitype.commandline.load_based_on_difficulty">
-<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_based_on_difficulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">difficulty_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mitype.commandline.</span></span><span class="sig-name descname"><span class="pre">load_based_on_difficulty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">difficulty_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/commandline.html#load_based_on_difficulty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.commandline.load_based_on_difficulty" title="Permalink to this definition"></a></dt>
 <dd><p>Load text of given difficulty from database if parameter is passed.</p>
 <p>Defaults to random difficulty level when none is provided.</p>
 <dl class="field-list simple">
@@ -534,8 +595,8 @@ the sample text.</p></li>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-mitype.database"></span><p>Deals with fetching texts from database.</p>
-<dl class="py function">
+<p>Deals with fetching texts from database.</p>
+<span class="target" id="module-mitype.database"></span><dl class="py function">
 <dt class="sig sig-object py" id="mitype.database.database_file_absolute_path">
 <span class="sig-prename descclassname"><span class="pre">mitype.database.</span></span><span class="sig-name descname"><span class="pre">database_file_absolute_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/database.html#database_file_absolute_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.database.database_file_absolute_path" title="Permalink to this definition"></a></dt>
 <dd><p>Get full path of directory where source files are stored.</p>
@@ -568,8 +629,8 @@ stored in same directory as app.</p>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-mitype.history"></span><p>Handle with user history.</p>
-<dl class="py function">
+<p>Handle with user history.</p>
+<span class="target" id="module-mitype.history"></span><dl class="py function">
 <dt class="sig sig-object py" id="mitype.history.get_history_records">
 <span class="sig-prename descclassname"><span class="pre">mitype.history.</span></span><span class="sig-name descname"><span class="pre">get_history_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number_of_records</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/history.html#get_history_records"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.history.get_history_records" title="Permalink to this definition"></a></dt>
 <dd><p>Get records from history.</p>
@@ -629,8 +690,8 @@ stored in same directory as app.</p>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-mitype.keycheck"></span><p>Keypress.</p>
-<dl class="py function">
+<p>Keypress.</p>
+<span class="target" id="module-mitype.keycheck"></span><dl class="py function">
 <dt class="sig sig-object py" id="mitype.keycheck.is_backspace">
 <span class="sig-prename descclassname"><span class="pre">mitype.keycheck.</span></span><span class="sig-name descname"><span class="pre">is_backspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/keycheck.html#is_backspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.keycheck.is_backspace" title="Permalink to this definition"></a></dt>
 <dd><p>Detect BACKSPACE key.</p>
@@ -865,15 +926,15 @@ otherwise.</p>
 </dl>
 </dd></dl>
 
-<span class="target" id="module-mitype.signals"></span><p>Custom handlers for received signals.</p>
-<dl class="py function">
+<p>Custom handlers for received signals.</p>
+<span class="target" id="module-mitype.signals"></span><dl class="py function">
 <dt class="sig sig-object py" id="mitype.signals.exit_on_signal">
 <span class="sig-prename descclassname"><span class="pre">mitype.signals.</span></span><span class="sig-name descname"><span class="pre">exit_on_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/signals.html#exit_on_signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.signals.exit_on_signal" title="Permalink to this definition"></a></dt>
 <dd><p>Exit when SIGINT signal is received.</p>
 </dd></dl>
 
-<span class="target" id="module-mitype.timer"></span><p>Timer.</p>
-<dl class="py function">
+<p>Timer.</p>
+<span class="target" id="module-mitype.timer"></span><dl class="py function">
 <dt class="sig sig-object py" id="mitype.timer.get_elapsed_minutes_since_first_keypress">
 <span class="sig-prename descclassname"><span class="pre">mitype.timer.</span></span><span class="sig-name descname"><span class="pre">get_elapsed_minutes_since_first_keypress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mitype/timer.html#get_elapsed_minutes_since_first_keypress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mitype.timer.get_elapsed_minutes_since_first_keypress" title="Permalink to this definition"></a></dt>
 <dd><p>Get time elapsed since initial keypress.</p>

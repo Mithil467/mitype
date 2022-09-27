@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mitype &mdash; Mitype 0+untagged.1.g83739fe documentation</title>
+  <title>Mitype &mdash; Mitype 0+untagged.1.g8eb0827 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,6 +16,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -93,7 +94,43 @@ the ease of your terminal.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.calculations.accuracy"><code class="docutils literal notranslate"><span class="pre">accuracy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.calculations.first_index_at_which_strings_differ"><code class="docutils literal notranslate"><span class="pre">first_index_at_which_strings_differ()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.calculations.get_space_count_after_ith_word"><code class="docutils literal notranslate"><span class="pre">get_space_count_after_ith_word()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.calculations.number_of_lines_to_fit_text_in_window"><code class="docutils literal notranslate"><span class="pre">number_of_lines_to_fit_text_in_window()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.calculations.speed_in_wpm"><code class="docutils literal notranslate"><span class="pre">speed_in_wpm()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.calculations.word_wrap"><code class="docutils literal notranslate"><span class="pre">word_wrap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.commandline.display_version"><code class="docutils literal notranslate"><span class="pre">display_version()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.commandline.load_based_on_difficulty"><code class="docutils literal notranslate"><span class="pre">load_based_on_difficulty()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.commandline.load_from_database"><code class="docutils literal notranslate"><span class="pre">load_from_database()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.commandline.load_text_from_file"><code class="docutils literal notranslate"><span class="pre">load_text_from_file()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.commandline.parse_arguments"><code class="docutils literal notranslate"><span class="pre">parse_arguments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.commandline.resolve_commandline_arguments"><code class="docutils literal notranslate"><span class="pre">resolve_commandline_arguments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.database.database_file_absolute_path"><code class="docutils literal notranslate"><span class="pre">database_file_absolute_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.database.fetch_text_from_id"><code class="docutils literal notranslate"><span class="pre">fetch_text_from_id()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.history.get_history_records"><code class="docutils literal notranslate"><span class="pre">get_history_records()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.history.history_file_absolute_path"><code class="docutils literal notranslate"><span class="pre">history_file_absolute_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.history.save_history"><code class="docutils literal notranslate"><span class="pre">save_history()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.history.show_history"><code class="docutils literal notranslate"><span class="pre">show_history()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_backspace"><code class="docutils literal notranslate"><span class="pre">is_backspace()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_ctrl_backspace"><code class="docutils literal notranslate"><span class="pre">is_ctrl_backspace()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_ctrl_c"><code class="docutils literal notranslate"><span class="pre">is_ctrl_c()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_ctrl_t"><code class="docutils literal notranslate"><span class="pre">is_ctrl_t()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_enter"><code class="docutils literal notranslate"><span class="pre">is_enter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_escape"><code class="docutils literal notranslate"><span class="pre">is_escape()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_ignored_key"><code class="docutils literal notranslate"><span class="pre">is_ignored_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_left_arrow_key"><code class="docutils literal notranslate"><span class="pre">is_left_arrow_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_null"><code class="docutils literal notranslate"><span class="pre">is_null()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_resize"><code class="docutils literal notranslate"><span class="pre">is_resize()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_right_arrow_key"><code class="docutils literal notranslate"><span class="pre">is_right_arrow_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_tab"><code class="docutils literal notranslate"><span class="pre">is_tab()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.keycheck.is_valid_initial_key"><code class="docutils literal notranslate"><span class="pre">is_valid_initial_key()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.signals.exit_on_signal"><code class="docutils literal notranslate"><span class="pre">exit_on_signal()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#mitype.timer.get_elapsed_minutes_since_first_keypress"><code class="docutils literal notranslate"><span class="pre">get_elapsed_minutes_since_first_keypress()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
