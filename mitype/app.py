@@ -518,8 +518,13 @@ class App:
         self.setup_print(win)
 
         win.timeout(10)
+
+        next_tick = time.time()
         for key in self.key_strokes:
-            time.sleep(key[0])
+            next_tick += key[0]
+            wait_duration = max(0, next_tick - time.time())
+            time.sleep(wait_duration)
+
             _key = self.keyinput(win)
             if is_escape(_key) or is_ctrl_c(_key):
                 sys.exit(0)
