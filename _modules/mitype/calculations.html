@@ -3,17 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mitype.calculations &mdash; Mitype 0+untagged.1.g7ac9f83 documentation</title>
+  <title>mitype.calculations &mdash; Mitype 0+untagged.1.g692f905 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> Mitype
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Mitype
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -56,9 +59,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>mitype.calculations</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mitype.calculations</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -76,7 +79,7 @@
 
 
 <div class="viewcode-block" id="first_index_at_which_strings_differ"><a class="viewcode-back" href="../../api.html#mitype.calculations.first_index_at_which_strings_differ">[docs]</a><span class="k">def</span> <span class="nf">first_index_at_which_strings_differ</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return index at which there is a change in strings.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return index at which there is a change in strings.</span>
 
 <span class="sd">    This is used to determine the index up to which text must be dimmed and</span>
 <span class="sd">    after which must be coloured red (indicating mismatch).</span>
@@ -98,7 +101,7 @@
 
 
 <div class="viewcode-block" id="number_of_lines_to_fit_text_in_window"><a class="viewcode-back" href="../../api.html#mitype.calculations.number_of_lines_to_fit_text_in_window">[docs]</a><span class="k">def</span> <span class="nf">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">window_width</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Count number of lines required for displaying text.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count number of lines required for displaying text.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        string (str): String containing sample text.</span>
@@ -111,7 +114,7 @@
 
 
 <div class="viewcode-block" id="get_space_count_after_ith_word"><a class="viewcode-back" href="../../api.html#mitype.calculations.get_space_count_after_ith_word">[docs]</a><span class="k">def</span> <span class="nf">get_space_count_after_ith_word</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return number of spaces after a given word.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return number of spaces after a given word.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        index (int): Index of word in text list</span>
@@ -128,7 +131,7 @@
 
 
 <div class="viewcode-block" id="word_wrap"><a class="viewcode-back" href="../../api.html#mitype.calculations.word_wrap">[docs]</a><span class="k">def</span> <span class="nf">word_wrap</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Wrap text on the screen according to the window width.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrap text on the screen according to the window width.</span>
 
 <span class="sd">    Returns text with extra spaces which makes the string word wrap.</span>
 
@@ -167,7 +170,7 @@
 
 
 <div class="viewcode-block" id="speed_in_wpm"><a class="viewcode-back" href="../../api.html#mitype.calculations.speed_in_wpm">[docs]</a><span class="k">def</span> <span class="nf">speed_in_wpm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Calculate typing speed in WPM.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate typing speed in WPM.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        text (list): List of words from sample text.</span>
@@ -184,7 +187,7 @@
 
 
 <div class="viewcode-block" id="accuracy"><a class="viewcode-back" href="../../api.html#mitype.calculations.accuracy">[docs]</a><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get accuracy for the current test.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get accuracy for the current test.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        total_chars_typed (int): Total characters typed.</span>
