@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install sphinx sphinx_rtd_theme --use-feature=2020-resolver
+          pip install sphinx sphinx_rtd_theme
       - name: Build docs
         run: |
           python setup.py build_sphinx
