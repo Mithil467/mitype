@@ -35,7 +35,7 @@ def resolve_commandline_arguments():
     elif opt.id:
         text, text_id = load_from_database(opt.id)
 
-    elif opt.difficulty:
+    elif opt.difficulty is not None:
         text, text_id = load_based_on_difficulty(opt.difficulty)
 
     else:
