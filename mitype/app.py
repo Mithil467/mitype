@@ -581,6 +581,8 @@ class App:
         self.text = " ".join(self.tokens)
         self.text_backup = self.text
 
+        self.text = word_wrap(self.text, self.window_width)
+
         self.reset_test()
         self.setup_print(win)
         self.update_state(win)
