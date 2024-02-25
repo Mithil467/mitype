@@ -1,4 +1,5 @@
 """Setup script for mitype."""
+
 from setuptools import setup
 
 import versioneer
