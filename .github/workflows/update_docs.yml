@@ -22,11 +22,11 @@ jobs:
           pip install sphinx sphinx_rtd_theme
       - name: Build docs
         run: |
-          python setup.py build_sphinx
+          sphinx-build ./docs/source ./build
       - name: Commit docs
         run: |
           git clone https://github.com/mithil467/mitype.git --branch gh-pages --single-branch gh-pages
-          cp -r build/sphinx/html/* gh-pages/
+          cp -r build/* gh-pages/
           cd gh-pages
           git config --local user.email "mithil467@gmail.com"
           git config --local user.name "Mithil Poojary"
