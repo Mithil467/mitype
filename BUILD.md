@@ -37,6 +37,6 @@ pip install sphinx sphinx_rtd_theme
 ```
 To build the docs locally, run -
 ```
-python setup.py build_sphinx
+sphinx-build ./docs/source ./build
 ```
 The HTML pages are built in `build\sphinx\html`.

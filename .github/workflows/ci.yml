@@ -63,4 +63,4 @@ jobs:
           pip install sphinx sphinx_rtd_theme
       - name: Build docs
         run: |
-          python setup.py build_sphinx
+          sphinx-build ./docs/source ./build
