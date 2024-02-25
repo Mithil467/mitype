@@ -19,7 +19,7 @@ python -m mitype [OPTION]... [FILE]...
 You'll need [windows_curses](https://pypi.org/project/windows-curses/) installed for running mitype on windows.
 You can install it by running the following command.
 ```
-pip install windows_curses
+pip install windows_curses==2.3.0
 ```
 
 ## Installing from Source
