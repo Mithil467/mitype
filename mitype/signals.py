@@ -1,4 +1,5 @@
 """Custom handlers for received signals."""
+
 import signal
 import sys
 
