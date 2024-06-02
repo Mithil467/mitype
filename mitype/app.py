@@ -288,7 +288,7 @@ class App:
         # Calculate stats at the end of the test
         if self.mode == 0:
             self.current_speed_wpm = speed_in_wpm(self.tokens, self.start_time)
-            total_chars_in_text = len(self.text)
+            total_chars_in_text = len(self.text_backup)
             wrongly_typed_chars = self.total_chars_typed - total_chars_in_text
             self.accuracy = accuracy(self.total_chars_typed, wrongly_typed_chars)
             self.time_taken = get_elapsed_minutes_since_first_keypress(self.start_time)
