@@ -132,6 +132,24 @@ def is_resize(key):
     return key == "KEY_RESIZE"
 
 
+def get_key_mapping(key):
+    """Map key to its corresponding character.
+
+    Addresses a bug in windows-curses where the apostrophe key is
+    incorrectly returned as 530 -
+    https://github.com/zephyrproject-rtos/windows-curses/issues/41
+
+    Args:
+        key (Union[int, str]): Character to check.
+
+    Returns:
+        Union[int, str]: Returns character if mapping is present or original key otherwise.
+    """
+    if key == 530:
+        return "'"
+    return key
+
+
 def is_ignored_key(key):
     """Detect if key press should be ignored.
 
@@ -144,7 +162,7 @@ def is_ignored_key(key):
         bool: Returns `True` if pressed key must be ignored or `False`
         otherwise.
     """
-    return isinstance(key, int)
+    return isinstance(get_key_mapping(key), int)
 
 
 def is_valid_initial_key(key):

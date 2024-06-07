@@ -18,6 +18,7 @@ from mitype.calculations import (
 from mitype.commandline import load_from_database, resolve_commandline_arguments
 from mitype.history import save_history
 from mitype.keycheck import (
+    get_key_mapping,
     is_backspace,
     is_ctrl_backspace,
     is_ctrl_c,
@@ -427,6 +428,7 @@ class App:
                 self.check_word()
 
         elif is_valid_initial_key(key):
+            key = get_key_mapping(key)
             self.appendkey(key)
             self.total_chars_typed += 1
 
