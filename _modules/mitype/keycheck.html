@@ -1,22 +1,20 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mitype.keycheck &mdash; Mitype 0+untagged.1.g4ced670 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+  <title>mitype.keycheck &mdash; Mitype 0+untagged.1.g023556e documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=effaab19"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=5c67f775"></script>
+      <script src="../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -75,10 +73,10 @@
   <h1>Source code for mitype.keycheck</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Keypress.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">curses.ascii</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">curses.ascii</span>
 
 
-<div class="viewcode-block" id="is_escape"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_escape">[docs]</a><span class="k">def</span> <span class="nf">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_escape"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_escape">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_escape</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect ESC key.</span>
 
 <span class="sd">    This is used to exit the application.</span>
@@ -98,7 +96,7 @@
     <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="is_ctrl_c"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ctrl_c">[docs]</a><span class="k">def</span> <span class="nf">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_ctrl_c"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ctrl_c">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_ctrl_c</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect Ctrl+c key combination.</span>
 
 <span class="sd">    This is used to exit the application.</span>
@@ -113,7 +111,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x03</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="is_ctrl_t"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ctrl_t">[docs]</a><span class="k">def</span> <span class="nf">is_ctrl_t</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_ctrl_t"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ctrl_t">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_ctrl_t</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect Ctrl+t key combination.</span>
 
 <span class="sd">    This is used to share results on twitter</span>
@@ -127,7 +125,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x14</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="is_ctrl_backspace"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ctrl_backspace">[docs]</a><span class="k">def</span> <span class="nf">is_ctrl_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_ctrl_backspace"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ctrl_backspace">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_ctrl_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect Ctrl+backspace key combination.</span>
 
 <span class="sd">    Used to delete the last typed word</span>
@@ -142,7 +140,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\x17</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="is_backspace"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_backspace">[docs]</a><span class="k">def</span> <span class="nf">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_backspace"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_backspace">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_backspace</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect BACKSPACE key.</span>
 
 <span class="sd">    Args:</span>
@@ -157,7 +155,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">(</span><span class="n">curses</span><span class="o">.</span><span class="n">KEY_BACKSPACE</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_DC</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="is_null"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_null">[docs]</a><span class="k">def</span> <span class="nf">is_null</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_null"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_null">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_null</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect null keys like super key.</span>
 
 <span class="sd">    Args:</span>
@@ -171,7 +169,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="is_enter"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_enter">[docs]</a><span class="k">def</span> <span class="nf">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_enter"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_enter">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_enter</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect enter key.</span>
 
 <span class="sd">    Args:</span>
@@ -183,7 +181,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="is_tab"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_tab">[docs]</a><span class="k">def</span> <span class="nf">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_tab"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_tab">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_tab</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect tab key to start mitype again.</span>
 
 <span class="sd">    Args:</span>
@@ -195,7 +193,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="is_resize"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_resize">[docs]</a><span class="k">def</span> <span class="nf">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_resize"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_resize">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_resize</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect if terminal was resized.</span>
 
 <span class="sd">    Args:</span>
@@ -207,7 +205,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;KEY_RESIZE&quot;</span></div>
 
 
-<div class="viewcode-block" id="get_key_mapping"><a class="viewcode-back" href="../../api.html#mitype.keycheck.get_key_mapping">[docs]</a><span class="k">def</span> <span class="nf">get_key_mapping</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="get_key_mapping"><a class="viewcode-back" href="../../api.html#mitype.keycheck.get_key_mapping">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_key_mapping</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Map key to its corresponding character.</span>
 
 <span class="sd">    Addresses a bug in windows-curses where the apostrophe key is</span>
@@ -225,7 +223,7 @@
     <span class="k">return</span> <span class="n">key</span></div>
 
 
-<div class="viewcode-block" id="is_ignored_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ignored_key">[docs]</a><span class="k">def</span> <span class="nf">is_ignored_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_ignored_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_ignored_key">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_ignored_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect if key press should be ignored.</span>
 
 <span class="sd">    Special function keys, page navigation keys must be ignored.</span>
@@ -240,7 +238,7 @@
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">get_key_mapping</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="is_valid_initial_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_valid_initial_key">[docs]</a><span class="k">def</span> <span class="nf">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_valid_initial_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_valid_initial_key">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_valid_initial_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect if the pressed key is a valid key to start timer.</span>
 
 <span class="sd">    Args:</span>
@@ -260,7 +258,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="is_right_arrow_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_right_arrow_key">[docs]</a><span class="k">def</span> <span class="nf">is_right_arrow_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_right_arrow_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_right_arrow_key">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_right_arrow_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect right arrow key.</span>
 
 <span class="sd">    Args:</span>
@@ -274,7 +272,7 @@
     <span class="k">return</span> <span class="n">key</span> <span class="o">==</span> <span class="n">curses</span><span class="o">.</span><span class="n">KEY_RIGHT</span></div>
 
 
-<div class="viewcode-block" id="is_left_arrow_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_left_arrow_key">[docs]</a><span class="k">def</span> <span class="nf">is_left_arrow_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="is_left_arrow_key"><a class="viewcode-back" href="../../api.html#mitype.keycheck.is_left_arrow_key">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_left_arrow_key</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect left arrow key.</span>
 
 <span class="sd">    Args:</span>

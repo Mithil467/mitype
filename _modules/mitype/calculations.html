@@ -1,22 +1,20 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>mitype.calculations &mdash; Mitype 0+untagged.1.g4ced670 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+  <title>mitype.calculations &mdash; Mitype 0+untagged.1.g023556e documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=effaab19"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=5c67f775"></script>
+      <script src="../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -75,12 +73,12 @@
   <h1>Source code for mitype.calculations</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Calculations.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
-<span class="kn">from</span> <span class="nn">mitype</span> <span class="kn">import</span> <span class="n">timer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mitype</span><span class="w"> </span><span class="kn">import</span> <span class="n">timer</span>
 
 
-<div class="viewcode-block" id="first_index_at_which_strings_differ"><a class="viewcode-back" href="../../api.html#mitype.calculations.first_index_at_which_strings_differ">[docs]</a><span class="k">def</span> <span class="nf">first_index_at_which_strings_differ</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
+<div class="viewcode-block" id="first_index_at_which_strings_differ"><a class="viewcode-back" href="../../api.html#mitype.calculations.first_index_at_which_strings_differ">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">first_index_at_which_strings_differ</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return index at which there is a change in strings.</span>
 
 <span class="sd">    This is used to determine the index up to which text must be dimmed and</span>
@@ -102,7 +100,7 @@
     <span class="k">return</span> <span class="n">length</span></div>
 
 
-<div class="viewcode-block" id="number_of_lines_to_fit_text_in_window"><a class="viewcode-back" href="../../api.html#mitype.calculations.number_of_lines_to_fit_text_in_window">[docs]</a><span class="k">def</span> <span class="nf">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">window_width</span><span class="p">):</span>
+<div class="viewcode-block" id="number_of_lines_to_fit_text_in_window"><a class="viewcode-back" href="../../api.html#mitype.calculations.number_of_lines_to_fit_text_in_window">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">number_of_lines_to_fit_text_in_window</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">window_width</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Count number of lines required for displaying text.</span>
 
 <span class="sd">    Args:</span>
@@ -115,7 +113,7 @@
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">/</span> <span class="n">window_width</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="get_space_count_after_ith_word"><a class="viewcode-back" href="../../api.html#mitype.calculations.get_space_count_after_ith_word">[docs]</a><span class="k">def</span> <span class="nf">get_space_count_after_ith_word</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<div class="viewcode-block" id="get_space_count_after_ith_word"><a class="viewcode-back" href="../../api.html#mitype.calculations.get_space_count_after_ith_word">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_space_count_after_ith_word</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Return number of spaces after a given word.</span>
 
 <span class="sd">    Args:</span>
@@ -132,7 +130,7 @@
     <span class="k">return</span> <span class="n">count</span></div>
 
 
-<div class="viewcode-block" id="word_wrap"><a class="viewcode-back" href="../../api.html#mitype.calculations.word_wrap">[docs]</a><span class="k">def</span> <span class="nf">word_wrap</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+<div class="viewcode-block" id="word_wrap"><a class="viewcode-back" href="../../api.html#mitype.calculations.word_wrap">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">word_wrap</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Wrap text on the screen according to the window width.</span>
 
 <span class="sd">    Returns text with extra spaces which makes the string word wrap.</span>
@@ -171,7 +169,7 @@
     <span class="k">return</span> <span class="n">text</span></div>
 
 
-<div class="viewcode-block" id="speed_in_wpm"><a class="viewcode-back" href="../../api.html#mitype.calculations.speed_in_wpm">[docs]</a><span class="k">def</span> <span class="nf">speed_in_wpm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span>
+<div class="viewcode-block" id="speed_in_wpm"><a class="viewcode-back" href="../../api.html#mitype.calculations.speed_in_wpm">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">speed_in_wpm</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate typing speed in WPM.</span>
 
 <span class="sd">    Args:</span>
@@ -188,7 +186,7 @@
     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">wpm</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="accuracy"><a class="viewcode-back" href="../../api.html#mitype.calculations.accuracy">[docs]</a><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed</span><span class="p">):</span>
+<div class="viewcode-block" id="accuracy"><a class="viewcode-back" href="../../api.html#mitype.calculations.accuracy">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">accuracy</span><span class="p">(</span><span class="n">total_chars_typed</span><span class="p">,</span> <span class="n">wrongly_typed</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get accuracy for the current test.</span>
 
 <span class="sd">    Args:</span>
