@@ -585,8 +585,6 @@ class App:
 
         self.text = word_wrap(self.text, self.window_width)
 
-        # Reset current word length
-        # limit is set to the length of largest word in string + 5 for buffer
         self.current_word_limit = len(max(self.tokens, key=len)) + 5
 
         self.reset_test()
