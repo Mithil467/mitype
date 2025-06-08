@@ -585,6 +585,8 @@ class App:
 
         self.text = word_wrap(self.text, self.window_width)
 
+        self.current_word_limit = len(max(self.tokens, key=len)) + 5
+
         self.reset_test()
         self.setup_print(win)
         self.update_state(win)
