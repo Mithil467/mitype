@@ -1,8 +1,8 @@
 ci:
   autofix_prs: false
 repos:
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 26.5.1
     hooks:
       - id: black
   - repo: https://github.com/MarcoGorelli/absolufy-imports
@@ -10,17 +10,17 @@ repos:
     hooks:
       - id: absolufy-imports
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/PyCQA/isort
-    rev: 6.0.1
+    rev: 9.0.1
     hooks:
       - id: isort
         args: [--profile=black]
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+    rev: v3.21.2
     hooks:
       - id: pyupgrade
         args: [--py3-plus]
