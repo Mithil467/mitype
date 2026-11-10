@@ -123,7 +123,7 @@ def load_text_from_file(file_path):
         return text, filename
 
     print("Cannot open file -", file_path)
-    sys.exit(0)
+    sys.exit(1)
 
 
 def load_from_database(text_id):
